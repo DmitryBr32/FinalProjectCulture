@@ -192,9 +192,9 @@ export default function Bar() {
         src="https://torgpit.ru/upload/images/stories/kartinki/bisnes-plan/otkritie-bara.jpg"
         alt="Бар"
       />
-      <div className={styles.bar_collection}>
+      <div className={styles.barCollection}>
         {limitedIngrs.map((userIngr) => (
-          <div key={userIngr.id} className={styles.bar_item}>
+          <div key={userIngr.id} className={styles.barItem}>
             <img src={userIngr.img} alt="Бутылка" />
           </div>
         ))}
