@@ -1,5 +1,5 @@
-//import SignInForm from "@/features/auth/ui/SignInForm/SignInForm";
+import SignInForm from "@/features/auth/ui/SignInForm/SignInForm";
 
 export function SignInPage() {
-  return <div>AAA</div>;
+  return <SignInForm />;
 }

@@ -5,8 +5,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --env-file=.env ./src/app.js --ext js,jsx",
-    "db": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
-    "db:remigrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all"
+    "dbHelp": "npx sequelize --help",
+    "dbCreate": "npx sequelize db:create",
+    "dbDrop": "npx sequelize db:drop",
+    "dbMig": "npx sequelize db:migrate",
+    "dbMigUndo": "npx sequelize db:migrate:undo:all",
+    "dbSeed": "npx sequelize db:seed:all",
+    "dbSeedUndo": "npx sequelize db:seed:undo:all",
+    "dbModGen": "npx sequelize model:generate --name Test --attributes title:string",
+    "dbSeedGen": "npx sequelize seed:generate --name Seed",
+    "dbReset": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",
