@@ -5,4 +5,6 @@ export enum CLIENT_ROUTES {
   SIGN_IN = "/signin",
   SIGN_UP = "/signup",
   NOT_FOUND = "*",
+  MY_BAR = "/bar",
+  SHOP_FORM= "shop"
 }
