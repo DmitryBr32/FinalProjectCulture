@@ -36,7 +36,7 @@ const userSlice = createSlice({
       })
       .addCase(refreshTokensThunk.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload!.error ?? "Cломалось получение токенов";
+        state.error = action.payload?.error ?? "Cломалось получение токенов";
         state.user = null;
       })
       ///* signInThunk */
