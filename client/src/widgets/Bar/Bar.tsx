@@ -183,7 +183,7 @@ export const userIngrs = [
   },
 ];
 
-const limitedIngrs = userIngrs.slice(0, 24);
+const limitedIngrs = userIngrs.slice(0, 18);
 
 export default function Bar() {
   return (

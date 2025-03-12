@@ -20,11 +20,10 @@
   left: 50%;
   z-index: 1;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   grid-gap: 5px;
   width: 100%;
-  transform: translate(-50%);
 }
 
 .barItem {
