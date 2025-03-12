@@ -27,6 +27,12 @@ export function Header(): JSX.Element {
       >
         Главная
       </NavLink>
+      <NavLink
+        to={CLIENT_ROUTES.JOURNAL}
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
+        Журнал
+      </NavLink>
       {!user && (
         <>
           <NavLink
