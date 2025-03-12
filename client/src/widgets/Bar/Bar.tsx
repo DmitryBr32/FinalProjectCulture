@@ -1,6 +1,6 @@
 import styles from "./Bar.module.css";
 
-const userIngrs = [
+export const userIngrs = [
   {
     id: 1,
     ingr_balance: 100,
