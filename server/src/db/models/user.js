@@ -1,9 +1,13 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate() {}
+    static associate(models) {
+      User.hasOne(models.Basket, { foreignKey: "userId", as: "basket" });
+    }
   }
+
   User.init(
     {
       username: DataTypes.STRING,
@@ -16,5 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
+
   return User;
 };
