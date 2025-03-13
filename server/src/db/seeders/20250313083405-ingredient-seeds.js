@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     await queryInterface.bulkInsert(
       "Ingredients",
       [
@@ -26,17 +26,42 @@ module.exports = {
           title: "Козел",
           strength: "4%",
         },
+        {
+          type: "Ром Белый",
+          title: "Bacardi",
+          strength: "40%",
+        },
+        {
+          type: "Текила Белая",
+          title: "Olmeca blanco",
+          strength: "40%",
+        },
+        {
+          type: "Джин",
+          title: "Gordon's",
+          strength: "47%",
+        },
+        {
+          type: "Ликер",
+          title: "Campari",
+          strength: "25%",
+        },
+        {
+          type: "Ликер",
+          title: "Cointreau",
+          strength: "40%",
+        },
+        {
+          type: "Ликер",
+          title: "Кофейный ликер (Kahlúa)",
+          strength: "20%",
+        },
       ],
       {}
     );
   },
 
-  async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+  async down(queryInterface) {
+    await queryInterface.bulkDelete("Ingredients", null, {});
   },
 };

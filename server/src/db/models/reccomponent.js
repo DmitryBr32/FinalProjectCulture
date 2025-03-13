@@ -1,24 +1,27 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class RecComponent extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+    static associate({ Ingredient, Recipe }) {
+      this.belongsTo(Ingredient, {
+        foreignKey: "ingredientId",
+        as: "ingredient",
+      });
+      this.belongsTo(Recipe, {
+        foreignKey: "recipeId",
+        as: "recipe",
+      });
     }
   }
-  RecComponent.init({
-    ingredientId: DataTypes.INTEGER,
-    recipeId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'RecComponent',
-  });
+  RecComponent.init(
+    {
+      ingredientId: DataTypes.INTEGER,
+      recipeId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "RecComponent",
+    }
+  );
   return RecComponent;
 };
