@@ -1,12 +1,9 @@
-export { ingredientReducer } from "./slice/ingredientSlice";
-export { ingredientsReducer } from "./slice/ingredientsSlice";
+export { stockReducer } from "./slice/stockSlice";
 
 export {
-  getIngredientsThunk,
-  getIngredientByIdThunk,
-  createIngredientThunk,
-  updateIngredientByIdThunk,
-  deleteIngredientThunk,
+  getStockThunk,
+  createOrUpdateStockThunk,
+  deleteStockThunk,
 } from "./api";
 
-export type { IIngredient } from "./model";
+export type { IStock, IStockRowData } from "./model";
