@@ -9,10 +9,21 @@ class StockService {
   }
 
   static async findOrCreateUserStock(userId, ingredientId, ingredientBalance) {
-    return await UserStock.findOrCreate({
+    const stock = await UserStock.findOne({
       where: { userId, ingredientId },
-      defaults: { ingredientBalance },
     });
+
+    if (stock) {
+      stock.ingredientBalance = ingredientBalance;
+      await stock.save();
+      return stock;
+    } else {
+      return await UserStock.create({
+        userId,
+        ingredientId,
+        ingredientBalance,
+      });
+    }
   }
 
   static async delete(userId, ingredientId) {

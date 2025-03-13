@@ -20,7 +20,7 @@ export const getIngredientsThunk = createAsyncThunk<
   { rejectValue: IServerResponse }
 >(INGREDIENT_THUNK_TYPES.GET_INGREDIENTS, async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.get("/ingredient");
+    const { data } = await axiosInstance.get(INGREDIENTS_ENDPOINT);
     return data;
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
@@ -51,7 +51,7 @@ export const createIngredientThunk = createAsyncThunk<
   INGREDIENT_THUNK_TYPES.CREATE_INGREDIENT,
   async (ingredientData, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/ingredient", ingredientData);
+      const { data } = await axiosInstance.post(INGREDIENTS_ENDPOINT, ingredientData);
       return data;
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
