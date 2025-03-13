@@ -39,7 +39,6 @@ export default function SignInForm() {
         navigate(CLIENT_ROUTES.MAIN);
       }
     } catch (error) {
-      console.log(error);
     }
   };
 

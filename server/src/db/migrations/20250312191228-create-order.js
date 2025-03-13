@@ -34,6 +34,9 @@ module.exports = {
       recipient: {
         type: Sequelize.STRING
       },
+      basket: {
+        type: Sequelize.JSONB
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

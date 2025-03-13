@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING,
     date: DataTypes.DATE,
     telephone: DataTypes.STRING,
-    recipient: DataTypes.STRING
+    recipient: DataTypes.STRING,
+    basket: DataTypes.JSONB,
   }, {
     sequelize,
     modelName: 'Order',

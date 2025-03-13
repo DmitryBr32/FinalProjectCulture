@@ -1,43 +1,52 @@
 import { JSX, useEffect, useState } from "react";
 import styles from "./BasketsPage.module.css";
-import { getCart } from "@/shared/api/api";
-import { Product } from "@/entities/product/product";
+import { getCart, getProducts } from "@/shared/api/api";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
+import { addToCart, initializeCart, removeFromCart } from "@/app/store/cartSlice";
+import { removeFromCart as removeFromCartAPI } from '@/shared/api/api';
+
 
 export default function Baskets(): JSX.Element {
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const cart = useAppSelector((state) => state.cart.items);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const cart = await getCart();
-        setCartItems(cart);
-      } catch (error) {
-        console.error("Ошибка при загрузке корзины:", error);
-      }
+    const fetchData = async () => {
+
+      const cartData = await getCart();
+      dispatch(initializeCart(cartData));
     };
 
-    fetchCart();
-  }, []);
+    fetchData();
+  }, [dispatch]);
 
+  async function deleteProduct(id?: number) {
+    if (!id) return
+
+    await removeFromCartAPI(id)
+    dispatch(removeFromCart(id))
+  }
   return (
     <div className={styles.container}>
       <h1>Корзина</h1>
-      {cartItems.length === 0 ? (
+      {cart?.length === 0 ? (
         <p>Ваша корзина пуста</p>
       ) : (
         <div className={styles.cartItems}>
-          {cartItems.map((product) => (
+          {cart.map((product) => (
             <div key={product.id} className={styles.cartItem}>
               <img
-                src={product.image}
-                alt={product.name}
+                src={product.Product?.image}
+                alt={product.Product?.name}
                 className={styles.cartItemImage}
               />
               <div className={styles.cartItemDetails}>
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <p>Цена: {product.price} руб.</p>
+                <h3>{product.Product?.name}</h3>
+                <p>{product.Product?.description}</p>
+                <p>Цена: {product.Product?.price} руб.</p>
+                <p>Количество: {product.quantity}</p>
               </div>
+              <button onClick={() => deleteProduct(product.id)}>Удалить</button>
             </div>
           ))}
         </div>
