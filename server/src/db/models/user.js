@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
+  // ассоциации
+
   User.init(
     {
       username: DataTypes.STRING,
