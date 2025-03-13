@@ -57,8 +57,16 @@ export function Header(): JSX.Element {
       )}
       {user && (
         <>
+          <NavLink
+            to={CLIENT_ROUTES.BASKETS} 
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
+            Корзина
+          </NavLink>
           <UserAvatar user={user} />
-          <button onClick={onLogoutHandler}>Выйти</button>
+          <button onClick={onLogoutHandler} className={styles.button}>
+            Выйти
+          </button>
         </>
       )}
     </nav>

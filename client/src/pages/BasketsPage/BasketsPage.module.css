@@ -1,0 +1,35 @@
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: rgb(163, 163, 163);
+}
+
+.container h1 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cartItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.cartItemImage {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.cartItemDetails {
+  flex-grow: 1;
+}
