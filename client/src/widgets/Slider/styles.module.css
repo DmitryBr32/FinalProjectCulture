@@ -31,13 +31,15 @@
   overflow: hidden;
   cursor: pointer;
   background: #9cbfec;
+  opacity: 1;
   background-position: center;
+  background-color: #fff;
   background-size: auto 120%;
   border: 0 solid #fdc5c5;
   border-radius: 30px;
-  transition: width 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95),
-    margin 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95),
-    border-radius 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+  transition: width 0.8s cubic-bezier(0.05, 0.61, 0.41, 0.95),
+    margin 0.8s cubic-bezier(0.05, 0.61, 0.41, 0.95),
+    border-radius 0.8s cubic-bezier(0.05, 0.61, 0.41, 0.95), opacity 0.6s ease;
 }
 
 .option.active {
@@ -53,6 +55,10 @@
   left: 0;
   height: 120px;
   transition: box-shadow 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.option:hover {
+  opacity: 0.75;
 }
 
 .option.active .shadow {

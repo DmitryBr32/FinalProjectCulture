@@ -3,22 +3,25 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Basket extends Model {
-    static associate(models) {
-      Basket.belongsTo(models.User, { foreignKey: 'userId' });
-      Basket.belongsTo(models.Product, { foreignKey: 'productId' });
-      Basket.hasOne(models.Order, { foreignKey: 'basketId' });
+    static associate({ User, Product, Order }) {
+      Basket.belongsTo(User, { foreignKey: "userId" });
+      Basket.belongsTo(Product, { foreignKey: "productId" });
+      Basket.hasOne(Order, { foreignKey: "basketId" });
     }
   }
 
-  Basket.init({
-    userId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER,
-    isOrdered: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Basket',
-  });
+  Basket.init(
+    {
+      userId: DataTypes.INTEGER,
+      productId: DataTypes.INTEGER,
+      quantity: DataTypes.INTEGER,
+      isOrdered: DataTypes.BOOLEAN,
+    },
+    {
+      sequelize,
+      modelName: "Basket",
+    }
+  );
 
   return Basket;
 };
