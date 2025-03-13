@@ -1,11 +1,14 @@
 import { userReducer } from "@/entities/user";
+import { ingredientReducer, ingredientsReducer } from "@/entities/ingredient";
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from './cartSlice';
+import cartReducer from "./cartSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     cart: cartReducer,
+    ingredient: ingredientReducer,
+    ingredients: ingredientsReducer,
   },
 });
 
