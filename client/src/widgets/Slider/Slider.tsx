@@ -1,8 +1,10 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
+import { useNavigate } from "react-router";
 
 export default function Slider() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
 
   const handleItemClick = (index: number) => {
     setActiveIndex(index);
@@ -12,14 +14,20 @@ export default function Slider() {
     {
       main: "Бар",
       icon: "svg",
+      backgroundImage: "/bottles.jpg",
+      navigator: "/bar",
     },
     {
       main: "Журнал",
       icon: "svg",
+      backgroundImage: "/coctail_bar.jpg",
+      navigator: "/journal",
     },
     {
       main: "Магазин",
       icon: "svg",
+      backgroundImage: "/shop.jpg",
+      navigator: "/shop",
     },
   ];
 
@@ -28,12 +36,19 @@ export default function Slider() {
       <div className={styles.options}>
         {items.map((item, index) => (
           <div
-            key={index} // Важно для React
+            key={index}
             className={`${styles.option} ${
               index === activeIndex ? styles.active : ""
             }`}
-            onClick={() => handleItemClick(index)}
-            style={{ width: index === activeIndex ? "600px" : "80px" }}
+            onClick={() =>
+              activeIndex === index
+                ? navigate(`${item.navigator}`)
+                : handleItemClick(index)
+            }
+            style={{
+              width: index === activeIndex ? "600px" : "80px",
+              backgroundImage: `url(${item.backgroundImage})`,
+            }}
           >
             <div className={styles.shadow}></div>
             <div className={styles.label}>
