@@ -2,7 +2,7 @@ const StockService = require("../services/Stock.service");
 
 class StockController {
   static async getUserStock(req, res) {
-    const { id } = res.params;
+    const { id } = req.params;
     try {
       const stock = await StockService.getStock(id);
       res.status(200).json(stock);
@@ -11,8 +11,9 @@ class StockController {
       res.status(500).json({ error: "Ошибка сервера" });
     }
   }
-  static async findOrCreateUserStock(req, res) {
-    const { id } = res.params;
+
+  static async createOrUpdateUserStock(req, res) {
+    const { id } = req.params;
     const { ingredientId, ingredientBalance } = req.body;
     try {
       const stock = await StockService.findOrCreateUserStock(
@@ -26,6 +27,7 @@ class StockController {
       res.status(500).json({ error: "Ошибка сервера" });
     }
   }
+
   static async deleteUserStock(req, res) {
     const { id } = req.params;
     const { ingredientId } = req.body;
