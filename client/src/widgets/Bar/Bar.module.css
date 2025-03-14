@@ -17,14 +17,13 @@
 .barCollection {
   position: absolute;
   top: 7%;
-  left: 50%;
+  left: 0%;
   z-index: 1;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(8, 1fr);
   grid-gap: 5px;
   width: 100%;
-  transform: translate(-50%);
 }
 
 .barItem {

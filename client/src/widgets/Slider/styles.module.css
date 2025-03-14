@@ -1,0 +1,150 @@
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden;
+  font-family: Roboto, sans-serif;
+  transition: 0.25s;
+}
+
+.credit {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: inherit;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+}
+
+.option {
+  position: relative;
+  flex-shrink: 0;
+  margin: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #9cbfec;
+  background-color: #fff;
+  background-position: center;
+  background-size: auto 120%;
+  border: 0 solid #fdc5c5;
+  border-radius: 30px;
+  opacity: 1;
+  transition: width 0.8s cubic-bezier(0.05, 0.61, 0.41, 0.95),
+    margin 0.8s cubic-bezier(0.05, 0.61, 0.41, 0.95),
+    border-radius 0.8s cubic-bezier(0.05, 0.61, 0.41, 0.95), opacity 0.6s ease;
+}
+
+.option.active {
+  margin: 0;
+  background-size: auto 100%;
+  border-radius: 40px;
+}
+
+.option .shadow {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 120px;
+  transition: box-shadow 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.option:hover {
+  opacity: 0.75;
+}
+
+.option.active .shadow {
+  box-shadow: inset 0 -120px 120px -120px black,
+    inset 0 -120px 120px -100px black;
+}
+
+.option:not(.active) .shadow {
+  box-shadow: inset 0 -120px 0 -120px black, inset 0 -120px 0 -100px black;
+}
+
+.option .label {
+  position: absolute;
+  right: 0;
+  display: flex;
+  height: 40px;
+  transition: all 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95); /* Добавили transition */
+}
+
+.option.active .label {
+  bottom: 20px;
+  left: 20px;
+}
+
+.option:not(.active) .label {
+  bottom: 10px;
+  left: 10px;
+}
+
+.option .icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  max-width: 40px;
+  height: 40px;
+  color: #9ceca0;
+  background-color: white;
+  border-radius: 100%;
+}
+
+.option .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  color: white;
+  white-space: pre;
+}
+
+.option .info > div {
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95),
+    opacity 0.5s ease-out;
+}
+
+.option.active .info > div {
+  left: 0;
+  opacity: 1;
+}
+
+.option:not(.active) .info > div {
+  left: 20px;
+  opacity: 0;
+}
+
+.main {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.sub {
+  transition-delay: 0.1s;
+}
+
+@media (width <= 768px) {
+  .options {
+    height: 300px;
+  }
+
+  .option {
+    width: 60px !important;
+  }
+
+  .option.active {
+    width: 300px !important;
+  }
+}

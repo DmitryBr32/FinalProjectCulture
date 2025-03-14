@@ -1,0 +1,25 @@
+"use strict";
+const { Model } = require("sequelize");
+
+module.exports = (sequelize, DataTypes) => {
+  class Order extends Model {
+    static associate({ Basket }) {
+      Order.belongsTo(Basket, { foreignKey: "basketId" });
+    }
+  }
+
+  Order.init({
+    basketId: DataTypes.INTEGER,
+    comment: DataTypes.TEXT,
+    address: DataTypes.STRING,
+    date: DataTypes.DATE,
+    telephone: DataTypes.STRING,
+    recipient: DataTypes.STRING,
+    basket: DataTypes.JSONB,
+  }, {
+    sequelize,
+    modelName: 'Order',
+  });
+
+  return Order;
+};
