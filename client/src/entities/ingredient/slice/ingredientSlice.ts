@@ -3,6 +3,7 @@ import {
   getIngredientByIdThunk,
   updateIngredientByIdThunk,
   deleteIngredientThunk,
+  createIngredientThunk,
 } from "../api";
 import { IIngredient } from "../model";
 
@@ -35,6 +36,18 @@ const ingredientSlice = createSlice({
       .addCase(getIngredientByIdThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload?.error ?? "Ошибка загрузки ингредиента";
+      })
+
+      .addCase(createIngredientThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createIngredientThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.ingredient = action.payload.data;
+      })
+      .addCase(createIngredientThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload?.error ?? "Ошибка создания ингредиента";
       })
 
       .addCase(updateIngredientByIdThunk.pending, (state) => {
