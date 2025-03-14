@@ -5,7 +5,7 @@ import Layout from "../layout/Layout";
 import MyBarPage from "@/pages/MyBarPage/MyBarPage";
 import ShopForm from "@/features/auth/ui/ShopForm/ShopForm";
 import Baskets from "@/pages/BasketsPage/BasketsPage";
-import ProductDetails from "@/features/auth/ui/productDetails/productDetails";
+import ProductDetails from "@/features/auth/ui/productDetails/ProductDetails";
 
 export default function Router() {
   return (
