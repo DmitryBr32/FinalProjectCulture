@@ -1,11 +1,11 @@
 export interface IStockRowData {
   ingredientId: number;
   ingredientBalance: string;
+  userId: number;
 }
 
 export interface IStock extends IStockRowData {
   id: number;
-  userId: number;
   createdAt: Date;
   updatedAt: Date;
   user: {

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import styles from "./BarStorage.module.css";
 import { useEffect, useState } from "react";
-import { getStockThunk } from "@/entities/stock";
+import { deleteStockThunk, getStockThunk } from "@/entities/stock";
 import BarAddForm from "../BarAddForm/BarAddForm";
 
 export default function BarStorage() {
@@ -11,6 +11,15 @@ export default function BarStorage() {
   const loading = useAppSelector((state) => state.stock.isLoading);
   const error = useAppSelector((state) => state.stock.error);
   const [showAddForm, setShowAddForm] = useState(false);
+
+  const deleteHandler = async (ingredientId: number) => {
+    if (user) {
+      await dispatch(deleteStockThunk({ ingredientId, userId: user }));
+      setTimeout(() => {
+        void dispatch(getStockThunk(user));
+      }, 50);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -32,6 +41,9 @@ export default function BarStorage() {
             <span> {ingredient.ingredient.type} </span>
             <span> {ingredient.ingredient.title} </span>
             <p>Остаток: {ingredient.ingredientBalance} мл. </p>
+            <button onClick={() => deleteHandler(ingredient.ingredientId)}>
+              Закончилось?
+            </button>
           </div>
         ))
       )}
