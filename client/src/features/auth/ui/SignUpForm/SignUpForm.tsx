@@ -41,8 +41,7 @@ export default function SignUpForm() {
         navigate(CLIENT_ROUTES.MAIN);
       }
     } catch (error) {
-      console.log(error);
-      // showAlert("Ошибка при регистрации", 500);
+      console.error("Ошибка:", error);
     }
   };
 

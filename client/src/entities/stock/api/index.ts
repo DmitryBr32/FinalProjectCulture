@@ -13,14 +13,20 @@ enum STOCK_THUNK_TYPES {
 }
 
 export const getStockThunk = createAsyncThunk<
-  IServerResponse<IStock>,
+  IServerResponse<IStock[]>,
   number,
   { rejectValue: IServerResponse }
 >(STOCK_THUNK_TYPES.GET_STOCK, async (id, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get(`${STOCK_ENDPOINT}/${id}`);
-    return data;
+    console.log("Response data:", data); 
+    return {
+      statusCode: 200,
+      message: "Stock retrieved",
+      data,
+    };
   } catch (error) {
+    console.error("Ошибка", error);
     return rejectWithValue(handleAxiosError(error));
   }
 });
@@ -46,7 +52,7 @@ export const deleteStockThunk = createAsyncThunk<
   { rejectValue: IServerResponse }
 >(STOCK_THUNK_TYPES.DELETE_STOCK, async (id, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.delete(`/stock/${id}`);
+    const { data } = await axiosInstance.delete(`${STOCK_ENDPOINT}/${id}`);
     return data;
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
