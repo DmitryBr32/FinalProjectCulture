@@ -132,7 +132,7 @@ module.exports = {
       },
       {
         name: "Шпажки, соломинки и зонтики",
-        image: "https://ae04.alicdn.com/kf/S64b5abdaaf6f46a9b17194f0aad025a9y.jpg",
+        image: "https://avatars.mds.yandex.net/get-mpic/3907807/2a000001911de3b4d87dc24318a6e6c21378/orig",
         price: 200.00,
         discount: 0,
         description: "Набор для украшения коктейлей.",

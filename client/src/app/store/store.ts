@@ -2,7 +2,7 @@ import { userReducer } from "@/entities/user";
 import { ingredientReducer, ingredientsReducer } from "@/entities/ingredient";
 import { stockReducer } from "@/entities/stock";
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./cartSlice";
+import cartReducer from "./cart";
 
 const store = configureStore({
   reducer: {

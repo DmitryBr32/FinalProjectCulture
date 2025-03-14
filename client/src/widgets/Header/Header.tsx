@@ -2,9 +2,11 @@ import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import { NavLink, useNavigate } from "react-router";
 import styles from "./Header.module.css";
 import { UserAvatar } from "@/entities/user/ui/UserAvatar/UserAvatar";
-import { JSX } from "react";
+import { JSX, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { signOutThunk } from "@/entities/user";
+import { initializeCart } from "@/app/store/cart";
+import { getCart } from "@/shared/api/api";
 //import { useAlert } from "@/features/alerts";
 
 export function Header(): JSX.Element {
@@ -12,6 +14,18 @@ export function Header(): JSX.Element {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   //const { showAlert } = useAlert();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const cartData = await getCart();
+      dispatch(initializeCart(cartData));
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  const cart = useAppSelector((state) => state.cart.items);
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const onLogoutHandler = async () => {
     dispatch(signOutThunk());
@@ -62,6 +76,15 @@ export function Header(): JSX.Element {
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Корзина
+            {totalQuantity > 0 && (
+              <span className={styles.cartQuantity}>{totalQuantity}</span>
+            )}
+          </NavLink>
+          <NavLink
+            to={CLIENT_ROUTES.ORDERS} 
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
+            Заказы
           </NavLink>
           <UserAvatar user={user} />
           <button onClick={onLogoutHandler} className={styles.button}>
