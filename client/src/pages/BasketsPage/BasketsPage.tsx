@@ -1,7 +1,15 @@
 import { JSX, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { removeFromCart, updateCartItemQuantity, initializeCart } from "@/app/store/cartSlice";
-import { getCart, addToCart as addToCartAPI, removeFromCart as removeFromCartAPI } from "@/shared/api/api";
+import {
+  removeFromCart,
+  updateCartItemQuantity,
+  initializeCart,
+} from "@/app/store/cartSlice";
+import {
+  getCart,
+  addToCart as addToCartAPI,
+  removeFromCart as removeFromCartAPI,
+} from "@/shared/api/api";
 import styles from "./BasketsPage.module.css";
 
 export default function Baskets(): JSX.Element {
@@ -40,34 +48,36 @@ export default function Baskets(): JSX.Element {
   const handleQuantityChange = async (productId: number, change: number) => {
     const existingItem = cart.find((item) => item.id === productId);
     if (!existingItem || !existingItem.Product) return;
-  
+
     const currentQuantity = existingItem.quantity;
     const newQuantity = Math.max(currentQuantity + change, 0);
-  
+
     if (newQuantity === 0) {
       await deleteProduct(productId);
       return;
     }
-  
+
     try {
-      const price = parseFloat(existingItem.Product.price); 
+      const price = parseFloat(existingItem.Product.price);
       if (isNaN(price)) {
-        console.error('Цена товара некорректна');
+        console.error("Цена товара некорректна");
         return;
       }
 
       await addToCartAPI(
         {
           ...existingItem.Product,
-          price, 
+          price,
         },
         newQuantity,
         existingItem.Product.image
       );
 
-      dispatch(updateCartItemQuantity({ id: productId, quantity: newQuantity }));
+      dispatch(
+        updateCartItemQuantity({ id: productId, quantity: newQuantity })
+      );
     } catch (error) {
-      console.error('Ошибка при обновлении количества в корзине:', error);
+      console.error("Ошибка при обновлении количества в корзине:", error);
     }
   };
 
@@ -95,50 +105,53 @@ export default function Baskets(): JSX.Element {
       ) : (
         <div className={styles.cartItems}>
           {cart.map((product, index) => (
-  <div key={product.id || index} className={styles.cartItem}>
-    <img
-      src={product.Product?.image}
-      alt={product.Product?.name}
-      className={styles.cartItemImage}
-    />
-    <div className={styles.cartItemDetails}>
-      <h3>{product.Product?.name}</h3>
-      <p>{product.Product?.description}</p>
-      <p>Цена: {product.Product?.price} руб.</p>
-      <div className={styles.quantityControls}>
-        <button
-          className={styles.button}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (product.id !== undefined) {
-              handleQuantityChange(product.id, -1);
-            }
-          }}
-          disabled={product.quantity === 0}
-        >
-          -
-        </button>
-        <span>{product.quantity}</span>
-        <button
-          className={styles.button}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (product.id !== undefined) {
-              handleQuantityChange(product.id, 1);
-            }
-          }}
-        >
-          +
-        </button>
-      </div>
-    </div>
-    <button onClick={() => deleteProduct(product.id)}>Удалить</button>
-  </div>
-))}
+            <div key={product.id || index} className={styles.cartItem}>
+              <img
+                src={product.Product?.image}
+                alt={product.Product?.name}
+                className={styles.cartItemImage}
+              />
+              <div className={styles.cartItemDetails}>
+                <h3>{product.Product?.name}</h3>
+                <p>{product.Product?.description}</p>
+                <p>Цена: {product.Product?.price} руб.</p>
+                <div className={styles.quantityControls}>
+                  <button
+                    className={styles.button}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (product.id !== undefined) {
+                        handleQuantityChange(product.id, -1);
+                      }
+                    }}
+                    disabled={product.quantity === 0}
+                  >
+                    -
+                  </button>
+                  <span>{product.quantity}</span>
+                  <button
+                    className={styles.button}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (product.id !== undefined) {
+                        handleQuantityChange(product.id, 1);
+                      }
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <button onClick={() => deleteProduct(product.id)}>Удалить</button>
+            </div>
+          ))}
           <div className={styles.total}>
             <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
           </div>
-          <button className={styles.orderButton} onClick={() => setIsModalOpen(true)}>
+          <button
+            className={styles.orderButton}
+            onClick={() => setIsModalOpen(true)}
+          >
             Оформить заказ
           </button>
         </div>
@@ -149,7 +162,12 @@ export default function Baskets(): JSX.Element {
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h2>Оформить заказ</h2>
-            <form onSubmit={(e) => { e.preventDefault(); handleOrderSubmit(); }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrderSubmit();
+              }}
+            >
               <div className={styles.formField}>
                 <label>Имя получателя:</label>
                 <input
@@ -187,7 +205,10 @@ export default function Baskets(): JSX.Element {
                 />
               </div>
               <div className={styles.modalActions}>
-                <button type="submit"  className={`${styles.button} ${styles.confirmButton}`}>
+                <button
+                  type="submit"
+                  className={`${styles.button} ${styles.confirmButton}`}
+                >
                   Подтвердить заказ
                 </button>
                 <button

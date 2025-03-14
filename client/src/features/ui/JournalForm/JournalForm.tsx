@@ -1,32 +1,19 @@
-import { JSX } from "react";
+import { JSX, useEffect } from "react";
 import styles from "./JournalForm.module.css";
+import { getRecipesThunk } from "@/entities/recipe";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
+//import { useAppDispatch } from "@/shared/hooks/reduxHook";
 
-  const recipe = 
-  [
-    {
-      "id": 1,
-      "title": "Мохито",
-      "image": "1.jpg"
-    },
-    {
-      "id": 2,
-      "title": "Палома",
-      "image": "2.jpg"
-    },
-    {
-      "id": 3,
-      "title": "Б-52",
-      "image": "3.jpg"
-    },
-    {
-      "id": 4,
-      "title": "Зеленый дракон",
-      "image": "4.jpg"
-    }
-  ]
-  export default function JournalForm(): JSX.Element {
-    return (
-      <div className={styles.container}>
+export default function JournalForm(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const recipes = useAppSelector((state) => state.recipes.recipes);
+
+  useEffect(() => {
+    dispatch(getRecipesThunk());
+  }, [dispatch]);
+
+  return (
+    <div className={styles.container}>
       <h1 className={styles.title}>Рецепты</h1>
       <div className={styles.filter}>
         <label htmlFor="category">Вид: </label>
@@ -38,10 +25,10 @@ import styles from "./JournalForm.module.css";
         </select>
       </div>
       <div className={styles.recipeList}>
-        {recipe.map((recipe) => (
+        {recipes.map((recipe) => (
           <div key={recipe.id} className={styles.recipeCard}>
             <img
-              src={recipe.image}
+              src={recipe.img}
               alt={recipe.title}
               className={styles.recipeImage}
             />
@@ -51,5 +38,5 @@ import styles from "./JournalForm.module.css";
         ))}
       </div>
     </div>
-    );
-  }
+  );
+}

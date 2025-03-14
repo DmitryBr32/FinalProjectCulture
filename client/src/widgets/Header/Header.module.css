@@ -4,7 +4,7 @@
   justify-content: space-between;
   padding: 1.5rem 3rem;
   color: white;
-  background: linear-gradient(to right, #2c3e50, #34495e);
+  background: var(--background-color);
   border-bottom: none;
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
 }

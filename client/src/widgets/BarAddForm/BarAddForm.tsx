@@ -1,12 +1,12 @@
-export default function BarAddIngredientForm() {
+export default function BarAddForm() {
   return (
     <>
       <label>Введите тип напитка</label>
-      <input type="text" />
+      <input type="text" id="type" />
       <label>Введите марку напитка</label>
-      <input type="text" />
+      <input type="text" id="title" />
       <label>Введите сколько напитка осталось (мл)</label>
-      <input type="number" />;
+      <input type="number" id="balance" />;
     </>
   );
 }
