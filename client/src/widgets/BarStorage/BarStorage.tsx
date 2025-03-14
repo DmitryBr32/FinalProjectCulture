@@ -1,7 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import styles from "./BarStorage.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getStockThunk } from "@/entities/stock";
+import BarAddIngredientForm from "../BarAddIngredientForm/BarAddIngredientForm";
 
 export default function BarStorage() {
   const stock = useAppSelector((state) => state.stock.stock);
@@ -9,17 +10,14 @@ export default function BarStorage() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.stock.isLoading);
   const error = useAppSelector((state) => state.stock.error);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
     if (user) {
-      console.log("Сток юзера:", user);
-      dispatch(getStockThunk(user));
+      console.log("Fetching stock for user:", user);
+      void dispatch(getStockThunk(user));
     }
   }, [dispatch, user]);
-
-  useEffect(() => {
-    console.log("stock обновился:", stock);
-  }, [stock]);
 
   return (
     <div className={styles.container}>
@@ -31,11 +29,18 @@ export default function BarStorage() {
       ) : (
         stock.map((ingredient) => (
           <div key={ingredient.id} className={styles.ingrCard}>
-            <p>type: {ingredient.ingredient.type} мл</p>
-            <p>title: {ingredient.ingredient.title} мл</p>
-            <p>Остаток: {ingredient.ingredientBalance} мл</p>
+            <span> {ingredient.ingredient.type} </span>
+            <span> {ingredient.ingredient.title} </span>
+            <p>Остаток: {ingredient.ingredientBalance} мл. </p>
           </div>
         ))
+      )}
+      {!showAddForm ? (
+        <button onClick={() => setShowAddForm(true)}>
+          Добавить еще напиток?
+        </button>
+      ) : (
+        <BarAddIngredientForm />
       )}
     </div>
   );

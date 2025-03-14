@@ -30,8 +30,9 @@ const stockSlice = createSlice({
       })
       .addCase(getStockThunk.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.error = null;
         state.stock = action.payload.data;
-        console.log("Новый сток:", state.stock);
+        console.log("Updated stock state:", state.stock);
       })
       .addCase(getStockThunk.rejected, (state, action) => {
         state.isLoading = false;
