@@ -7,13 +7,13 @@ import {
 import { IStock } from "../model";
 
 type StockState = {
-  stock: IStock | null;
+  stock: IStock[];
   error: string | null;
   isLoading: boolean;
 };
 
 const initialState: StockState = {
-  stock: null,
+  stock: [],
   error: null,
   isLoading: false,
 };
@@ -31,6 +31,7 @@ const stockSlice = createSlice({
       .addCase(getStockThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.stock = action.payload.data;
+        console.log("Новый сток:", state.stock);
       })
       .addCase(getStockThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -42,7 +43,16 @@ const stockSlice = createSlice({
       })
       .addCase(createOrUpdateStockThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.stock = action.payload.data;
+        const updatedStock = action.payload.data;
+        const index = state.stock.findIndex(
+          (item) => item.id === updatedStock.id
+        );
+
+        if (index !== -1) {
+          state.stock[index] = updatedStock;
+        } else {
+          state.stock.push(updatedStock);
+        }
       })
       .addCase(createOrUpdateStockThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -52,9 +62,9 @@ const stockSlice = createSlice({
       .addCase(deleteStockThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteStockThunk.fulfilled, (state) => {
+      .addCase(deleteStockThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.stock = null;
+        state.stock = state.stock.filter((item) => item.id !== action.meta.arg);
       })
       .addCase(deleteStockThunk.rejected, (state, action) => {
         state.isLoading = false;

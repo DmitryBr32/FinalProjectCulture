@@ -3,6 +3,7 @@ const StockService = require("../services/Stock.service");
 class StockController {
   static async getUserStock(req, res) {
     const { id } = req.params;
+    console.log("ID из запроса:", req.params.id);
     try {
       const stock = await StockService.getStock(id);
       res.status(200).json(stock);

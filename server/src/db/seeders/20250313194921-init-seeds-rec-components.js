@@ -1,44 +1,20 @@
 "use strict";
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
     await queryInterface.bulkInsert(
       "RecComponents",
       [
-        {
-          title: "Мохито",
-          text: "Освежающий кубинский коктейль с ромом, мятой и лаймом.",
-          img: "mojito.jpg",
-          strengthLevel: "слабый",
-          isShot: false,
-        },
-        {
-          title: "Маргарита",
-          text: "Классический коктейль с текилой, лаймом и апельсиновым ликером.",
-          img: "margarita.jpg",
-          strengthLevel: "средний",
-          isShot: false,
-        },
-        {
-          title: "Пина Колада",
-          text: "Тропический коктейль с ромом, кокосовым кремом и ананасовым соком.",
-          img: "pinacolada.jpg",
-          strengthLevel: "слабый",
-          isShot: false,
-        },
-        {
-          title: "Эспрессо Мартини",
-          text: "Коктейль с водкой, кофейным ликером и свежесваренным эспрессо.",
-          img: "espressomartini.jpg",
-          strengthLevel: "средний",
-          isShot: false,
-        },
+        { recipeId: 1, ingredientId: 5 },
+        { recipeId: 2, ingredientId: 6 },
+        { recipeId: 2, ingredientId: 9 },
+        { recipeId: 3, ingredientId: 5 },
+        { recipeId: 4, ingredientId: 1 },
+        { recipeId: 4, ingredientId: 10 },
       ],
       {}
     );
   },
-
   async down(queryInterface) {
     await queryInterface.bulkDelete("RecComponents", null, {});
   },
