@@ -1,13 +1,18 @@
-import { JSX, useEffect } from "react";
-import styles from "./BasketsPage.module.css";
-import { getCart, addToCart as addToCartAPI } from "@/shared/api/api";
+import { JSX, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { initializeCart, removeFromCart, updateCartItemQuantity } from "@/app/store/cartSlice";
-import { removeFromCart as removeFromCartAPI } from '@/shared/api/api';
+import { removeFromCart, updateCartItemQuantity, initializeCart } from "@/app/store/cartSlice";
+import { getCart, addToCart as addToCartAPI, removeFromCart as removeFromCartAPI } from "@/shared/api/api";
+import styles from "./BasketsPage.module.css";
 
 export default function Baskets(): JSX.Element {
   const cart = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для модального окна
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +22,13 @@ export default function Baskets(): JSX.Element {
 
     fetchData();
   }, [dispatch]);
+
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => {
+      const price = item.Product?.price ? parseFloat(item.Product.price) : 0;
+      return total + price * item.quantity;
+    }, 0);
+  };
 
   async function deleteProduct(id?: number) {
     if (!id) return;
@@ -57,6 +69,24 @@ export default function Baskets(): JSX.Element {
     } catch (error) {
       console.error('Ошибка при обновлении количества в корзине:', error);
     }
+  };
+
+  const totalPrice = calculateTotalPrice();
+
+  const handleOrderSubmit = () => {
+    // Логика отправки заказа
+    const order = {
+      name,
+      address,
+      phone,
+      deliveryDate,
+      items: cart,
+      totalPrice,
+    };
+
+    // Отправка данных заказа (например, с помощью API)
+    console.log("Заказ отправлен", order);
+    setIsModalOpen(false); // Закрыть модальное окно после отправки заказа
   };
 
   return (
@@ -107,6 +137,71 @@ export default function Baskets(): JSX.Element {
               <button onClick={() => deleteProduct(product.id)}>Удалить</button>
             </div>
           ))}
+          <div className={styles.total}>
+            <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
+          </div>
+          <button className={styles.orderButton} onClick={() => setIsModalOpen(true)}>
+            Оформить заказ
+          </button>
+        </div>
+      )}
+
+      {/* Модальное окно */}
+      {isModalOpen && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Оформить заказ</h2>
+            <form onSubmit={(e) => { e.preventDefault(); handleOrderSubmit(); }}>
+              <div className={styles.formField}>
+                <label>Имя получателя:</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={styles.formField}>
+                <label>Адрес:</label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={styles.formField}>
+                <label>Номер телефона:</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={styles.formField}>
+                <label>Дата доставки:</label>
+                <input
+                  type="date"
+                  value={deliveryDate}
+                  onChange={(e) => setDeliveryDate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={styles.modalActions}>
+                <button type="submit"  className={`${styles.button} ${styles.confirmButton}`}>
+                  Подтвердить заказ
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.button} ${styles.cancelButton}`}
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Закрыть
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>
