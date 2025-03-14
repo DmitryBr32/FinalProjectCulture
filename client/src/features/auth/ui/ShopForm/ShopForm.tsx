@@ -3,7 +3,7 @@ import styles from "./ShopForm.module.css";
 import { getProducts, getCart } from "@/shared/api/api";
 import { Product } from "@/entities/product/product";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { addToCart, initializeCart } from "@/app/store/cart";
+import { addToCart, initializeCart } from "@/app/store/cartSlice";
 import { addToCart as addToCartAPI } from "@/shared/api/api";
 import { useNavigate } from "react-router";
 

@@ -1,30 +1,30 @@
-import { JSX } from "react";
+import { JSX, useEffect, useState } from "react";
 import styles from "./JournalForm.module.css";
+import { getRecipesThunk } from "@/entities/recipe";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
+import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
+//import { useAppDispatch } from "@/shared/hooks/reduxHook";
 
-  const recipe = 
-  [
-    {
-      "id": 1,
-      "title": "Мохито",
-      "image": "1.jpg"
-    },
-    {
-      "id": 2,
-      "title": "Палома",
-      "image": "2.jpg"
-    },
-    {
-      "id": 3,
-      "title": "Б-52",
-      "image": "3.jpg"
-    },
-    {
-      "id": 4,
-      "title": "Зеленый дракон",
-      "image": "4.jpg"
-    }
-  ]
-  export default function JournalForm(): JSX.Element {
+export default function JournalForm(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const recipes = useAppSelector((state) => state.recipes.recipes);
+
+  useEffect(() => {
+    dispatch(getRecipesThunk());
+  }, [dispatch]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  const openModal = (recipes) => {
+    setSelectedRecipe(recipes);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRecipe(null);
+  };
     return (
       <div className={styles.container}>
       <h1 className={styles.title}>Рецепты</h1>
@@ -38,18 +38,21 @@ import styles from "./JournalForm.module.css";
         </select>
       </div>
       <div className={styles.recipeList}>
-        {recipe.map((recipe) => (
+        {recipes.map((recipe) => (
           <div key={recipe.id} className={styles.recipeCard}>
             <img
-              src={recipe.image}
+              src={recipe.img}
               alt={recipe.title}
               className={styles.recipeImage}
             />
             <h3 className={styles.recipeTitle}>{recipe.title}</h3>
-            <button className={styles.recipeButton}>Подробнее</button>
+            <button className={styles.recipeButton}  onClick={() => openModal(recipe)}>Подробнее</button>
           </div>
         ))}
       </div>
+      {isModalOpen && (
+        <ModalRecipe recipe={selectedRecipe} onClose={closeModal} />
+      )}
     </div>
-    );
-  }
+  );
+}

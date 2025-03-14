@@ -1,0 +1,66 @@
+.userRecipes {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.userRecipesTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.userRecipeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.userRecipeCard {
+  display: flex; 
+  align-items: center; 
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  width: 300px; 
+  max-width: 500px; 
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.userRecipeCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.userRecipeImage {
+  width: 100px; 
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-right: 16px;
+}
+
+.userRecipeContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+}
+
+.userRecipeName {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.userRecipeTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}

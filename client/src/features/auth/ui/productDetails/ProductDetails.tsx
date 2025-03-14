@@ -5,7 +5,7 @@ import { Product } from "@/entities/product/product";
 import styles from "./ProductDetails.module.css";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { addToCart as addToCartAPI } from "@/shared/api/api";
-import { addToCart } from "@/app/store/cart";
+import { addToCart } from "@/app/store/cartSlice";
 
 export default function ProductDetails(): JSX.Element {
   const { productId } = useParams();

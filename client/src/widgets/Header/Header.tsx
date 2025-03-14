@@ -5,7 +5,7 @@ import { UserAvatar } from "@/entities/user/ui/UserAvatar/UserAvatar";
 import { JSX, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { signOutThunk } from "@/entities/user";
-import { initializeCart } from "@/app/store/cart";
+import { initializeCart } from "@/app/store/cartSlice";
 import { getCart } from "@/shared/api/api";
 //import { useAlert } from "@/features/alerts";
 

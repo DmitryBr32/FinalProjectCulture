@@ -1,6 +1,6 @@
 import { JSX, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { removeFromCart, updateCartItemQuantity, initializeCart, clearCart } from "@/app/store/cart";
+import { removeFromCart, updateCartItemQuantity, initializeCart, clearCart } from "@/app/store/cartSlice";
 import { getCart, addToCart as addToCartAPI, removeFromCart as removeFromCartAPI, addToOrder } from "@/shared/api/api";
 import styles from "./BasketsPage.module.css";
 
@@ -70,41 +70,43 @@ export default function Baskets(): JSX.Element {
   const handleQuantityChange = async (productId: number, change: number) => {
     const existingItem = cart.find((item) => item.id === productId);
     if (!existingItem || !existingItem.Product) return;
-  
+
     const currentQuantity = existingItem.quantity;
     const newQuantity = Math.max(currentQuantity + change, 0);
-  
+
     if (newQuantity === 0) {
       await deleteProduct(productId);
       return;
     }
-  
+
     try {
-      const price = parseFloat(existingItem.Product.price); 
+      const price = parseFloat(existingItem.Product.price);
       if (isNaN(price)) {
-        console.error('Цена товара некорректна');
+        console.error("Цена товара некорректна");
         return;
       }
 
       await addToCartAPI(
         {
           ...existingItem.Product,
-          price, 
+          price,
         },
         newQuantity,
         existingItem.Product.image
       );
 
-      dispatch(updateCartItemQuantity({ id: productId, quantity: newQuantity }));
+      dispatch(
+        updateCartItemQuantity({ id: productId, quantity: newQuantity })
+      );
     } catch (error) {
-      console.error('Ошибка при обновлении количества в корзине:', error);
+      console.error("Ошибка при обновлении количества в корзине:", error);
     }
   };
 
   const totalPrice = calculateTotalPrice();
 
-  const handleOrderSubmit = async() => {
-   
+  const handleOrderSubmit = async () => {
+
     await addToOrder(inputs, cart)
     setIsModalOpen(false);
     setInputs(INITIAL_INPUTS_DATA)
@@ -127,8 +129,7 @@ export default function Baskets(): JSX.Element {
               <img
                 src={product.Product?.image}
                 alt={product.Product?.name}
-                className={styles.cartItemImage}
-              />
+                className={styles.cartItemImage} />
               <div className={styles.cartItemDetails}>
                 <h3>{product.Product?.name}</h3>
                 <p>{product.Product?.description}</p>
@@ -166,7 +167,10 @@ export default function Baskets(): JSX.Element {
           <div className={styles.total}>
             <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
           </div>
-          <button className={styles.orderButton} onClick={() => setIsModalOpen(true)}>
+          <button
+            className={styles.orderButton}
+            onClick={() => setIsModalOpen(true)}
+          >
             Оформить заказ
           </button>
         </div>
@@ -175,9 +179,14 @@ export default function Baskets(): JSX.Element {
       {isModalOpen && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-          <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
+            <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
             <h2>Оформить заказ</h2>
-            <form onSubmit={(e) => { e.preventDefault(); handleOrderSubmit(); }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrderSubmit();
+              }}
+            >
               <div className={styles.formField}>
                 <label>Имя получателя:</label>
                 <input
@@ -229,7 +238,10 @@ export default function Baskets(): JSX.Element {
                 />
               </div>
               <div className={styles.modalActions}>
-                <button type="submit"  className={`${styles.button} ${styles.confirmButton}`}>
+                <button
+                  type="submit"
+                  className={`${styles.button} ${styles.confirmButton}`}
+                >
                   Подтвердить заказ
                 </button>
                 <button
