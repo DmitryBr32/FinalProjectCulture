@@ -1,7 +1,7 @@
 .container {
   padding: 20px;
   font-family: Arial, sans-serif;
-  color: rgb(163, 163, 163);
+  color: rgb(163 163 163);
 }
 
 .container h1 {
@@ -36,20 +36,17 @@
 
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 50%);
 }
 
 .modalContent {
-  background: white;
-  padding: 20px;
   width: 300px;
+  padding: 20px;
+  background: white;
   border-radius: 8px;
 }
 
@@ -63,11 +60,11 @@
 }
 
 .formField input {
+  box-sizing: border-box;
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
 }
 
 .modalActions {
@@ -77,9 +74,9 @@
 
 .modalActions button {
   padding: 10px 20px;
-  border: none;
   color: white;
   cursor: pointer;
+  border: none;
   transition: background-color 0.3s ease;
 }
 
