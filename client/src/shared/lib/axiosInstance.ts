@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
     const prevRequest: ExtendedAxiosRequestConfig | undefined = error.config;
     if (error.response?.status === 403 && prevRequest && !prevRequest.sent) {
       try {
-        const response = await axiosInstance.get("/api/tokens/refresh");
+        const response = await axiosInstance.get("auth/refreshTokens");
 
         accessToken = response.data.accessToken;
 

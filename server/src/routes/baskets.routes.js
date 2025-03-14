@@ -1,36 +1,65 @@
 const express = require('express');
 const router = express.Router();
-const { Basket } = require('../db/models');
+const { Basket, Product } = require('../db/models');
+const verifyAccessToken = require("../middleware/verifyAccessToken");
 
 // Пост-запрос для добавления товара в корзину
-router.post('/', async (req, res) => {  
+// Пост-запрос для добавления товара в корзину
+router.post('/', verifyAccessToken, async (req, res) => {
+  const userId = res.locals.user.id; // Получаем ID пользователя из токена
   try {
     const { productId, quantity } = req.body;
-    const cartItem = await Basket.create({ productId, quantity });
-    res.status(201).json(cartItem);
+
+    // Ищем запись в корзине для данного пользователя и товара
+    const cartItem = await Basket.findOne({
+      where: { userId, productId },
+    });
+
+    if (cartItem) {
+      // Если запись уже существует, обновляем количество
+      cartItem.quantity = quantity; // Устанавливаем новое количество
+      await cartItem.save(); // Сохраняем изменения
+    } else {
+      // Если записи нет, создаем новую
+      await Basket.create({ userId, productId, quantity });
+    }
+
+    res.status(201).json({ message: 'Корзина обновлена' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
 // Получение всех товаров в корзине
-router.get('/', async (req, res) => { 
+router.get('/', verifyAccessToken, async (req, res) => { 
+  const userId = res.locals.user.id;
+
   try {
-    const cartItems = await Basket.findAll();
-    res.status(200).json(cartItems);
+    const cartItems = await Basket.findAll({
+      where: { userId },
+      include: [
+        {
+          model: Product,
+          attributes: ['id', 'name', 'image', 'price', 'discount', 'description']
+        },
+      ],
+    });
+
+    res.status(200).json(cartItems || []);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Удаление товара из корзины по ID
 router.delete('/:id', async (req, res) => { 
   try {
     const { id } = req.params;
     await Basket.destroy({ where: { id } });
-    res.status(204).send();
+    return res.status(200).json('OK');
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 

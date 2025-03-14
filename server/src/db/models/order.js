@@ -8,20 +8,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  Order.init(
-    {
-      basketId: DataTypes.INTEGER,
-      comment: DataTypes.TEXT,
-      address: DataTypes.STRING,
-      date: DataTypes.DATE,
-      telephone: DataTypes.STRING,
-      recipient: DataTypes.STRING,
-    },
-    {
-      sequelize,
-      modelName: "Order",
-    }
-  );
+  Order.init({
+    basketId: DataTypes.INTEGER,
+    comment: DataTypes.TEXT,
+    address: DataTypes.STRING,
+    date: DataTypes.DATE,
+    telephone: DataTypes.STRING,
+    recipient: DataTypes.STRING,
+    basket: DataTypes.JSONB,
+  }, {
+    sequelize,
+    modelName: 'Order',
+  });
 
   return Order;
 };

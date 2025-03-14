@@ -1,31 +1,38 @@
 import { JSX, useEffect, useState } from 'react';
 import styles from './ShopForm.module.css';
-import { getProducts } from '@/shared/api/api';
+import { getProducts, getCart } from '@/shared/api/api';
 import { Product } from '@/entities/product/product';
-import { useAppDispatch } from '@/shared/hooks/reduxHook';
-import { addToCart } from '@/app/store/cartSlice';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHook';
+import { addToCart, initializeCart } from '@/app/store/cartSlice';
 import { addToCart as addToCartAPI } from '@/shared/api/api';
 
 export default function ShopForm(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
+  const cart = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       const products = await getProducts();
       setProducts(products);
+
+      const cartData = await getCart();
+      dispatch(initializeCart(cartData));
     };
 
-    fetchProducts();
-  }, []);
+    fetchData();
+  }, [dispatch]);
 
-  const handleAddToCart = async (product: Product) => {
+  const handleQuantityChange = async (product: Product, change: number) => {
+    const existingItem = cart.find((item) => item.productId === product.id);
+    const currentQuantity = existingItem ? existingItem.quantity : 0;
+    const newQuantity = Math.max(currentQuantity + change, 0);
+
     try {
-      await addToCartAPI(product, 1, product.image);
-      dispatch(addToCart(product));
-      alert(`${product.name} добавлен в корзину!`);
+      await addToCartAPI(product, newQuantity, product.image);
+      dispatch(addToCart({ productId: product.id, quantity: newQuantity }));
     } catch (error) {
-      console.error('Ошибка при добавлении в корзину:', error);
+      console.error('Ошибка при обновлении количества в корзине:', error);
     }
   };
 
@@ -36,20 +43,37 @@ export default function ShopForm(): JSX.Element {
         <div className={styles.productList}>
           <h2>Товары</h2>
           <div className={styles.products}>
-            {products.map((product) => (
-              <div key={product.id} className={styles.product}>
-                <img src={product.image} alt={product.name} className={styles.productImage} />
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <p>Цена: {product.price} руб.</p>
-                <div className={styles.buttonContainer}>
-                  <button className={styles.button}>Подробнее</button>
-                  <button className={styles.button} onClick={() => handleAddToCart(product)}>
-                    В корзину
-                  </button>
+            {products.map((product) => {
+              const cartItem = cart.find((item) => item.productId === product.id);
+              const quantity = cartItem ? cartItem.quantity : 0;
+              return (
+                <div key={product.id} className={styles.product}>
+                  <img src={product.image} alt={product.name} className={styles.productImage} />
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                  <p>Цена: {product.price} руб.</p>
+                  <div className={styles.buttonContainer}>
+                    <button className={styles.button}>Подробнее</button>
+                    <div className={styles.quantityControls}>
+                      <button
+                        className={styles.button}
+                        onClick={() => handleQuantityChange(product, -1)}
+                        disabled={quantity === 0}
+                      >
+                        -
+                      </button>
+                      <span>{quantity}</span>
+                      <button
+                        className={styles.button}
+                        onClick={() => handleQuantityChange(product, 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
