@@ -15,7 +15,7 @@ module.exports = {
       },
       {
         name: "Барный стакан для смешивания",
-        image: "https://img.freepik.com/free-photo/tasty-daiquiri-cocktail-with-cherry_23-2149418279.jpg?t=st=1741854221~exp=1741857821~hmac=83090d6f0bd6d94f0a9c271d66da03487957ebdcf3c09b6f19f2606426809310&w=740",
+        image: "https://ir.ozone.ru/s3/multimedia-m/c800/6707254630.jpg",
         price: 1200.00,
         discount: 5,
         description: "Прочный стеклянный стакан для смешивания коктейлей.",

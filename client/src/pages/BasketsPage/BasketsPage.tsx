@@ -1,10 +1,9 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, useEffect } from "react";
 import styles from "./BasketsPage.module.css";
-import { getCart, getProducts } from "@/shared/api/api";
+import { getCart, addToCart as addToCartAPI } from "@/shared/api/api";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { addToCart, initializeCart, removeFromCart } from "@/app/store/cartSlice";
+import { initializeCart, removeFromCart, updateCartItemQuantity } from "@/app/store/cartSlice";
 import { removeFromCart as removeFromCartAPI } from '@/shared/api/api';
-
 
 export default function Baskets(): JSX.Element {
   const cart = useAppSelector((state) => state.cart.items);
@@ -12,7 +11,6 @@ export default function Baskets(): JSX.Element {
 
   useEffect(() => {
     const fetchData = async () => {
-
       const cartData = await getCart();
       dispatch(initializeCart(cartData));
     };
@@ -21,11 +19,46 @@ export default function Baskets(): JSX.Element {
   }, [dispatch]);
 
   async function deleteProduct(id?: number) {
-    if (!id) return
+    if (!id) return;
 
-    await removeFromCartAPI(id)
-    dispatch(removeFromCart(id))
+    await removeFromCartAPI(id);
+    dispatch(removeFromCart(id));
   }
+
+  const handleQuantityChange = async (productId: number, change: number) => {
+    const existingItem = cart.find((item) => item.id === productId);
+    if (!existingItem || !existingItem.Product) return;
+  
+    const currentQuantity = existingItem.quantity;
+    const newQuantity = Math.max(currentQuantity + change, 0);
+  
+    if (newQuantity === 0) {
+      await deleteProduct(productId);
+      return;
+    }
+  
+    try {
+      const price = parseFloat(existingItem.Product.price); 
+      if (isNaN(price)) {
+        console.error('Цена товара некорректна');
+        return;
+      }
+
+      await addToCartAPI(
+        {
+          ...existingItem.Product,
+          price, 
+        },
+        newQuantity,
+        existingItem.Product.image
+      );
+
+      dispatch(updateCartItemQuantity({ id: productId, quantity: newQuantity }));
+    } catch (error) {
+      console.error('Ошибка при обновлении количества в корзине:', error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h1>Корзина</h1>
@@ -44,7 +77,32 @@ export default function Baskets(): JSX.Element {
                 <h3>{product.Product?.name}</h3>
                 <p>{product.Product?.description}</p>
                 <p>Цена: {product.Product?.price} руб.</p>
-                <p>Количество: {product.quantity}</p>
+                <div className={styles.quantityControls}>
+                  <button
+                    className={styles.button}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (product.id !== undefined) {
+                        handleQuantityChange(product.id, -1);
+                      }
+                    }}
+                    disabled={product.quantity === 0}
+                  >
+                    -
+                  </button>
+                  <span>{product.quantity}</span>
+                  <button
+                    className={styles.button}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (product.id !== undefined) {
+                        handleQuantityChange(product.id, 1);
+                      }
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
               <button onClick={() => deleteProduct(product.id)}>Удалить</button>
             </div>
