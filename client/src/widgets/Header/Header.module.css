@@ -49,6 +49,16 @@
   transform: translateY(-2px);
 }
 
+.cartQuantity {
+  padding: 3px 6px;
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background-color: #ff4d4f;
+  border-radius: 50%;
+}
+
 @media (width <= 768px) {
   .container {
     flex-direction: column;

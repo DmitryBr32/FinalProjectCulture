@@ -2,8 +2,9 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Recipe extends Model {
-    static associate({ RecFavourite }) {
+    static associate({ RecFavourite, RecComponent }) {
       this.hasMany(RecFavourite, { foreignKey: "recipeId", as: "Favourites" });
+      this.hasMany(RecComponent, { foreignKey: "recipeId", as: "Components" });
     }
   }
   Recipe.init(

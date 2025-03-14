@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -9,15 +8,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      basketId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Baskets",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
       },
       comment: {
         type: Sequelize.TEXT,
@@ -36,6 +26,16 @@ module.exports = {
       },
       basket: {
         type: Sequelize.JSONB,
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

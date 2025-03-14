@@ -60,3 +60,25 @@ export const removeFromCart = async (id: number) => {
   }
 };
 
+export const addToOrder = async (inputs: object, basket: object) => {
+  try {
+    const response = await axiosInstance.post(`${API_URL}/order`, {
+      ...inputs,
+      basket,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при добавлении в заказы:', error);
+    throw error;
+  }
+};
+
+export const getOrders = async () => {
+  try { 
+    const response = await axiosInstance.get(`${API_URL}/order`);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при добавлении в заказы:', error);
+    throw error;
+  }
+};

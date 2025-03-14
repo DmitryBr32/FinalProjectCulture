@@ -1,8 +1,9 @@
-import { JSX, useEffect } from "react";
+import { JSX, useEffect, useState } from "react";
 import styles from "./JournalForm.module.css";
 import { getRecipesThunk } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-//import { useAppDispatch } from "@/shared/hooks/reduxHook";
+import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
+import { IRecipe } from "@/entities/recipe/model";
 
 export default function JournalForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,6 +13,18 @@ export default function JournalForm(): JSX.Element {
     dispatch(getRecipesThunk());
   }, [dispatch]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null);
+
+  const openModal = (recipe: IRecipe) => {
+    setSelectedRecipe(recipe);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRecipe(null);
+  };
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Рецепты</h1>
@@ -33,10 +46,18 @@ export default function JournalForm(): JSX.Element {
               className={styles.recipeImage}
             />
             <h3 className={styles.recipeTitle}>{recipe.title}</h3>
-            <button className={styles.recipeButton}>Подробнее</button>
+            <button
+              className={styles.recipeButton}
+              onClick={() => openModal(recipe)}
+            >
+              Подробнее
+            </button>
           </div>
         ))}
       </div>
+      {isModalOpen && (
+        <ModalRecipe recipe={selectedRecipe} onClose={closeModal} />
+      )}
     </div>
   );
 }
