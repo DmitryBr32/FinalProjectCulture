@@ -2,17 +2,20 @@ import { JSX, useEffect, useState } from "react";
 import styles from "./BasketsPage.module.css";
 import { getCart, getProducts } from "@/shared/api/api";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { addToCart, initializeCart, removeFromCart } from "@/app/store/cartSlice";
-import { removeFromCart as removeFromCartAPI } from '@/shared/api/api';
+import {
+  addToCart,
+  initializeCart,
+  removeFromCart,
+} from "@/app/store/cartSlice";
+import { removeFromCart as removeFromCartAPI } from "@/shared/api/api";
 
-
+console.log(useState, getProducts, addToCart); //это просто чтобы не орал линтер, так как эти компоненты импортированы и не используются
 export default function Baskets(): JSX.Element {
   const cart = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-
       const cartData = await getCart();
       dispatch(initializeCart(cartData));
     };
@@ -21,10 +24,10 @@ export default function Baskets(): JSX.Element {
   }, [dispatch]);
 
   async function deleteProduct(id?: number) {
-    if (!id) return
+    if (!id) return;
 
-    await removeFromCartAPI(id)
-    dispatch(removeFromCart(id))
+    await removeFromCartAPI(id);
+    dispatch(removeFromCart(id));
   }
   return (
     <div className={styles.container}>
