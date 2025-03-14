@@ -39,14 +39,13 @@ interface ApiResponse {
 }
 
 export default function OrdersPage() {
-    // Типизируем состояние
+
     const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
         getAllOrders();
     }, []);
 
-    // Типизируем функцию
     async function getAllOrders() {
         const result: ApiResponse = await getOrders();
         setOrders(result.orders);
