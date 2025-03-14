@@ -7,11 +7,11 @@ import { handleAxiosError } from "@/shared/utils/handleAxiosError";
 export const RECIPES_ENDPOINT = "/recipe" as const;
 
 enum RECIPE_THUNK_TYPES {
-  GET_RECIPES = "ingredient/getIngredients",
-  GET_RECIPE_BY_ID = "ingredient/getIngredientById",
-  CREATE_RECIPE = "ingredient/createIngredient",
-  UPDATE_RECIPE = "ingredient/updateIngredientById",
-  DELETE_RECIPE = "ingredient/deleteIngredient",
+  GET_RECIPES = "recipe/getIngredients",
+  GET_RECIPE_BY_ID = "recipe/getIngredientById",
+  CREATE_RECIPE = "recipe/createIngredient",
+  UPDATE_RECIPE = "recipe/updateIngredientById",
+  DELETE_RECIPE = "recipe/deleteIngredient",
 }
 
 export const getRecipesThunk = createAsyncThunk<
@@ -21,7 +21,8 @@ export const getRecipesThunk = createAsyncThunk<
 >(RECIPE_THUNK_TYPES.GET_RECIPES, async (_, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get(RECIPES_ENDPOINT);
-    return data;
+    console.log(data);
+    return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }

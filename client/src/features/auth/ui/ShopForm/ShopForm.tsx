@@ -1,11 +1,11 @@
-import { JSX, useEffect, useState } from 'react';
-import styles from './ShopForm.module.css';
-import { getProducts, getCart } from '@/shared/api/api';
-import { Product } from '@/entities/product/product';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHook';
-import { addToCart, initializeCart } from '@/app/store/cartSlice';
-import { addToCart as addToCartAPI } from '@/shared/api/api';
-import { useNavigate } from 'react-router-dom';
+import { JSX, useEffect, useState } from "react";
+import styles from "./ShopForm.module.css";
+import { getProducts, getCart } from "@/shared/api/api";
+import { Product } from "@/entities/product/product";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
+import { addToCart, initializeCart } from "@/app/store/cartSlice";
+import { addToCart as addToCartAPI } from "@/shared/api/api";
+import { useNavigate } from "react-router";
 
 export default function ShopForm(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
@@ -35,7 +35,7 @@ export default function ShopForm(): JSX.Element {
       await addToCartAPI(product, newQuantity, product.image);
       dispatch(addToCart({ productId: product.id, quantity: newQuantity }));
     } catch (error) {
-      console.error('Ошибка при обновлении количества в корзине:', error);
+      console.error("Ошибка при обновлении количества в корзине:", error);
     }
   };
 
@@ -47,38 +47,50 @@ export default function ShopForm(): JSX.Element {
           <h2>Товары</h2>
           <div className={styles.products}>
             {products.map((product) => {
-              const cartItem = cart.find((item) => item.productId === product.id);
+              const cartItem = cart.find(
+                (item) => item.productId === product.id
+              );
               const quantity = cartItem ? cartItem.quantity : 0;
               return (
-                <div key={product.id} className={styles.product} onClick={() => navigate(`/product/${product.id}`)}>
-                  <img src={product.image} alt={product.name} className={styles.productImage} />
+                <div
+                  key={product.id}
+                  className={styles.product}
+                  onClick={() => navigate(`/product/${product.id}`)}
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className={styles.productImage}
+                  />
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
                   <p>Цена: {product.price} руб.</p>
                   <div className={styles.buttonContainer}>
                     <button className={styles.button}>Подробнее</button>
-                    {user && <div className={styles.quantityControls}>
-                      <button
-                        className={styles.button}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleQuantityChange(product, -1);
-                        }}
-                        disabled={quantity === 0}
-                      >
-                        -
-                      </button>
-                      <span>{quantity}</span>
-                      <button
-                        className={styles.button}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleQuantityChange(product, 1);
-                        }}
-                      >
-                        +
-                      </button>
-                    </div>}
+                    {user && (
+                      <div className={styles.quantityControls}>
+                        <button
+                          className={styles.button}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleQuantityChange(product, -1);
+                          }}
+                          disabled={quantity === 0}
+                        >
+                          -
+                        </button>
+                        <span>{quantity}</span>
+                        <button
+                          className={styles.button}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleQuantityChange(product, 1);
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

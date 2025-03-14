@@ -15,7 +15,7 @@ const initialState: RecipesState = {
 };
 
 const recipesSlice = createSlice({
-  name: "ingredient",
+  name: "recipes",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -23,10 +23,12 @@ const recipesSlice = createSlice({
       //получить все рецепты
       .addCase(getRecipesThunk.pending, (state) => {
         state.isLoading = true;
+        console.log("state.recipes pending");
       })
       .addCase(getRecipesThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.recipes = action.payload.data;
+        console.log("state.recipes");
       })
       .addCase(getRecipesThunk.rejected, (state, action) => {
         state.isLoading = false;
