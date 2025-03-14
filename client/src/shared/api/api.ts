@@ -13,7 +13,7 @@ export const getProducts = async () => {
   }
 };
 
-export const getProductById = async (id: number): Promise<Product> => {
+export const getProductById = async (id: number): Promise<Product | null> => {
   try {
     const response = await axiosInstance.get(`${API_URL}/shop/products/${id}`);
     return response.data.data;
@@ -53,10 +53,10 @@ export const addToCart = async (product: Product, quantity: number = 1, image: s
 export const removeFromCart = async (id: number) => {
   try {
     const response = await axiosInstance.delete(`${API_URL}/baskets/${id}`);
-    console.log('Ответ от сервера:', response); // Логируем ответ
     return response
   } catch (error) {
     console.error('Error removing from cart:', error);
     throw error;
   }
 };
+

@@ -41,7 +41,7 @@ export default function SignUpForm() {
         navigate(CLIENT_ROUTES.MAIN);
       }
     } catch (error) {
-      console.log(error);
+      console.error('Ошибка:', error);
     }
   };
 

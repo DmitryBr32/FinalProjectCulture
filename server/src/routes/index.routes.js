@@ -13,6 +13,7 @@ router.use("/baskets", basketsRoutes);
 router.use("/ingredient", ingredientRoutes);
 router.use("/recipe", recipeRoutes);
 router.use("/stock", stockRoutes);
+router.use("/shop/products/:id", shopRoutes);
 router.use("*", (req, res) => {
   res.status(404).json(formatResponse(404, "Not found"));
 });

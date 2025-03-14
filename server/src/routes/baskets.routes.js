@@ -4,7 +4,6 @@ const { Basket, Product } = require('../db/models');
 const verifyAccessToken = require("../middleware/verifyAccessToken");
 
 // Пост-запрос для добавления товара в корзину
-// Пост-запрос для добавления товара в корзину
 router.post('/', verifyAccessToken, async (req, res) => {
   const userId = res.locals.user.id; // Получаем ID пользователя из токена
   try {

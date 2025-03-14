@@ -33,3 +33,61 @@
 .cartItemDetails {
   flex-grow: 1;
 }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 50%);
+}
+
+.modalContent {
+  width: 300px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+}
+
+.formField {
+  margin-bottom: 15px;
+}
+
+.formField label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formField input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modalActions button {
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.modalActions button:hover {
+  background-color: #3d3d3d !important; 
+}
+
+.modalActions button.confirmButton {
+  background-color: #28a745;
+}
+
+.modalActions button.cancelButton {
+  background-color: #dc3545;
+}
