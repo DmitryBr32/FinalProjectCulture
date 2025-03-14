@@ -1,10 +1,11 @@
 const { UserStock } = require("../db/models");
+const { Ingredient } = require("../db/models");
 
 class StockService {
   static async getStock(userId) {
     return await UserStock.findAll({
       where: { userId },
-      include: "Ingredients",
+      include: [{ model: Ingredient, as: "ingredient" }],
     });
   }
 

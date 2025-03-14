@@ -8,7 +8,7 @@ export default function Baskets(): JSX.Element {
   const cart = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для модального окна
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -74,7 +74,6 @@ export default function Baskets(): JSX.Element {
   const totalPrice = calculateTotalPrice();
 
   const handleOrderSubmit = () => {
-    // Логика отправки заказа
     const order = {
       name,
       address,
@@ -84,9 +83,8 @@ export default function Baskets(): JSX.Element {
       totalPrice,
     };
 
-    // Отправка данных заказа (например, с помощью API)
     console.log("Заказ отправлен", order);
-    setIsModalOpen(false); // Закрыть модальное окно после отправки заказа
+    setIsModalOpen(false);
   };
 
   return (
@@ -96,47 +94,47 @@ export default function Baskets(): JSX.Element {
         <p>Ваша корзина пуста</p>
       ) : (
         <div className={styles.cartItems}>
-          {cart.map((product) => (
-            <div key={product.id} className={styles.cartItem}>
-              <img
-                src={product.Product?.image}
-                alt={product.Product?.name}
-                className={styles.cartItemImage}
-              />
-              <div className={styles.cartItemDetails}>
-                <h3>{product.Product?.name}</h3>
-                <p>{product.Product?.description}</p>
-                <p>Цена: {product.Product?.price} руб.</p>
-                <div className={styles.quantityControls}>
-                  <button
-                    className={styles.button}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (product.id !== undefined) {
-                        handleQuantityChange(product.id, -1);
-                      }
-                    }}
-                    disabled={product.quantity === 0}
-                  >
-                    -
-                  </button>
-                  <span>{product.quantity}</span>
-                  <button
-                    className={styles.button}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (product.id !== undefined) {
-                        handleQuantityChange(product.id, 1);
-                      }
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <button onClick={() => deleteProduct(product.id)}>Удалить</button>
-            </div>
-          ))}
+          {cart.map((product, index) => (
+  <div key={product.id || index} className={styles.cartItem}>
+    <img
+      src={product.Product?.image}
+      alt={product.Product?.name}
+      className={styles.cartItemImage}
+    />
+    <div className={styles.cartItemDetails}>
+      <h3>{product.Product?.name}</h3>
+      <p>{product.Product?.description}</p>
+      <p>Цена: {product.Product?.price} руб.</p>
+      <div className={styles.quantityControls}>
+        <button
+          className={styles.button}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (product.id !== undefined) {
+              handleQuantityChange(product.id, -1);
+            }
+          }}
+          disabled={product.quantity === 0}
+        >
+          -
+        </button>
+        <span>{product.quantity}</span>
+        <button
+          className={styles.button}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (product.id !== undefined) {
+              handleQuantityChange(product.id, 1);
+            }
+          }}
+        >
+          +
+        </button>
+      </div>
+    </div>
+    <button onClick={() => deleteProduct(product.id)}>Удалить</button>
+  </div>
+))}
           <div className={styles.total}>
             <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
           </div>

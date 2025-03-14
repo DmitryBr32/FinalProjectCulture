@@ -1,11 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { JSX, useEffect, useState } from 'react';
-import { getProductById } from '@/shared/api/api';
-import { Product } from '@/entities/product/product';
-import styles from './ProductDetails.module.css';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHook';
-import { addToCart as addToCartAPI } from '@/shared/api/api';
-import { addToCart } from '@/app/store/cartSlice';
+import { useParams, useNavigate } from "react-router";
+import { JSX, useEffect, useState } from "react";
+import { getProductById } from "@/shared/api/api";
+import { Product } from "@/entities/product/product";
+import styles from "./ProductDetails.module.css";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
+import { addToCart as addToCartAPI } from "@/shared/api/api";
+import { addToCart } from "@/app/store/cartSlice";
 
 export default function ProductDetails(): JSX.Element {
   const { productId } = useParams();
@@ -18,15 +18,15 @@ export default function ProductDetails(): JSX.Element {
   useEffect(() => {
     const fetchProduct = async () => {
       if (!productId) {
-        console.error('ID товара не определен');
-        navigate('/');
+        console.error("ID товара не определен");
+        navigate("/");
         return;
       }
 
       const id = parseInt(productId as string, 10);
       if (!id) {
-        console.error('Неверный ID товара');
-        navigate('/');
+        console.error("Неверный ID товара");
+        navigate("/");
         return;
       }
 
@@ -46,7 +46,7 @@ export default function ProductDetails(): JSX.Element {
       await addToCartAPI(product, newQuantity, product.image);
       dispatch(addToCart({ productId: product.id, quantity: newQuantity }));
     } catch (error) {
-      console.error('Ошибка при обновлении количества в корзине:', error);
+      console.error("Ошибка при обновлении количества в корзине:", error);
     }
   };
 
