@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import styles from "./Bar.module.css";
 
 export const userIngrs = [
