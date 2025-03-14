@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ User, Product, Order }) {
       Basket.belongsTo(User, { foreignKey: "userId" });
       Basket.belongsTo(Product, { foreignKey: "productId" });
-      Basket.hasOne(Order, { foreignKey: "basketId" });
     }
   }
 
@@ -15,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
       productId: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,
-      isOrdered: DataTypes.BOOLEAN,
     },
     {
       sequelize,
