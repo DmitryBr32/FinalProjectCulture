@@ -10,21 +10,19 @@ class StockService {
   }
 
   static async findOrCreateUserStock(userId, ingredientId, ingredientBalance) {
-    const stock = await UserStock.findOne({
+    const [stock, created] = await UserStock.findOrCreate({
       where: { userId, ingredientId },
+      defaults: { ingredientBalance, userId, ingredientId },
+      include: [{ model: Ingredient, as: "ingredient" }],
     });
-
-    if (stock) {
+    if (!created) {
       stock.ingredientBalance = ingredientBalance;
       await stock.save();
-      return stock;
-    } else {
-      return await UserStock.create({
-        userId,
-        ingredientId,
-        ingredientBalance,
+      await stock.reload({
+        include: [{ model: Ingredient, as: "ingredient" }],
       });
     }
+    return stock;
   }
 
   static async delete(userId, ingredientId) {
