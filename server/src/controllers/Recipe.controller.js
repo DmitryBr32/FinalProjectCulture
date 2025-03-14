@@ -39,19 +39,19 @@ class RecipeController {
     }
   }
 
-  // static async getRecipesByIngr(req, res) {
-  //   const { type } = req.body;
-  //   try {
-  //     const recipes = await RecipeService.getRecipesByIngr(type);
-  //     if (!recipes) {
-  //       return res.status(404).json({ error: "Ингредиенты не найдены" });
-  //     }
-  //     res.status(200).json(recipes);
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ error: "Ошибка сервера" });
-  //   }
-  // }
+  static async getRecipesByIngr(req, res) {
+    const { type } = req.body;
+    try {
+      const recipes = await RecipeService.getRecipesByIngr(type);
+      if (!recipes) {
+        return res.status(404).json({ error: "Ингредиенты не найдены" });
+      }
+      res.status(200).json(recipes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Ошибка сервера" });
+    }
+  }
 
   static async getRecipesBySeveralIngrs(req, res) {
     const typesArr = req.body;
