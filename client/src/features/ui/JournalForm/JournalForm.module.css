@@ -34,16 +34,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
-  transition: transform 0.2s, box-shadow 0.2s;
-=======
   width: 220px;
   height: 330px;
   padding: 15px;
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 8px;
->>>>>>> 40429728f3338b7442951f27cb707e95d5dd5d20
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .recipeImage {
@@ -75,6 +72,6 @@
 }
 
 .recipeCard:hover {
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 20%); */
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
