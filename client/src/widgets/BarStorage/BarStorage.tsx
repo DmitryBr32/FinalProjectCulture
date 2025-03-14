@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import styles from "./BarStorage.module.css";
 import { useEffect, useState } from "react";
 import { getStockThunk } from "@/entities/stock";
-import BarAddIngredientForm from "../BarAddIngredientForm/BarAddIngredientForm";
+import BarAddForm from "../BarAddForm/BarAddForm";
 
 export default function BarStorage() {
   const stock = useAppSelector((state) => state.stock.stock);
@@ -40,7 +40,7 @@ export default function BarStorage() {
           Добавить еще напиток?
         </button>
       ) : (
-        <BarAddIngredientForm />
+        <BarAddForm />
       )}
     </div>
   );
