@@ -2,14 +2,12 @@ import { useEffect } from "react";
 import styles from "./Bar.module.css";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { getStockThunk } from "@/entities/stock";
-import { p } from "node_modules/react-router/dist/development/fog-of-war-Da8gpnoZ.d.mts";
 
 export default function Bar() {
   const stock = useAppSelector((state) => state.stock.stock);
   const user = useAppSelector((state) => state.user.user?.id);
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.stock.isLoading);
-  const error = useAppSelector((state) => state.stock.error);
 
   useEffect(() => {
     if (user) {
