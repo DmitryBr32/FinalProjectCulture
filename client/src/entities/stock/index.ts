@@ -6,4 +6,4 @@ export {
   deleteStockThunk,
 } from "./api";
 
-export type { IStock, IStockRowData } from "./model";
+export type { IStock, IStockRowData, StockArrayType } from "./model";
