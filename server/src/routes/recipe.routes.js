@@ -4,7 +4,7 @@ const verifyAccessToken = require("../middleware/verifyAccessToken.js");
 
 router.get("/", RecipeController.getRecipes);
 router.get("/:id", RecipeController.getRecipe);
-router.post("/getRecipesByIngr", RecipeController.getRecipesByIngr);
+router.post("/getRecipesByIngr", RecipeController.getRecipesByIngrType);
 router.post(
   "/getRecipesBySeveralIngrs",
   RecipeController.getRecipesBySeveralIngrs

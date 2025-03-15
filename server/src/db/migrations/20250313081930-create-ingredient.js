@@ -11,11 +11,12 @@ module.exports = {
       },
       type: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
-      title: {
-        type: Sequelize.STRING,
+      isAlko: {
+        type: Sequelize.BOOLEAN,
       },
-      strength: {
+      imgUrl: {
         type: Sequelize.STRING,
       },
       createdAt: {
