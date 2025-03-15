@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     telephone: DataTypes.STRING,
     recipient: DataTypes.STRING,
     basket: DataTypes.JSONB,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'pending',
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,

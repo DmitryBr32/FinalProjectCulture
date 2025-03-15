@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -26,6 +27,10 @@ module.exports = {
       },
       basket: {
         type: Sequelize.JSONB,
+      },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'pending', 
       },
       userId: {
         type: Sequelize.INTEGER,
