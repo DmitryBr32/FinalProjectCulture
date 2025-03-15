@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class RecComponent extends Model {
     static associate({ Ingredient, Recipe }) {
       this.belongsTo(Ingredient, {
-        foreignKey: "ingredientId",
+        foreignKey: "ingredientTypeId",
         as: "ingredient",
       });
       this.belongsTo(Recipe, {
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   RecComponent.init(
     {
-      ingredientId: DataTypes.INTEGER,
+      ingredientTypeId: DataTypes.INTEGER,
       recipeId: DataTypes.INTEGER,
       quantity: DataTypes.STRING,
     },

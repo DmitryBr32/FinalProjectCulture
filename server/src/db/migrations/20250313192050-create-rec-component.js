@@ -15,6 +15,8 @@ module.exports = {
           model: "Ingredients",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       recipeId: {
         type: Sequelize.INTEGER,
@@ -22,6 +24,8 @@ module.exports = {
           model: "Recipes",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       quantity: {
         type: Sequelize.STRING,
