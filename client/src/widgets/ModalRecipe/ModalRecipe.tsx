@@ -1,6 +1,5 @@
-import { JSX } from "react";
+import { JSX, useState } from "react";
 import styles from "./ModalRecipe.module.css";
-
 import { IRecipe } from "@/entities/recipe";
 
 type Props = {
@@ -9,10 +8,16 @@ type Props = {
 };
 
 export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
+  const [isFavorite, setIsFavorite] = useState(false);
+
   if (!recipe) {
     onClose();
   }
 
+  const addToFavorite = () => {
+    setIsFavorite((prev) => !prev);
+    alert(isFavorite ? "Удален из избранного" : "Добавлен в избранное");
+  };
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
@@ -39,13 +44,28 @@ export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
             <div>
               <h3>Тебе понадобиться:</h3>
               <ul>
-                {recipe?.ingredients?.map((ingredient, index) => ( 
-                  <li key={index}>- {ingredient}</li> 
+                {recipe?.ingredients?.map((ingredient, index) => (
+                  <li key={index}>- {ingredient}</li>
                 ))}
               </ul>
             </div>
           </div>
         </div>
+        <button className={styles.favoriteButton} onClick={addToFavorite}>
+          {isFavorite ? (
+            <img
+              src="../../../public/free-icon-bookmark-4305474.png"
+              alt="favorite"
+              className={styles.favoriteIcon}
+            />
+          ) : (
+            <img
+              src="../../../public/free-icon-bookmark-4305497.png"
+              alt="favorite"
+              className={styles.favoriteIcon}
+            />
+          )}
+        </button>
       </div>
     </div>
   );
