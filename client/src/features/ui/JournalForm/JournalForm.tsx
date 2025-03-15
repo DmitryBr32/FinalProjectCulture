@@ -1,9 +1,8 @@
 import { JSX, useEffect, useState } from "react";
 import styles from "./JournalForm.module.css";
-import { getRecipesThunk } from "@/entities/recipe";
+import { getRecipesThunk, IRecipe } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
-import { IRecipe } from "@/entities/recipe/model";
 
 export default function JournalForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -14,9 +13,9 @@ export default function JournalForm(): JSX.Element {
   }, [dispatch]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null);  // не было типизаций state
 
-  const openModal = (recipe: IRecipe) => {
+  const openModal = (recipe: IRecipe) => { // аналогично не было типизаций
     setSelectedRecipe(recipe);
     setIsModalOpen(true);
   };
@@ -55,7 +54,7 @@ export default function JournalForm(): JSX.Element {
           </div>
         ))}
       </div>
-      {isModalOpen && (
+      {isModalOpen && selectedRecipe && (
         <ModalRecipe recipe={selectedRecipe} onClose={closeModal} />
       )}
     </div>

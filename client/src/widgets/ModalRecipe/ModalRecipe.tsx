@@ -1,5 +1,6 @@
 import { JSX } from "react";
 import styles from "./ModalRecipe.module.css";
+
 import { IRecipe } from "@/entities/recipe";
 
 type Props = {
@@ -38,9 +39,9 @@ export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
             <div>
               <h3>Тебе понадобиться:</h3>
               <ul>
-                {/* {recipe.ingredients.map((ingredient, index) => (
-                  <li key={index}>- {ingredient}</li>
-                ))} */}
+                {recipe?.ingredients?.map((ingredient, index) => ( 
+                  <li key={index}>- {ingredient}</li> 
+                ))}
               </ul>
             </div>
           </div>

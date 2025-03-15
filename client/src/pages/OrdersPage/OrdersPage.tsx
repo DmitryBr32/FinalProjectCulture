@@ -69,7 +69,6 @@ export default function OrdersPage() {
                                 <p><strong>Товар:</strong> {item.Product.name}</p>
                                 <p><strong>Количество:</strong> {item.quantity}</p>
                                 <p><strong>Цена:</strong> {item.Product.price} руб.</p>
-                                <p><strong>Скидка:</strong> {item.Product.discount}%</p>
                             </li>
                         ))}
                     </ul>
