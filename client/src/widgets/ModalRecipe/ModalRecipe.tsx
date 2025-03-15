@@ -39,7 +39,7 @@ export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
             <div>
               <h3>Тебе понадобиться:</h3>
               <ul>
-                {recipe.ingredients?.map((ingredient, index) => ( // не было вопроса после ingredients?
+                {recipe?.ingredients?.map((ingredient, index) => ( 
                   <li key={index}>- {ingredient}</li> 
                 ))}
               </ul>

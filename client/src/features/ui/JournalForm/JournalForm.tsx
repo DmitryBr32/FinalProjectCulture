@@ -3,7 +3,6 @@ import styles from "./JournalForm.module.css";
 import { getRecipesThunk, IRecipe } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
-import { IRecipe } from "@/entities/recipe/model";
 
 export default function JournalForm(): JSX.Element {
   const dispatch = useAppDispatch();

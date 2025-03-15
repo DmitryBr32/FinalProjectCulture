@@ -7,7 +7,7 @@ export interface IRecipeRowData {
   likes: number;
   instructions?: string;
   description?: string;
-  ingredients: React.ReactNode[];
+  ingredients?: React.ReactNode[];
 }
 
 export interface IRecipe extends IRecipeRowData {
