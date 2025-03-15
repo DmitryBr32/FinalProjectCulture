@@ -5,7 +5,11 @@ import { IIngredientRowData } from "@/entities/ingredient/model";
 import { IStockRowData } from "@/entities/stock/model";
 import { createOrUpdateStockThunk, getStockThunk } from "@/entities/stock";
 
-export default function BarAddForm() {
+type Props = {
+  setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function BarAddForm({ setShowAddForm }: Props) {
   const user = useAppSelector((state) => state.user.user?.id ?? 0);
 
   const [ingredientInputs, setIngredientInputs] = useState<IIngredientRowData>({
@@ -76,6 +80,7 @@ export default function BarAddForm() {
             userId: user,
           });
           dispatch(getStockThunk(user));
+          setShowAddForm(false);
         }
       }
     } catch (error) {

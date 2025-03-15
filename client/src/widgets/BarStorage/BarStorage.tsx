@@ -15,9 +15,7 @@ export default function BarStorage() {
   const deleteHandler = async (ingredientId: number) => {
     if (user) {
       await dispatch(deleteStockThunk({ ingredientId, userId: user }));
-      setTimeout(() => {
-        void dispatch(getStockThunk(user));
-      }, 50);
+      await dispatch(getStockThunk(user));
     }
   };
 
@@ -52,7 +50,7 @@ export default function BarStorage() {
           Добавить еще напиток?
         </button>
       ) : (
-        <BarAddForm />
+        <BarAddForm setShowAddForm={setShowAddForm} />
       )}
     </div>
   );
