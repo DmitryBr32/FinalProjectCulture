@@ -19,7 +19,7 @@ export const getStockThunk = createAsyncThunk<
 >(STOCK_THUNK_TYPES.GET_STOCK, async (id, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get(`${STOCK_ENDPOINT}/${id}`);
-    console.log("Response data:", data); 
+    console.log("Response data:", data);
     return {
       statusCode: 200,
       message: "Stock retrieved",
@@ -39,7 +39,13 @@ export const createOrUpdateStockThunk = createAsyncThunk<
   STOCK_THUNK_TYPES.CREATE_OR_UPDATE_STOCK,
   async (stockData, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.put(STOCK_ENDPOINT, stockData);
+      const { data } = await axiosInstance.put(
+        `${STOCK_ENDPOINT}/${stockData.userId}`,
+        {
+          ingredientId: stockData.ingredientId,
+          ingredientBalance: stockData.ingredientBalance,
+        }
+      );
       return data;
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
@@ -48,13 +54,18 @@ export const createOrUpdateStockThunk = createAsyncThunk<
 );
 export const deleteStockThunk = createAsyncThunk<
   IServerResponse<IStock>,
-  number,
+  { ingredientId: number; userId: number },
   { rejectValue: IServerResponse }
->(STOCK_THUNK_TYPES.DELETE_STOCK, async (id, { rejectWithValue }) => {
-  try {
-    const { data } = await axiosInstance.delete(`${STOCK_ENDPOINT}/${id}`);
-    return data;
-  } catch (error) {
-    return rejectWithValue(handleAxiosError(error));
+>(
+  STOCK_THUNK_TYPES.DELETE_STOCK,
+  async ({ ingredientId, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.delete(
+        `${STOCK_ENDPOINT}/${userId}/${ingredientId}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(handleAxiosError(error));
+    }
   }
-});
+);

@@ -6,7 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Basket, UserStock, RecFavourite, Order }) {
       this.hasMany(Basket, { foreignKey: "userId" });
       this.hasMany(UserStock, { foreignKey: "userId" });
-      this.hasMany(RecFavourite, { foreignKey: "userId" });
+      this.hasMany(RecFavourite, {
+        foreignKey: "userId",
+        as: "userFavourites",
+      });
       this.hasMany(Order, { foreignKey: "userId" });
     }
   }

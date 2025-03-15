@@ -22,18 +22,24 @@ class StockController {
         ingredientId,
         ingredientBalance
       );
-      res.status(200).json(stock);
+      res.status(200).json({
+        statusCode: 200,
+        message: "Stock updated successfully",
+        stock,
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Ошибка сервера" });
+      res.status(500).json((500, "Server error", null, error.message));
     }
   }
 
   static async deleteUserStock(req, res) {
-    const { id } = req.params;
-    const { ingredientId } = req.body;
+    const { id, ingredientId } = req.params;
+    if (!ingredientId) {
+      return res.status(400).json({ error: "ingredientId is required" });
+    }
     try {
-      await StockService.delete(id, ingredientId);
+      await StockService.delete(id, Number(ingredientId));
       res.status(204).end();
     } catch (error) {
       console.error(error);

@@ -42,16 +42,22 @@ export function Header(): JSX.Element {
         Главная
       </NavLink>
       <NavLink
-        to={CLIENT_ROUTES.SHOP_FORM}
+        to={CLIENT_ROUTES.MY_BAR}
         className={({ isActive }) => (isActive ? styles.active : "")}
       >
-        Магазин
+        Бар
       </NavLink>
       <NavLink
         to={CLIENT_ROUTES.JOURNAL}
         className={({ isActive }) => (isActive ? styles.active : "")}
       >
         Журнал
+      </NavLink>
+      <NavLink
+        to={CLIENT_ROUTES.SHOP_FORM}
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
+        Магазин
       </NavLink>
       {!user && (
         <>
@@ -72,7 +78,7 @@ export function Header(): JSX.Element {
       {user && (
         <>
           <NavLink
-            to={CLIENT_ROUTES.BASKETS} 
+            to={CLIENT_ROUTES.BASKETS}
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Корзина

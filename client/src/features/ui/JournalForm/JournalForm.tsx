@@ -3,7 +3,7 @@ import styles from "./JournalForm.module.css";
 import { getRecipesThunk, IRecipe } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
-//import { useAppDispatch } from "@/shared/hooks/reduxHook";
+import { IRecipe } from "@/entities/recipe/model";
 
 export default function JournalForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -13,11 +13,11 @@ export default function JournalForm(): JSX.Element {
     dispatch(getRecipesThunk());
   }, [dispatch]);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null); // не было типизаций state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null);  // не было типизаций state
 
-  const openModal = (recipes: IRecipe) => { // аналогично не было типизаций
-    setSelectedRecipe(recipes);
+  const openModal = (recipe: IRecipe) => { // аналогично не было типизаций
+    setSelectedRecipe(recipe);
     setIsModalOpen(true);
   };
 
@@ -25,8 +25,8 @@ export default function JournalForm(): JSX.Element {
     setIsModalOpen(false);
     setSelectedRecipe(null);
   };
-    return (
-      <div className={styles.container}>
+  return (
+    <div className={styles.container}>
       <h1 className={styles.title}>Рецепты</h1>
       <div className={styles.filter}>
         <label htmlFor="category">Вид: </label>
@@ -46,7 +46,12 @@ export default function JournalForm(): JSX.Element {
               className={styles.recipeImage}
             />
             <h3 className={styles.recipeTitle}>{recipe.title}</h3>
-            <button className={styles.recipeButton}  onClick={() => openModal(recipe)}>Подробнее</button>
+            <button
+              className={styles.recipeButton}
+              onClick={() => openModal(recipe)}
+            >
+              Подробнее
+            </button>
           </div>
         ))}
       </div>
