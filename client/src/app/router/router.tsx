@@ -7,6 +7,8 @@ import ShopForm from "@/features/auth/ui/ShopForm/ShopForm";
 import Baskets from "@/pages/BasketsPage/BasketsPage";
 import ProductDetails from "@/features/auth/ui/productDetails/ProductDetails";
 import Orders from "@/pages/OrdersPage/OrdersPage";
+import { AdminPage } from "@/pages/AdminPage/AdminPage";
+
 
 export default function Router() {
   return (
@@ -22,6 +24,7 @@ export default function Router() {
           <Route path={CLIENT_ROUTES.PRODUCTID} element={<ProductDetails />} />
           <Route path={CLIENT_ROUTES.BASKETS} element={<Baskets />} /> 
           <Route path={CLIENT_ROUTES.ORDERS} element={<Orders />} />
+          <Route path={CLIENT_ROUTES.ADMIN} element={<AdminPage />} />
           <Route path={CLIENT_ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>

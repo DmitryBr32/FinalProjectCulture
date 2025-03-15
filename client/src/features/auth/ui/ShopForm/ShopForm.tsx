@@ -5,7 +5,8 @@ import { Product } from "@/entities/product/product";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { addToCart, initializeCart } from "@/app/store/cartSlice";
 import { addToCart as addToCartAPI } from "@/shared/api/api";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 
 export default function ShopForm(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
@@ -39,9 +40,28 @@ export default function ShopForm(): JSX.Element {
     }
   };
 
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div className={styles.container}>
       <h1>Мини - Магазин</h1>
+      <nav className={styles.navContainer}>
+      <NavLink
+            to={CLIENT_ROUTES.BASKETS}
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
+            Корзина
+            {totalQuantity > 0 && (
+              <span className={styles.cartQuantity}>{totalQuantity}</span>
+            )}
+          </NavLink>
+          <NavLink
+            to={CLIENT_ROUTES.ORDERS} 
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
+            Заказы
+          </NavLink>
+          </nav>
       <div className={styles.content}>
         <div className={styles.productList}>
           <h2>Товары</h2>
