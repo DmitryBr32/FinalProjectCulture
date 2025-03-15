@@ -5,6 +5,9 @@ export interface IRecipeRowData {
   strengthLevel: string;
   isShot: boolean;
   likes: number;
+  instructions?: string;
+  description?: string;
+  ingredients: React.ReactNode[];
 }
 
 export interface IRecipe extends IRecipeRowData {

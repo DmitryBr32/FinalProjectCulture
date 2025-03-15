@@ -1,8 +1,8 @@
 import { JSX } from "react";
 import styles from "./ModalRecipe.module.css";
+import { IRecipeRowData } from "@/entities/recipe/model";
 
-export default function ModalRecipe({ recipe, onClose }): JSX.Element {
-  if (!recipe) return null; 
+export default function ModalRecipe({ recipe, onClose }: { recipe: IRecipeRowData, onClose: () => void } ): JSX.Element {
 
   return (
     <div className={styles.modalOverlay}>
@@ -13,7 +13,7 @@ export default function ModalRecipe({ recipe, onClose }): JSX.Element {
         <div className={styles.modalContent}>
           <div className={styles.modalLeft}>
             <img
-              src={recipe.image}
+              src={recipe.img}
               alt={recipe.title}
               className={styles.modalImage}
             />
@@ -30,8 +30,8 @@ export default function ModalRecipe({ recipe, onClose }): JSX.Element {
             <div>
               <h3>Тебе понадобиться:</h3>
               <ul>
-                {recipe.ingredients.map((ingredient, index) => (
-                  <li key={index}>- {ingredient}</li>
+                {recipe.ingredients?.map((ingredient, index) => ( // не было вопроса после ingredients?
+                  <li key={index}>- {ingredient}</li> 
                 ))}
               </ul>
             </div>
