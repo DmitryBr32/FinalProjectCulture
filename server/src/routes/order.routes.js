@@ -25,8 +25,13 @@ router.post('/', verifyAccessToken, async (req, res) => {
 });
 
   router.get('/', verifyAccessToken, async (req, res) => {
-    const userId = res.locals.user.id;
+    const user = res.locals.user
+    const userId = user.id;
     try {
+      if(user.isAdmin) {
+        const orders = await Order.findAll()
+        return res.status(200).json({ message: 'Все заказы', orders });
+      }
       const orders = await Order.findAll({ where: { userId } })
       return res.status(200).json({ message: 'Все заказы', orders });
     } catch (error) {

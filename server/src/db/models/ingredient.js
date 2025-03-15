@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Ingredient.init(
     {
       type: DataTypes.STRING,
-      title: DataTypes.STRING,
-      strength: DataTypes.STRING,
+      isAlko: DataTypes.BOOLEAN,
+      imgUrl: DataTypes.STRING,
     },
     {
       sequelize,

@@ -5,6 +5,9 @@ class RecipeController {
   static async getRecipes(req, res) {
     try {
       const recipes = await RecipeService.getAllRecipes();
+      if (!recipes) {
+        return res.status(404).json({ error: "Рецепты не найдены" });
+      }
       res.status(200).json(recipes);
     } catch (error) {
       console.error(error);
@@ -16,7 +19,7 @@ class RecipeController {
     try {
       const recipe = await RecipeService.getRecipeById(id);
       if (!recipe) {
-        return res.status(404).json({ error: "Ингредиент не найден" });
+        return res.status(404).json({ error: "Рецепт не найден" });
       }
       res.status(200).json(recipe);
     } catch (error) {
@@ -30,7 +33,7 @@ class RecipeController {
     try {
       const recipe = await RecipeService.getRecipeByTitle(title);
       if (!recipe) {
-        return res.status(404).json({ error: "Ингредиент не найден" });
+        return res.status(404).json({ error: "Рецепт не найден" });
       }
       res.status(200).json(recipe);
     } catch (error) {
@@ -39,12 +42,12 @@ class RecipeController {
     }
   }
 
-  static async getRecipesByIngr(req, res) {
+  static async getRecipesByIngrType(req, res) {
     const { type } = req.body;
     try {
       const recipes = await RecipeService.getRecipesByIngr(type);
       if (!recipes) {
-        return res.status(404).json({ error: "Ингредиенты не найдены" });
+        return res.status(404).json({ error: "Рецепты не найдены" });
       }
       res.status(200).json(recipes);
     } catch (error) {

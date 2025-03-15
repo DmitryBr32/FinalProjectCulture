@@ -40,7 +40,22 @@ class RecipeService {
   }
 
   static async getRecipeByTitle(title) {
-    return await Recipe.findOne({ where: { title: title } });
+    return await Recipe.findOne({
+      where: { title: { [Op.iLike]: `%${title}%` } },
+      include: [
+        {
+          model: RecComponent,
+          as: "Components",
+          required: true,
+          include: [
+            {
+              model: Ingredient,
+              as: "ingredient",
+            },
+          ],
+        },
+      ],
+    });
   }
 
   static async createRecipe(recipeData) {

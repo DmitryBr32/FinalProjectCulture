@@ -9,4 +9,5 @@ export enum CLIENT_ROUTES {
   BASKETS="/baskets",
   PRODUCTID="/product/:productId",
   ORDERS="/orders",
+  ADMIN="/admin",
 }
