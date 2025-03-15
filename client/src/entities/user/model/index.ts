@@ -8,6 +8,7 @@ export interface IUserSignUpData extends IUserSignInData {
 }
 
 export interface IUser {
+  isAdmin: boolean;
   id: number;
   email: string;
   username: string;

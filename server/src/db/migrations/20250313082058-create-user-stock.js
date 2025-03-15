@@ -9,15 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      ingredientId: {
+      ingredientTypeId: {
         type: Sequelize.INTEGER,
         references: {
           model: "Ingredients",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       ingredientBalance: {
         type: Sequelize.INTEGER,
+      },
+      title: {
+        type: Sequelize.STRING,
+      },
+      strength: {
+        type: Sequelize.STRING,
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -38,7 +46,7 @@ module.exports = {
       },
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable("UserStocks");
   },
 };
