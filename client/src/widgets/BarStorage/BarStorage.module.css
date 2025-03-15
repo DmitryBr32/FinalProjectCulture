@@ -7,39 +7,39 @@
 }
 
 .ingrCard {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 19vw;
+  padding: 15px;
+  text-align: center;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 15px;
-  box-sizing: border-box;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
 }
 
 .ingrHeader {
   display: flex;
   flex-direction: column;
+  gap: 8px;
   align-items: center; /* Центрирование по горизонтали */
   justify-content: center; /* Центрирование по вертикали */
   width: 100%;
-  gap: 8px;
 }
 
 .ingrImg {
-  width: 60px;
-  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 60px;
+  height: 60px;
   overflow: hidden;
-  border-radius: 8px;
   background-color: #fff;
   border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
 .ingrImg img {
@@ -49,16 +49,16 @@
 }
 
 .ingredientType {
+  font-size: 24px;
   font-weight: bold;
   color: #333;
-  font-size: 24px;
 }
 
 /* Body section with title, balance, and button */
 .ingrBody {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -69,26 +69,26 @@
 }
 
 .ingredientTitle {
+  margin: 5px 0;
   font-size: 20px;
   color: #555;
-  margin: 5px 0;
 }
 
 .ingredientBalance {
-  color: #888;
   margin: 5px 0;
+  color: #888;
 }
 
 button {
   padding: 8px 16px;
+  margin-left: 10px;
   font-size: 14px;
-  background-color: #4caf50;
   color: white;
+  cursor: pointer;
+  background-color: #4caf50;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 10px;
 }
 
 button:hover {
