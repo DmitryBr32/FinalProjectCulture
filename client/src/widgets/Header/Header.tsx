@@ -14,7 +14,7 @@ export function Header(): JSX.Element {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   //const { showAlert } = useAlert();
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const cartData = await getCart();
@@ -24,14 +24,13 @@ export function Header(): JSX.Element {
     fetchData();
   }, [dispatch]);
 
-  const cart = useAppSelector((state) => state.cart.items);
-  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-
   const onLogoutHandler = async () => {
     dispatch(signOutThunk());
     //showAlert("Вы вышли из системы", 200);
     navigate(CLIENT_ROUTES.SIGN_IN);
   };
+
+console.log("user",user)
 
   return (
     <nav className={styles.container}>
@@ -77,21 +76,14 @@ export function Header(): JSX.Element {
       )}
       {user && (
         <>
+        {user.isAdmin &&
           <NavLink
-            to={CLIENT_ROUTES.BASKETS}
+            to={CLIENT_ROUTES.ADMIN}
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            Корзина
-            {totalQuantity > 0 && (
-              <span className={styles.cartQuantity}>{totalQuantity}</span>
-            )}
+            Администратор
           </NavLink>
-          <NavLink
-            to={CLIENT_ROUTES.ORDERS} 
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            Заказы
-          </NavLink>
+          }
           <UserAvatar user={user} />
           <button onClick={onLogoutHandler} className={styles.button}>
             Выйти
