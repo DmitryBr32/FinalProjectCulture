@@ -32,16 +32,37 @@ export default function BarStorage() {
       {loading && <p>Загрузка...</p>}
       {error && <p>Ошибка: {error}</p>}{" "}
       {!Array.isArray(stock) || stock.length === 0 ? (
-        <p>Нет данных для отображения</p>
+        <p>Ваш бар в данный момент пуст</p>
       ) : (
         stock.map((ingredient) => (
           <div key={ingredient.id} className={styles.ingrCard}>
-            <span> {ingredient.ingredient.type} </span>
-            <span> {ingredient.ingredient.title} </span>
-            <p>Остаток: {ingredient.ingredientBalance} мл. </p>
-            <button onClick={() => deleteHandler(ingredient.ingredientId)}>
-              Закончилось?
-            </button>
+            <div className={styles.ingrHeader}>
+              <span className={styles.ingredientType}>
+                {ingredient.ingredient.type}
+              </span>
+              <span className={styles.ingredientTitle}>
+                {ingredient.ingredient.title}
+              </span>
+            </div>
+            <div className={styles.ingrBody}>
+              <div className={styles.ingredientDetails}>
+                <p className={styles.ingredientBalance}>
+                  Остаток: {ingredient.ingredientBalance} мл.
+                </p>
+              </div>
+              <div className={styles.ingrImg}>
+                <img
+                  src="https://cdn-img.perekrestok.ru/i/800x800-fit/xdelivery/files/a7/24/15aa8a53a002522a88eee56f35f4.jpg"
+                  alt={ingredient.ingredient.title}
+                />
+              </div>
+              <button
+                className={styles.deleteButton}
+                onClick={() => deleteHandler(ingredient.ingredientId)}
+              >
+                Закончилось?
+              </button>
+            </div>
           </div>
         ))
       )}
