@@ -15,6 +15,9 @@ module.exports = {
       text: {
         type: Sequelize.STRING,
       },
+      discription: {
+        type: Sequelize.STRING,
+      },
       img: {
         type: Sequelize.STRING,
       },
