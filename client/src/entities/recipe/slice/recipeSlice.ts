@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getRecipeByIdThunk,
+  getRecipeByTitleThunk,
   createRecipeThunk,
   updateRecipeByIdThunk,
   deleteRecipeThunk,
@@ -37,6 +38,20 @@ const recipeSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload?.error ?? "Ошибка загрузки рецепта";
       })
+
+      //получить рецепт по названию
+      .addCase(getRecipeByTitleThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getRecipeByTitleThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.recipe = action.payload.data;
+      })
+      .addCase(getRecipeByTitleThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload?.error ?? "Ошибка загрузки рецепта";
+      })
+
       //создать рецепт
       .addCase(createRecipeThunk.pending, (state) => {
         state.isLoading = true;

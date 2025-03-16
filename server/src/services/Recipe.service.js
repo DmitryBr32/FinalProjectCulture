@@ -4,7 +4,21 @@ const IngredientService = require("./Ingredient.service");
 
 class RecipeService {
   static async getAllRecipes() {
-    return await Recipe.findAll();
+    return await Recipe.findAll({
+      include: [
+        {
+          model: RecComponent,
+          as: "Components",
+          required: true,
+          include: [
+            {
+              model: Ingredient,
+              as: "ingredient",
+            },
+          ],
+        },
+      ],
+    });
   }
 
   static async getAllRecipeTitles() {

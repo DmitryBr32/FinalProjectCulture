@@ -13,8 +13,8 @@
   height: 80%;
   padding: 40px;
   overflow-y: auto;
-  background-color: white;
-  border-radius: 10px; 
+  background-color: rgb(247 247 247 / 90%);
+  border-radius: 10px;
 }
 
 .closeButton {
@@ -29,21 +29,21 @@
 
 .modalContent {
   display: flex;
-  gap: 40px; 
+  gap: 40px;
 }
 
-.modalLeft { 
+.modalLeft {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 20px; 
+  gap: 20px;
 }
 
-.modalRight { 
+.modalRight {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 20px; 
+  gap: 20px;
 }
 
 .modalImage {
@@ -87,4 +87,3 @@
   width: 50px;
   height: 50px;
 }
-

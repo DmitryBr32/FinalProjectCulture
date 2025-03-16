@@ -3,7 +3,9 @@ export { recipesReducer } from "./slice/recipesSlice";
 
 export {
   getRecipesThunk,
+  getRecipesByStrengthThunk,
   getRecipeByIdThunk,
+  getRecipeByTitleThunk,
   createRecipeThunk,
   updateRecipeByIdThunk,
   deleteRecipeThunk,
