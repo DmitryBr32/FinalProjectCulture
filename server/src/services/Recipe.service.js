@@ -97,11 +97,38 @@ class RecipeService {
         quantity: ingredientData.quantity,
       });
     });
+
     return recipe;
   }
 
-  static async updateRecipe(id, recipeData) {
-    return await Recipe.update(recipeData, { where: { id } });
+  static async updateRecipe(id, recipeData, ingredientsData) {
+    const findRecipe = await Recipe.findByPk(id);
+    if (!findRecipe) {
+      return null;
+    } else {
+      const updatedRecipe = await findRecipe.update({
+        title: recipeData.title,
+        text: recipeData.text,
+        discription: recipeData.discription,
+        img: recipeData.img,
+        strengthLevel: recipeData.strengthLevel,
+        isShot: recipeData.isShot,
+      });
+
+      RecComponent.destroy({ where: { recipeId: id } });
+
+      ingredientsData.forEach(async (ingredientData) => {
+        const ingredient = await IngredientService.create(ingredientData);
+
+        await RecComponent.create({
+          recipeId: id,
+          ingredientTypeId: ingredient.id,
+          quantity: ingredientData.quantity,
+        });
+      });
+
+      return updatedRecipe;
+    }
   }
 
   static async deleteRecipe(id) {

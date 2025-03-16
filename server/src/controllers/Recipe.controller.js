@@ -112,11 +112,9 @@ class RecipeController {
         recipeData,
         ingredientsData
       );
-      const recipeWithIngredients = await RecipeService.getRecipeById(
-        recipe.id
-      );
-      if (!recipeWithIngredients) {
-        res.status(201).json(recipeWithIngredients);
+
+      if (recipe) {
+        res.status(201).json(recipe);
       } else {
         res.status(201).json({ message: "Связи не установлены" });
       }
@@ -126,11 +124,31 @@ class RecipeController {
     }
   }
   static async updateRecipe(req, res) {
+    const { recipeData, ingredientsData } = req.body;
+    const { id } = req.params;
     try {
-      const recipeData = req.body;
-      const { id } = req.params;
-      const updatedRecipe = await RecipeService.updateRecipe(id, recipeData);
-      res.status(200).json(updatedRecipe);
+      if (
+        !id ||
+        typeof Number(id) !== "number" ||
+        !recipeData ||
+        !ingredientsData ||
+        ingredientsData.length === 0
+      ) {
+        return res.status(400).json({
+          error: "Необходимыб id, данные и хотя бы один компонент",
+        });
+      }
+
+      const updatedRecipe = await RecipeService.updateRecipe(
+        id,
+        recipeData,
+        ingredientsData
+      );
+      if (updatedRecipe) {
+        res.status(201).json(updatedRecipe);
+      } else {
+        res.status(201).json({ message: "Не удалось обновить рецепт" });
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Ошибка сервера" });
