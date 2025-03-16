@@ -47,14 +47,14 @@ export default function BarStorage() {
           <div key={ingredient.id} className={styles.ingrCard}>
             <div className={styles.ingrHeader}>
               <span className={styles.ingredientType}>
-                {ingredient?.ingredient?.type ||
+                {ingredient?.ingredientType?.type ||
                   ingredients.find((i) => i.id === ingredient.ingredientTypeId)
                     ?.type ||
                   "Тип не указан"}
               </span>
               <span className={styles.ingredientTitle}>
                 {ingredient.title ||
-                  ingredient?.ingredient?.type ||
+                  ingredient?.ingredientType?.type ||
                   "Название не указано"}
               </span>
             </div>
