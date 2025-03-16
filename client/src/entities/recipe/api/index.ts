@@ -35,7 +35,7 @@ export const getRecipesByStrengthThunk = createAsyncThunk<
   string,
   { rejectValue: IServerResponse }
 >(
-  RECIPE_THUNK_TYPES.GET_RECIPES,
+  RECIPE_THUNK_TYPES.GET_RECIPES_BY_STRENGTH,
   async (strengthLevel, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post(

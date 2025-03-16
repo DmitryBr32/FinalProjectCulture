@@ -56,14 +56,18 @@ export default function ModalRecipe({
             </div>
             <div>
               <h3>Тебе понадобятся:</h3>
-              <tbody>
+              <div>
                 {recipe?.Components.map((component, index) => (
-                  <tr key={index}>
-                    <td>- {component.ingredient.type}</td>
-                    <td> ({component.quantity})</td>
-                  </tr>
+                  <div key={index} className={styles.ingrTable}>
+                    <div className={styles.ingrName}>
+                      - {component.ingredient.type}
+                    </div>
+                    <div className={styles.ingrQuant}>
+                      ({component.quantity})
+                    </div>
+                  </div>
                 ))}
-              </tbody>
+              </div>
             </div>
           </div>
         </div>
