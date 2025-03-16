@@ -7,11 +7,13 @@ import { handleAxiosError } from "@/shared/utils/handleAxiosError";
 export const RECIPES_ENDPOINT = "/recipe" as const;
 
 enum RECIPE_THUNK_TYPES {
-  GET_RECIPES = "recipe/getIngredients",
-  GET_RECIPE_BY_ID = "recipe/getIngredientById",
-  CREATE_RECIPE = "recipe/createIngredient",
-  UPDATE_RECIPE = "recipe/updateIngredientById",
-  DELETE_RECIPE = "recipe/deleteIngredient",
+  GET_RECIPES = "recipe/getRecipes",
+  GET_RECIPES_BY_STRENGTH = "recipe/getRecipesByStrength",
+  GET_RECIPE_BY_ID = "recipe/getRecipeById",
+  GET_RECIPE_BY_TITLE = "recipe/getRecipeByTitle",
+  CREATE_RECIPE = "recipe/createRecipe",
+  UPDATE_RECIPE = "recipe/updateRecipeById",
+  DELETE_RECIPE = "recipe/deleteRecipe",
 }
 
 export const getRecipesThunk = createAsyncThunk<
@@ -28,6 +30,26 @@ export const getRecipesThunk = createAsyncThunk<
   }
 });
 
+export const getRecipesByStrengthThunk = createAsyncThunk<
+  IServerResponse<IRecipeArrayType>,
+  string,
+  { rejectValue: IServerResponse }
+>(
+  RECIPE_THUNK_TYPES.GET_RECIPES,
+  async (strengthLevel, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(
+        RECIPES_ENDPOINT,
+        strengthLevel
+      );
+      console.log(data);
+      return { statusCode: 200, data, message: "все ок" };
+    } catch (error) {
+      return rejectWithValue(handleAxiosError(error));
+    }
+  }
+);
+
 export const getRecipeByIdThunk = createAsyncThunk<
   IServerResponse<IRecipe>,
   number,
@@ -35,11 +57,27 @@ export const getRecipeByIdThunk = createAsyncThunk<
 >(RECIPE_THUNK_TYPES.GET_RECIPE_BY_ID, async (id, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get(`${RECIPES_ENDPOINT}/${id}`);
-    return data;
+    return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }
 });
+
+export const getRecipeByTitleThunk = createAsyncThunk<
+  IServerResponse<IRecipe>,
+  string,
+  { rejectValue: IServerResponse }
+>(
+  RECIPE_THUNK_TYPES.GET_RECIPE_BY_TITLE,
+  async (title, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(RECIPES_ENDPOINT, title);
+      return data;
+    } catch (error) {
+      return rejectWithValue(handleAxiosError(error));
+    }
+  }
+);
 
 export const createRecipeThunk = createAsyncThunk<
   IServerResponse<IRecipe>,

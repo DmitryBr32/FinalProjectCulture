@@ -1,18 +1,28 @@
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import styles from "./ModalRecipe.module.css";
-import { IRecipe } from "@/entities/recipe";
+import { getRecipeByIdThunk } from "@/entities/recipe";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 
 type Props = {
-  recipe: IRecipe | null;
+  recId: number;
+  recipesLength: number;
   onClose: () => void;
 };
 
-export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
+export default function ModalRecipe({
+  recId,
+  recipesLength,
+  onClose,
+}: Props): JSX.Element {
   const [isFavorite, setIsFavorite] = useState(false);
+  const recipe = useAppSelector((state) => state.recipe.recipe);
+  const [recipeId, setRecipeId] = useState(recId);
+  const dispatch = useAppDispatch();
 
-  if (!recipe) {
-    onClose();
-  }
+  useEffect(() => {
+    console.log("Recipe:", recipeId);
+    dispatch(getRecipeByIdThunk(recipeId));
+  }, [recipeId, dispatch]);
 
   const addToFavorite = () => {
     setIsFavorite((prev) => !prev);
@@ -20,6 +30,9 @@ export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
   };
   return (
     <div className={styles.modalOverlay}>
+      {recipeId > 1 && (
+        <button onClick={() => setRecipeId(recipeId - 1)}></button>
+      )}
       <div className={styles.modal}>
         <button className={styles.closeButton} onClick={onClose}>
           &times;
@@ -33,7 +46,7 @@ export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
             />
             <div className={styles.modalPreparation}>
               <h3>Приготовление:</h3>
-              <p>{recipe?.text}</p>
+              <p>{recipe?.discription}</p>
             </div>
           </div>
           <div className={styles.modalRight}>
@@ -42,12 +55,15 @@ export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
               <p>{recipe?.text}</p>
             </div>
             <div>
-              <h3>Тебе понадобиться:</h3>
-              <ul>
-                {recipe?.ingredients?.map((ingredient, index) => (
-                  <li key={index}>- {ingredient}</li>
+              <h3>Тебе понадобятся:</h3>
+              <tbody>
+                {recipe?.Components.map((component, index) => (
+                  <tr key={index}>
+                    <td>- {component.ingredient.type}</td>
+                    <td> ({component.quantity})</td>
+                  </tr>
                 ))}
-              </ul>
+              </tbody>
             </div>
           </div>
         </div>
@@ -67,6 +83,9 @@ export default function ModalRecipe({ recipe, onClose }: Props): JSX.Element {
           )}
         </button>
       </div>
+      {recipeId < recipesLength && (
+        <button onClick={() => setRecipeId(recipeId + 1)}></button>
+      )}
     </div>
   );
 }

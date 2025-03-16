@@ -1,3 +1,5 @@
+import { IRecipeComponentArrayType } from "@/entities/component/model";
+
 export interface IRecipeRowData {
   title: string;
   text: string;
@@ -5,9 +7,8 @@ export interface IRecipeRowData {
   strengthLevel: string;
   isShot: boolean;
   likes: number;
-  instructions?: string;
-  description?: string;
-  ingredients?: React.ReactNode[];
+  discription: string;
+  Components: IRecipeComponentArrayType;
 }
 
 export interface IRecipe extends IRecipeRowData {
