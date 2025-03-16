@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "./ShopStorages.module.css";
-import { defaultItem } from "./ShopStorages";
 
 interface Props {
   product: StorageItem;
@@ -20,14 +19,23 @@ export type StorageItem = {
   quantity: number;
 };
 
+const defaultItem = {
+    id: 0,
+    name: "",
+    image: "",
+    price: 0,
+    description: "",
+    quantity: 0,
+  };
+
 export function ShopStorageItem({ product, onUpdate, handleDelete, textFirstButton, textSecondButton, isClearInput }: Props) {
   const [formData, setFormData] = useState({
     id: product.id,
     name: product.name,
     image: product.image,
-    price: product.price.toString(), // Храним как строку
+    price: product.price.toString(), 
     description: product.description,
-    quantity: product.quantity.toString(), // Храним как строку
+    quantity: product.quantity.toString(),
   });
 
   const handleChange = (

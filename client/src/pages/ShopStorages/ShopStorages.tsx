@@ -7,7 +7,7 @@ import styles from "./ShopStorages.module.css";
 import { useEffect, useState } from "react";
 import { ShopStorageItem, StorageItem } from "./ShopStorageItem";
 
-export const defaultItem = {
+const defaultItem = {
   id: 0,
   name: "",
   image: "",
