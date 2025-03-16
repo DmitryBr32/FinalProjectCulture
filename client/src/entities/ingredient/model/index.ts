@@ -1,7 +1,7 @@
 export interface IIngredientRowData {
   type: string;
-  title: string;
-  strength: string;
+  isAlko: boolean;
+  imgUrl: string;
 }
 
 export interface IIngredient extends IIngredientRowData {

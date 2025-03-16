@@ -28,16 +28,21 @@ export default function Bar() {
       setHoveredType(null);
     }, 1000);
   };
-
+  console.log("stock", stock);
   const typesOrder = Array.from(
-    new Set(stock.map((item) => item.ingredient.type))
-  );
+    new Set(stock.map((item) => item.ingredientType?.type))
+  ).filter(Boolean);
+
+  console.log("typesOrder", typesOrder);
 
   const stockByType = typesOrder.reduce<Record<string, typeof stock>>(
     (acc, type) => {
+      if (!type) return acc;
+
       const filteredItems = stock.filter(
-        (item) => item.ingredient.type === type
+        (item) => item.ingredientType?.type === type
       );
+
       if (filteredItems.length > 0) {
         acc[type] = filteredItems;
       }
@@ -45,6 +50,9 @@ export default function Bar() {
     },
     {}
   );
+
+  console.log("typesOrder", typesOrder);
+  console.log("stockByType", stockByType);
 
   return (
     <div className={styles.bar}>
@@ -70,16 +78,20 @@ export default function Bar() {
                     <strong>{type}</strong>
                   </p>
                   {stockByType[type].map((ingredient) => (
-                    <p key={ingredient.id}>
-                      Марка: {ingredient.ingredient.title} —{" "}
+                    <p key={`${ingredient.id}-${ingredient.title}`}>
+                      {ingredient.title || type} —{" "}
                       {ingredient.ingredientBalance} мл
+                      {ingredient.strength && ` (${ingredient.strength}%)`}
                     </p>
                   ))}
                 </div>
               )}
               <img
-                src="https://cdn-img.perekrestok.ru/i/800x800-fit/xdelivery/files/a7/24/15aa8a53a002522a88eee56f35f4.jpg"
-                alt="Бутылка"
+                src={
+                  stockByType[type][0]?.ingredientType?.imgUrl ||
+                  "https://cdn-img.perekrestok.ru/i/800x800-fit/xdelivery/files/a7/24/15aa8a53a002522a88eee56f35f4.jpg"
+                }
+                alt={`${type} bottle`}
               />
             </div>
           ))

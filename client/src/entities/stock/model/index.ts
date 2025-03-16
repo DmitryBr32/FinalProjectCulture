@@ -1,6 +1,8 @@
 export interface IStockRowData {
-  ingredientId: number;
+  ingredientTypeId: number;
   ingredientBalance: string;
+  title: string;
+  strength: string;
   userId: number;
 }
 
@@ -13,11 +15,11 @@ export interface IStock extends IStockRowData {
     username: string;
     email: string;
   };
-  ingredient: {
+  ingredientType: {
     id: number;
     type: string;
-    title: string;
-    strength: string;
+    isAlko: boolean;
+    imgUrl: string;
   };
 }
 

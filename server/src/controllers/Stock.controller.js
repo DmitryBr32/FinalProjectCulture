@@ -5,7 +5,7 @@ class StockController {
     const { id } = req.params;
     console.log("ID из запроса:", req.params.id);
     try {
-      const stock = await StockService.getStock(id);
+      const stock = await StockService.getUserStock(id);
       res.status(200).json(stock);
     } catch (error) {
       console.error(error);
@@ -15,12 +15,14 @@ class StockController {
 
   static async createOrUpdateUserStock(req, res) {
     const { id } = req.params;
-    const { ingredientId, ingredientBalance } = req.body;
+    const { ingredientTypeId, ingredientBalance, title, strength } = req.body;
     try {
       const stock = await StockService.findOrCreateUserStock(
         id,
-        ingredientId,
-        ingredientBalance
+        ingredientTypeId,
+        ingredientBalance,
+        title,
+        strength
       );
       res.status(200).json({
         statusCode: 200,
@@ -34,12 +36,12 @@ class StockController {
   }
 
   static async deleteUserStock(req, res) {
-    const { id, ingredientId } = req.params;
-    if (!ingredientId) {
-      return res.status(400).json({ error: "ingredientId is required" });
+    const { id, ingredientTypeId } = req.params;
+    if (!ingredientTypeId) {
+      return res.status(400).json({ error: "ingredientTypeId is required" });
     }
     try {
-      await StockService.delete(id, Number(ingredientId));
+      await StockService.delete(id, Number(ingredientTypeId));
       res.status(204).end();
     } catch (error) {
       console.error(error);

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Ingredient, User }) {
       this.belongsTo(Ingredient, {
-        foreignKey: "ingredientId",
+        foreignKey: "ingredientTypeId",
         as: "ingredientType",
       });
       this.belongsTo(User, {
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   UserStock.init(
     {
-      ingredientId: DataTypes.INTEGER,
+      ingredientTypeId: DataTypes.INTEGER,
       ingredientBalance: DataTypes.INTEGER,
       title: DataTypes.STRING,
       strength: DataTypes.STRING,

@@ -21,6 +21,7 @@ export const getIngredientsThunk = createAsyncThunk<
 >(INGREDIENT_THUNK_TYPES.GET_INGREDIENTS, async (_, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get(INGREDIENTS_ENDPOINT);
+    console.log(data);
     return {
       statusCode: 200,
       message: "Ingredient recieved",

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Ingredient extends Model {
     static associate({ UserStock, RecComponent }) {
       this.hasMany(UserStock, {
-        foreignKey: "ingredientId",
+        foreignKey: "ingredientTypeId",
         as: "userStocks",
       });
       this.hasMany(RecComponent, {

@@ -5,7 +5,7 @@ const verifyAccessToken = require("../middleware/verifyAccessToken");
 router.get("/:id", verifyAccessToken, StockController.getUserStock);
 router.put("/:id", verifyAccessToken, StockController.createOrUpdateUserStock);
 router.delete(
-  "/:id/:ingredientId",
+  "/:id/:ingredientTypeId",
   verifyAccessToken,
   StockController.deleteUserStock
 );

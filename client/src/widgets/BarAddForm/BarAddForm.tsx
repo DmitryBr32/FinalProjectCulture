@@ -17,13 +17,15 @@ export default function BarAddForm({ setShowAddForm }: Props) {
 
   const [ingredientInputs, setIngredientInputs] = useState<IIngredientRowData>({
     type: "",
-    title: "",
-    strength: "",
+    isAlko: false,
+    imgUrl: "",
   });
   const [stockInputs, setStockInputs] = useState<IStockRowData>({
-    ingredientId: 0,
+    ingredientTypeId: 0,
     ingredientBalance: "0",
     userId: user,
+    title: "",
+    strength: "",
   });
   const dispatch = useAppDispatch();
   const ingredients =
@@ -35,12 +37,22 @@ export default function BarAddForm({ setShowAddForm }: Props) {
   }, [dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value, checked } = e.target;
 
     if (name === "ingredientBalance") {
       setStockInputs((prev) => ({
         ...prev,
         ingredientBalance: value,
+      }));
+    } else if (name === "isAlko") {
+      setIngredientInputs((prev) => ({
+        ...prev,
+        isAlko: checked,
+      }));
+    } else if (name === "title" || name === "strength") {
+      setStockInputs((prev) => ({
+        ...prev,
+        [name]: value,
       }));
     } else {
       setIngredientInputs((prev) => ({
@@ -53,40 +65,48 @@ export default function BarAddForm({ setShowAddForm }: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log("Диспатчим создание ингредиента", ingredientInputs);
-      const resultIngredient = await dispatch(
-        createIngredientThunk(ingredientInputs)
+      console.log("Проверяем существующий ингредиент:", ingredientInputs.type);
+      const existingIngredient = ingredients.find(
+        (ingredient) => ingredient.type === ingredientInputs.type
       );
-      console.log("Ответ от сервера (ингредиент):", resultIngredient);
 
-      if (resultIngredient.payload && "id" in resultIngredient.payload) {
-        const newIngredientId = (resultIngredient.payload as { id: number }).id;
-        console.log("Созданный ingredientId:", newIngredientId);
+      let ingredientId = existingIngredient?.id;
 
-        console.log("Диспатчим обновление склада");
-        console.log(newIngredientId, "newIngredientId");
-        console.log(
-          stockInputs.ingredientBalance,
-          "stockInputs.ingredientBalance"
+      if (!ingredientId) {
+        console.log("Диспатчим создание нового ингредиента");
+        const resultIngredient = await dispatch(
+          createIngredientThunk(ingredientInputs)
         );
-        console.log(user, "user");
+        console.log("Ответ от сервера (ингредиент):", resultIngredient);
+
+        if (resultIngredient.payload && "id" in resultIngredient.payload) {
+          ingredientId = (resultIngredient.payload as { id: number }).id;
+        }
+      }
+
+      if (ingredientId) {
+        console.log("Диспатчим обновление склада");
 
         const resultStock = await dispatch(
           createOrUpdateStockThunk({
-            ingredientId: newIngredientId,
+            ingredientTypeId: ingredientId,
             ingredientBalance: stockInputs.ingredientBalance,
             userId: user,
+            title: stockInputs.title,
+            strength: stockInputs.strength,
           })
         );
         console.log("Ответ от сервера (склад):", resultStock);
 
         if (resultStock.payload?.statusCode === 200) {
-          console.log("Ингредиент и склад успешно добавлены!");
-          setIngredientInputs({ type: "", title: "", strength: "" });
+          console.log("Ингредиент и склад успешно добавлены/обновлены!");
+          setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
           setStockInputs({
-            ingredientId: newIngredientId,
+            ingredientTypeId: 0,
             ingredientBalance: "0",
             userId: user,
+            title: "",
+            strength: "",
           });
           dispatch(getStockThunk(user));
           setShowAddForm(false);
@@ -120,7 +140,7 @@ export default function BarAddForm({ setShowAddForm }: Props) {
       <input
         type="text"
         name="title"
-        value={ingredientInputs.title}
+        value={stockInputs.title}
         onChange={handleChange}
         required
       />
@@ -132,6 +152,25 @@ export default function BarAddForm({ setShowAddForm }: Props) {
         value={stockInputs.ingredientBalance}
         onChange={handleChange}
         min="0"
+      />
+
+      <label>
+        Алкогольный:
+        <input
+          type="checkbox"
+          name="isAlko"
+          checked={ingredientInputs.isAlko}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label>Введите крепость напитка</label>
+      <input
+        type="text"
+        name="strength"
+        value={stockInputs.strength}
+        onChange={handleChange}
+        required
       />
 
       <button type="submit">Добавить</button>
