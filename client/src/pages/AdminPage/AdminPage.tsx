@@ -3,10 +3,10 @@ import Orders from "@/pages/OrdersPage/OrdersPage";
 
 export function AdminPage() {
     return (
-        <p className={styles.whiteText}>
+        <div className={styles.whiteText}>
            Администратор
            <Orders />
-          </p>
+          </div>
     );
   }
   

@@ -30,8 +30,6 @@ export function Header(): JSX.Element {
     navigate(CLIENT_ROUTES.SIGN_IN);
   };
 
-console.log("user",user)
-
   return (
     <nav className={styles.container}>
       <NavLink
