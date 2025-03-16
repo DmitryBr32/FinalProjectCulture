@@ -31,7 +31,7 @@ const stockSlice = createSlice({
       .addCase(getStockThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.stock = [...action.payload.data];
+        state.stock = action.payload.data;
         console.log("Updated stock state:", state.stock);
       })
       .addCase(getStockThunk.rejected, (state, action) => {
@@ -74,7 +74,7 @@ const stockSlice = createSlice({
       .addCase(deleteStockThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.stock = state.stock.filter(
-          (item) => item.id !== action.meta.arg.ingredientId
+          (item) => item.id !== action.meta.arg.ingredientTypeId
         );
       })
       .addCase(deleteStockThunk.rejected, (state, action) => {

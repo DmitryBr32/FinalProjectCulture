@@ -42,8 +42,10 @@ export const createOrUpdateStockThunk = createAsyncThunk<
       const { data } = await axiosInstance.put(
         `${STOCK_ENDPOINT}/${stockData.userId}`,
         {
-          ingredientId: stockData.ingredientId,
+          ingredientTypeId: stockData.ingredientTypeId,
           ingredientBalance: stockData.ingredientBalance,
+          title: stockData.title,
+          strength: stockData.strength,
         }
       );
       return data;
@@ -54,14 +56,14 @@ export const createOrUpdateStockThunk = createAsyncThunk<
 );
 export const deleteStockThunk = createAsyncThunk<
   IServerResponse<IStock>,
-  { ingredientId: number; userId: number },
+  { ingredientTypeId: number; userId: number },
   { rejectValue: IServerResponse }
 >(
   STOCK_THUNK_TYPES.DELETE_STOCK,
-  async ({ ingredientId, userId }, { rejectWithValue }) => {
+  async ({ ingredientTypeId, userId }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.delete(
-        `${STOCK_ENDPOINT}/${userId}/${ingredientId}`
+        `${STOCK_ENDPOINT}/${userId}/${ingredientTypeId}`
       );
       return data;
     } catch (error) {
