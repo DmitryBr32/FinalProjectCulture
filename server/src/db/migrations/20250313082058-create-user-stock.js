@@ -15,6 +15,8 @@ module.exports = {
           model: "Ingredients",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       ingredientBalance: {
         type: Sequelize.INTEGER,

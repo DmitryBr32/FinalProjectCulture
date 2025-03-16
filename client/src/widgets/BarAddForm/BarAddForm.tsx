@@ -1,11 +1,18 @@
-import { createIngredientThunk } from "@/entities/ingredient";
+import {
+  createIngredientThunk,
+  getIngredientsThunk,
+} from "@/entities/ingredient";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IIngredientRowData } from "@/entities/ingredient/model";
 import { IStockRowData } from "@/entities/stock/model";
 import { createOrUpdateStockThunk, getStockThunk } from "@/entities/stock";
 
-export default function BarAddForm() {
+type Props = {
+  setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function BarAddForm({ setShowAddForm }: Props) {
   const user = useAppSelector((state) => state.user.user?.id ?? 0);
 
   const [ingredientInputs, setIngredientInputs] = useState<IIngredientRowData>({
@@ -18,8 +25,14 @@ export default function BarAddForm() {
     ingredientBalance: "0",
     userId: user,
   });
-
   const dispatch = useAppDispatch();
+  const ingredients =
+    useAppSelector((state) => state.ingredients.ingredients) || [];
+  console.log(ingredients, "ingredients");
+
+  useEffect(() => {
+    void dispatch(getIngredientsThunk());
+  }, [dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -76,6 +89,7 @@ export default function BarAddForm() {
             userId: user,
           });
           dispatch(getStockThunk(user));
+          setShowAddForm(false);
         }
       }
     } catch (error) {
@@ -91,8 +105,16 @@ export default function BarAddForm() {
         name="type"
         value={ingredientInputs.type}
         onChange={handleChange}
+        list="ingredientsType"
         required
       />
+      <datalist id="ingredientsType">
+        {ingredients.map((ingredient) =>
+          ingredient.type ? (
+            <option key={ingredient.id} value={ingredient.type} />
+          ) : null
+        )}
+      </datalist>
 
       <label>Введите марку напитка</label>
       <input

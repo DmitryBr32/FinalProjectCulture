@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "userStocks",
       });
       this.hasMany(RecComponent, {
-        foreignKey: "ingredientId",
+        foreignKey: "ingredientTypeId",
         as: "recComponents",
       });
     }

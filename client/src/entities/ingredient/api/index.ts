@@ -21,7 +21,11 @@ export const getIngredientsThunk = createAsyncThunk<
 >(INGREDIENT_THUNK_TYPES.GET_INGREDIENTS, async (_, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get(INGREDIENTS_ENDPOINT);
-    return data;
+    return {
+      statusCode: 200,
+      message: "Ingredient recieved",
+      data,
+    };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }
@@ -51,7 +55,10 @@ export const createIngredientThunk = createAsyncThunk<
   INGREDIENT_THUNK_TYPES.CREATE_INGREDIENT,
   async (ingredientData, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(INGREDIENTS_ENDPOINT, ingredientData);
+      const { data } = await axiosInstance.post(
+        INGREDIENTS_ENDPOINT,
+        ingredientData
+      );
       return data;
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));

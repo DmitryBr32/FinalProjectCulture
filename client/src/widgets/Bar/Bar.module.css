@@ -41,3 +41,18 @@
   height: auto;
   object-fit: contain;
 }
+
+.barBlock {
+  position: absolute;
+  top: 60px;
+  right: -250px;
+  z-index: 100;
+  width: 260px;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  background: rgb(255 255 255 / 90%);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
+}
