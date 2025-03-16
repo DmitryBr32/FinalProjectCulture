@@ -39,7 +39,7 @@ router.get('/', verifyAccessToken, async (req, res) => {
       include: [
         {
           model: Product,
-          attributes: ['id', 'name', 'image', 'price', 'discount', 'description']
+          attributes: ['id', 'name', 'image', 'price', 'description']
         },
       ],
     });

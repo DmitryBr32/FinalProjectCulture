@@ -1,4 +1,5 @@
 import { Product } from '@/entities/product/product';
+import { StorageItem } from '@/pages/ShopStorages/ShopStorageItem';
 import { axiosInstance } from '@/shared/lib/axiosInstance';
 
 const API_URL = import.meta.env.VITE_API || 'http://localhost:3000/api';
@@ -79,6 +80,56 @@ export const getOrders = async () => {
     return response.data;
   } catch (error) {
     console.error('Ошибка при добавлении в заказы:', error);
+    throw error;
+  }
+};
+
+export const changeStatusOrder = async ( id: number, status: string) => {
+  try { 
+    const response = await axiosInstance.post(`${API_URL}/order/status`, {id, status});
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при изменении статуса заказа:', error);
+    throw error;
+  }
+};
+
+export const deleteOrder = async ( id: number) => {
+  try { 
+    const response = await axiosInstance.delete(`${API_URL}/order/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при удалении заказа:', error);
+    throw error;
+  }
+};
+
+export const getShopStorage = async () => {
+  try { 
+    const response = await axiosInstance.get(`${API_URL}/shop-storage`);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении данных склада:', error);
+    throw error;
+  }
+};
+
+export const updateShopStorage = async (data: StorageItem) => {
+  try { 
+    const response = await axiosInstance.post(`${API_URL}/shop-storage`, data);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при изменений данных склада:', error);
+    throw error;
+  }
+};
+
+export const deleteShopStorage = async (id: number) => {
+  try { 
+    const response = await axiosInstance.delete(`${API_URL}/shop-storage/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при удалений данных склада:', error);
     throw error;
   }
 };

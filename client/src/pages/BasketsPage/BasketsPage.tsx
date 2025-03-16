@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { removeFromCart, updateCartItemQuantity, initializeCart, clearCart } from "@/app/store/cartSlice";
 import { getCart, addToCart as addToCartAPI, removeFromCart as removeFromCartAPI, addToOrder } from "@/shared/api/api";
 import styles from "./BasketsPage.module.css";
+import { NavLink } from "react-router-dom";
+import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 
 const INITIAL_INPUTS_DATA = {
   name: "",
@@ -18,6 +20,9 @@ export default function Baskets(): JSX.Element {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
+
+ const [ step, setStep ] = useState(1)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,11 +116,34 @@ export default function Baskets(): JSX.Element {
     setIsModalOpen(false);
     setInputs(INITIAL_INPUTS_DATA)
     dispatch(clearCart())
+    setStep(2)
   };
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
+
+  if(step === 2) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.notification}>
+       <h1>Заказ успешно создан!</h1> 
+      <nav className={styles.navContainer}>
+      <NavLink
+            to={CLIENT_ROUTES.SHOP_FORM}
+          >
+            Вернуться в магазин
+          </NavLink>
+          <NavLink
+            to={CLIENT_ROUTES.ORDERS} 
+          >
+            Мои заказы
+          </NavLink>
+          </nav>
+          </div>
+          </div>
+    )
+  }
 
   return (
     <div className={styles.container}>

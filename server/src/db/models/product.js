@@ -2,7 +2,11 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Product extends Model {}
+  class Product extends Model {
+    static associate({ ShopStorage }) {
+      Product.hasOne(ShopStorage, { foreignKey: "productId" });
+    }
+  }
 
   Product.init(
     {
@@ -14,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       price: {
         type: DataTypes.DECIMAL,
         allowNull: false,
-      },
-      discount: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
       },
       description: DataTypes.TEXT,
     },
