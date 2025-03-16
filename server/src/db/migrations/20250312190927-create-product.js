@@ -22,10 +22,6 @@ module.exports = {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
-      discount: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-      },
       description: {
         type: Sequelize.TEXT,
         allowNull: true,

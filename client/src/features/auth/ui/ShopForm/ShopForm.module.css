@@ -114,13 +114,17 @@
 
 .buttonContainer {
   display: flex;
+  flex-direction: row;
   gap: 8px;
+  align-items: center;
   justify-content: center;
   margin-top: 10px;
 }
 
 .button {
+  max-height: 30px;
   padding: 6px 12px;
+  margin: 0;
   font-size: 14px;
   color: white;
   cursor: pointer;
@@ -134,3 +138,16 @@
   background-color: #494d52;
 }
 
+.quantityControls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.quantityControls div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./OrdersPage.module.css";
 import { getOrders } from "@/shared/api/api";
-import { useNavigate } from "react-router";
+import { OneOrder } from "./OneOrder";
+import { useAppSelector } from "@/shared/hooks/reduxHook";
 
 // Определяем интерфейсы
 interface Product {
@@ -9,7 +10,6 @@ interface Product {
   name: string;
   image: string;
   price: string;
-  discount: number;
 }
 
 interface BasketItem {
@@ -22,7 +22,7 @@ interface BasketItem {
   userId: number;
 }
 
-interface Order {
+export interface Order {
   id: number;
   address: string;
   basket: BasketItem[];
@@ -33,6 +33,7 @@ interface Order {
   telephone: string;
   updatedAt: string;
   userId: number;
+  status: string;
 }
 
 interface ApiResponse {
@@ -40,8 +41,13 @@ interface ApiResponse {
 }
 
 export default function OrdersPage() {
-  const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
+  const user = useAppSelector((state) => state.user.user);
+
+  function deleteOneOrder(id: number) {
+    const filteredOrders = orders.filter((order) => order.id !== id);
+    setOrders(filteredOrders);
+  }
 
   useEffect(() => {
     getAllOrders();
@@ -52,65 +58,16 @@ export default function OrdersPage() {
     setOrders(result.orders);
   }
 
-  function calculateTotalOrderAmount(order: Order): number {
-    return order.basket.reduce((total, item) => {
-      const price = parseFloat(item.Product.price);
-      return total + price * item.quantity;
-    }, 0);
-  }
-
   return (
-    <div className={styles.whiteText}>
+    <div className={styles.container}>
       <h1>Заказы</h1>
       {orders.map((order) => (
-        <div key={order.id} className={styles.order}>
-          <h2>Заказ №{order.id}</h2>
-          <p>
-            <strong>Адрес:</strong> {order.address}
-          </p>
-          <p>
-            <strong>Комментарий:</strong> {order.comment}
-          </p>
-          <p>
-            <strong>Дата заказа:</strong>{" "}
-            {new Date(order.date).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Получатель:</strong> {order.recipient}
-          </p>
-          <p>
-            <strong>Телефон:</strong> {order.telephone}
-          </p>
-          <h3>Товары:</h3>
-          <ul>
-            {order.basket.map((item) => (
-              <li key={item.id}>
-                <p>
-                  <strong>Товар:</strong> {item.Product.name}
-                </p>
-                <p>
-                  <strong>Количество:</strong> {item.quantity}
-                </p>
-                <p>
-                  <strong>Цена за штуку:</strong> {item.Product.price} руб.
-                </p>
-                <button>
-                  <div
-                    key={item.Product.id}
-                    className={styles.product}
-                    onClick={() => navigate(`/product/${item.Product.id}`)}
-                  >
-                    Карточка товара
-                  </div>
-                </button>
-              </li>
-            ))}
-          </ul>
-          <p>
-            <strong>Общая сумма заказа:</strong>{" "}
-            {calculateTotalOrderAmount(order).toFixed(2)} руб.
-          </p>
-        </div>
+        <OneOrder
+          key={order.id}
+          order={order}
+          deleteOneOrder={deleteOneOrder}
+          isAdmin={user?.isAdmin}
+        />
       ))}
     </div>
   );

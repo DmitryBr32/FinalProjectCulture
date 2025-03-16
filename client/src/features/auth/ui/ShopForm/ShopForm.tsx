@@ -1,6 +1,6 @@
 import { JSX, useEffect, useState } from "react";
 import styles from "./ShopForm.module.css";
-import { getProducts, getCart } from "@/shared/api/api";
+import { getCart, getShopStorage } from "@/shared/api/api";
 import { Product } from "@/entities/product/product";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { addToCart, initializeCart } from "@/app/store/cartSlice";
@@ -17,9 +17,8 @@ export default function ShopForm(): JSX.Element {
 
   useEffect(() => {
     const fetchData = async () => {
-      const products = await getProducts();
+      const products = await getShopStorage();
       setProducts(products);
-
       const cartData = await getCart();
       dispatch(initializeCart(cartData));
     };
@@ -32,6 +31,10 @@ export default function ShopForm(): JSX.Element {
     const currentQuantity = existingItem ? existingItem.quantity : 0;
     const newQuantity = Math.max(currentQuantity + change, 0);
 
+    if (!product.quantity || product.quantity < newQuantity) {
+      return;
+    }
+
     try {
       await addToCartAPI(product, newQuantity, product.image);
       dispatch(addToCart({ productId: product.id, quantity: newQuantity }));
@@ -40,28 +43,28 @@ export default function ShopForm(): JSX.Element {
     }
   };
 
-    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className={styles.container}>
       <h1>Мини - Магазин</h1>
       <nav className={styles.navContainer}>
-      <NavLink
-            to={CLIENT_ROUTES.BASKETS}
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            Корзина
-            {totalQuantity > 0 && (
-              <span className={styles.cartQuantity}>{totalQuantity}</span>
-            )}
-          </NavLink>
-          <NavLink
-            to={CLIENT_ROUTES.ORDERS} 
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            Заказы
-          </NavLink>
-          </nav>
+        <NavLink
+          to={CLIENT_ROUTES.BASKETS}
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
+          Корзина
+          {totalQuantity > 0 && (
+            <span className={styles.cartQuantity}>{totalQuantity}</span>
+          )}
+        </NavLink>
+        <NavLink
+          to={CLIENT_ROUTES.ORDERS}
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
+          Заказы
+        </NavLink>
+      </nav>
       <div className={styles.content}>
         <div className={styles.productList}>
           <h2>Товары</h2>
@@ -83,7 +86,8 @@ export default function ShopForm(): JSX.Element {
                     className={styles.productImage}
                   />
                   <h3>{product.name}</h3>
-                  <p>{product.description}</p>
+                  <p>{product.description.slice(0, 20) + "..."}</p>
+                  <p>Остаток: {product.quantity} шт.</p>
                   <p>Цена: {product.price} руб.</p>
                   <div className={styles.buttonContainer}>
                     <button className={styles.button}>Подробнее</button>
@@ -99,7 +103,7 @@ export default function ShopForm(): JSX.Element {
                         >
                           -
                         </button>
-                        <span>{quantity}</span>
+                        <div>{quantity}</div>
                         <button
                           className={styles.button}
                           onClick={(e) => {
