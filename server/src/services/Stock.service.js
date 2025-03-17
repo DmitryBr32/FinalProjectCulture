@@ -6,8 +6,34 @@ class StockService {
       where: { userId },
       include: [{ model: Ingredient, as: "ingredientType" }],
     });
-    console.log(stock);
     return stock;
+  }
+
+  static async createUserStock(
+    userId,
+    ingredientTypeId,
+    ingredientBalance,
+    title,
+    strength
+  ) {
+    const newStock = await UserStock.create({
+      userId,
+      ingredientTypeId,
+      ingredientBalance,
+      title,
+      strength,
+    });
+    await newStock.reload({
+      include: [
+        {
+          model: Ingredient,
+          as: "ingredientType",
+          attributes: ["id", "type", "isAlko", "imgUrl"],
+        },
+      ],
+    });
+
+    return newStock;
   }
 
   static async findOrCreateUserStock(
@@ -17,40 +43,49 @@ class StockService {
     title,
     strength
   ) {
-    // Find all existing stocks for this user and ingredient type
-    const existingStocks = await UserStock.findAll({
-      where: { userId, ingredientTypeId },
-      include: [{ model: Ingredient, as: "ingredientType" }],
-    });
-    // Check if there's an exact title match
-    const exactMatch = existingStocks.find((stock) => stock.title === title);
-
-    if (exactMatch) {
-      // Update existing stock with same title
-      exactMatch.ingredientBalance = ingredientBalance;
-      await exactMatch.save();
-      await exactMatch.reload({
-        include: [{ model: Ingredient, as: "ingredientType" }],
-      });
-      return exactMatch;
-    } else {
-      // Create new stock entry
-      const stock = await UserStock.create({
+    const existingStock = await UserStock.findOne({
+      where: {
         userId,
         ingredientTypeId,
-        ingredientBalance,
-        title,
-        strength,
+      },
+    });
+    if (existingStock) {
+      existingStock.title = title;
+      existingStock.ingredientBalance = ingredientBalance;
+      existingStock.strength = strength;
+      await existingStock.save();
+      await existingStock.reload({
+        include: [
+          {
+            model: Ingredient,
+            as: "ingredientType",
+            attributes: ["id", "type", "isAlko", "imgUrl"],
+          },
+        ],
       });
-      await stock.reload({
-        include: [{ model: Ingredient, as: "ingredientType" }],
-      });
-      return stock;
+      return existingStock;
     }
+    const newStock = await UserStock.create({
+      userId,
+      ingredientTypeId,
+      ingredientBalance,
+      title,
+      strength,
+    });
+    await newStock.reload({
+      include: [
+        {
+          model: Ingredient,
+          as: "ingredientType",
+          attributes: ["id", "type", "isAlko", "imgUrl"],
+        },
+      ],
+    });
+    return newStock;
   }
 
-  static async delete(userId, ingredientTypeId) {
-    return await UserStock.destroy({ where: { userId, ingredientTypeId } });
+  static async delete(userId, id) {
+    return await UserStock.destroy({ where: { userId, id } });
   }
 }
 
