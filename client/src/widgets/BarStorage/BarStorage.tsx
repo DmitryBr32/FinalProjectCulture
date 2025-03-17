@@ -13,11 +13,9 @@ export default function BarStorage() {
   const loading = useAppSelector((state) => state.stock.isLoading);
   const error = useAppSelector((state) => state.stock.error);
 
-  // Состояния для управления формами
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [editingStock, setEditingStock] = useState<IStock | null>(null);
-  // Обработчик удаления
   const deleteHandler = async (id: number) => {
     if (!user) return;
     try {
@@ -30,7 +28,6 @@ export default function BarStorage() {
       console.error("Error deleting stock item:", error);
     }
   };
-  // Обработчик редактирования
   const editHandler = (id: number) => {
     const stockItem = stock.find((item) => item.id === id);
     if (stockItem) {
@@ -40,7 +37,6 @@ export default function BarStorage() {
     }
   };
 
-  // Загрузка данных при монтировании
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -54,7 +50,6 @@ export default function BarStorage() {
     };
     fetchData();
   }, [dispatch, user]);
-  // Обработчик закрытия форм
   const handleFormClose = () => {
     setShowAddForm(false);
     setShowUpdateForm(false);
@@ -98,7 +93,7 @@ export default function BarStorage() {
                   alt={ingredient.title}
                 />
               </div>
-              <div>
+              <div className={styles.buttonContainer}>
                 <button onClick={() => editHandler(ingredient.id)}>
                   Отредактировать
                 </button>
@@ -112,6 +107,7 @@ export default function BarStorage() {
       )}
       {!showAddForm && !showUpdateForm ? (
         <button
+          className={styles.addButton}
           onClick={() => {
             setShowAddForm(true);
             setShowUpdateForm(false);
