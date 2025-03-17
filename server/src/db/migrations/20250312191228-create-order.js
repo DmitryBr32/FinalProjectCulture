@@ -30,7 +30,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING,
-        defaultValue: 'pending', 
+        defaultValue: 'заказ принят', 
       },
       userId: {
         type: Sequelize.INTEGER,
