@@ -25,8 +25,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  align-items: center; /* Центрирование по горизонтали */
-  justify-content: center; /* Центрирование по вертикали */
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -34,18 +34,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 120px;
   overflow: hidden;
-  background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 8px;
 }
 
 .ingrImg img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Чтобы картинка целиком вмещалась */
+  object-fit: cover;
+  object-position: center;
 }
 
 .ingredientType {
@@ -54,7 +53,6 @@
   color: #333;
 }
 
-/* Body section with title, balance, and button */
 .ingrBody {
   display: flex;
   align-items: center;

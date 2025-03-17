@@ -33,59 +33,62 @@ export default function ModalRecipe({
       {recipeId > 1 && (
         <button onClick={() => setRecipeId(recipeId - 1)}></button>
       )}
-      <div className={styles.modal}>
-        <button className={styles.closeButton} onClick={onClose}>
-          &times;
-        </button>
-        <div className={styles.modalContent}>
-          <div className={styles.modalLeft}>
-            <img
-              src={recipe?.img}
-              alt={recipe?.title}
-              className={styles.modalImage}
-            />
-            <div className={styles.modalPreparation}>
-              <h3>Приготовление:</h3>
-              <p>{recipe?.discription}</p>
+
+      <div className={styles.modalContainer}>
+        <div className={styles.modal}>
+          <button className={styles.closeButton} onClick={onClose}>
+            &times;
+          </button>
+          <div className={styles.modalContent}>
+            <div className={styles.modalLeft}>
+              <img
+                src={recipe?.img}
+                alt={recipe?.title}
+                className={styles.modalImage}
+              />
+              <div className={styles.modalPreparation}>
+                <h3>Приготовление:</h3>
+                <p>{recipe?.discription}</p>
+              </div>
             </div>
-          </div>
-          <div className={styles.modalRight}>
-            <h2>{recipe?.title}</h2>
-            <div className={styles.modalDescription}>
-              <p>{recipe?.text}</p>
-            </div>
-            <div>
-              <h3>Тебе понадобятся:</h3>
+            <div className={styles.modalRight}>
+              <h2>{recipe?.title}</h2>
+              <div className={styles.modalDescription}>
+                <p>{recipe?.text}</p>
+              </div>
               <div>
-                {recipe?.Components.map((component, index) => (
-                  <div key={index} className={styles.ingrTable}>
-                    <div className={styles.ingrName}>
-                      - {component.ingredient.type}
+                <h3>Тебе понадобятся:</h3>
+                <div>
+                  {recipe?.Components.map((component, index) => (
+                    <div key={index} className={styles.ingrTable}>
+                      <div className={styles.ingrName}>
+                        - {component.ingredient.type}
+                      </div>
+                      <div className={styles.ingrQuant}>
+                        ({component.quantity})
+                      </div>
                     </div>
-                    <div className={styles.ingrQuant}>
-                      ({component.quantity})
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+          <button className={styles.favoriteButton} onClick={addToFavorite}>
+            {isFavorite ? (
+              <img
+                src="../../../public/free-icon-bookmark-4305474.png"
+                alt="favorite"
+                className={styles.favoriteIcon}
+              />
+            ) : (
+              <img
+                src="../../../public/free-icon-bookmark-4305497.png"
+                alt="favorite"
+                className={styles.favoriteIcon}
+              />
+            )}
+          </button>
         </div>
-        <button className={styles.favoriteButton} onClick={addToFavorite}>
-          {isFavorite ? (
-            <img
-              src="../../../public/free-icon-bookmark-4305474.png"
-              alt="favorite"
-              className={styles.favoriteIcon}
-            />
-          ) : (
-            <img
-              src="../../../public/free-icon-bookmark-4305497.png"
-              alt="favorite"
-              className={styles.favoriteIcon}
-            />
-          )}
-        </button>
       </div>
       {recipeId < recipesLength && (
         <button onClick={() => setRecipeId(recipeId + 1)}></button>

@@ -1,31 +1,68 @@
 const router = require("express").Router();
 const verifyAccessToken = require("../middleware/verifyAccessToken");
-const { Order, Basket } = require('../db/models');
+const { Order, Basket, ShopStorage } = require('../db/models');
 
 router.post('/', verifyAccessToken, async (req, res) => {
-    const userId = res.locals.user.id;
-    try {
-        // Создаем новый заказ в базе данных
-        const newOrder = await Order.create({
-            comment: req.body.comment,
-            address: req.body.address,
-            date: req.body.date,
-            telephone: req.body.telephone,
-            recipient: req.body.name,
-            basket: req.body.basket,
-            userId: userId // Добавляем userId к заказу
-        });
+  const userId = res.locals.user.id;
+  const basket = req.body.basket;
 
-        await Basket.destroy({
+  try {
+      // Проверка наличия товаров на складе
+      for (const item of basket) {
+          const productId = item.productId;
+          const quantity = item.quantity;
+
+          // Находим запись на складе для данного товара
+          const shopStorageItem = await ShopStorage.findOne({
+              where: { productId: productId }
+          });
+
+          if (!shopStorageItem) {
+              throw new Error(`Товар с ID ${productId} не найден на складе`);
+          }
+
+          if (shopStorageItem.quantity < quantity) {
+              throw new Error(`Недостаточно товара на складе для товара с ID ${productId}`);
+          }
+      }
+
+      // Если проверка прошла успешно, создаем заказ
+      const newOrder = await Order.create({
+          comment: req.body.comment,
+          address: req.body.address,
+          date: req.body.date,
+          telephone: req.body.telephone,
+          recipient: req.body.name,
+          basket,
+          userId: userId
+      });
+
+      // Уменьшаем количество товаров на складе
+      for (const item of basket) {
+          const productId = item.productId;
+          const quantity = item.quantity;
+
+          // Находим запись на складе для данного товара
+          const shopStorageItem = await ShopStorage.findOne({
+              where: { productId: productId }
+          });
+
+          // Уменьшаем количество товара на складе
+          shopStorageItem.quantity -= quantity;
+          await shopStorageItem.save();
+      }
+
+      // Очищаем корзину пользователя
+      await Basket.destroy({
           where: { userId: userId }
       });
 
-        // Отправляем ответ с созданным заказом
-        return res.status(201).json({ message: 'Заказы обновлены', order: newOrder });
-    } catch (error) {
-        console.error('Ошибка при создании заказа:', error);
-        res.status(500).json({ error: error.message });
-    }
+      // Отправляем ответ с созданным заказом
+      return res.status(201).json({ message: 'Заказ успешно создан', order: newOrder });
+  } catch (error) {
+      console.error('Ошибка при создании заказа:', error);
+      res.status(500).json({ error: error.message });
+  }
 });
 
   router.get('/', verifyAccessToken, async (req, res) => {

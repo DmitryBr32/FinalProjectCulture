@@ -9,6 +9,7 @@ export const STOCK_ENDPOINT = "/stock" as const;
 enum STOCK_THUNK_TYPES {
   GET_STOCK = "stock/getUserStock",
   CREATE_OR_UPDATE_STOCK = "stock/findOrCreateUserStock",
+  CREATE_STOCK = "stock/сreateUserStock",
   DELETE_STOCK = "stock/deleteUserStock",
 }
 
@@ -27,6 +28,27 @@ export const getStockThunk = createAsyncThunk<
     };
   } catch (error) {
     console.error("Ошибка", error);
+    return rejectWithValue(handleAxiosError(error));
+  }
+});
+
+export const createStockThunk = createAsyncThunk<
+  IServerResponse<IStock>,
+  IStockRowData,
+  { rejectValue: IServerResponse }
+>(STOCK_THUNK_TYPES.CREATE_STOCK, async (stockData, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${STOCK_ENDPOINT}/${stockData.userId}`,
+      {
+        ingredientTypeId: stockData.ingredientTypeId,
+        ingredientBalance: stockData.ingredientBalance,
+        title: stockData.title,
+        strength: stockData.strength,
+      }
+    );
+    return data;
+  } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }
 });
@@ -54,16 +76,17 @@ export const createOrUpdateStockThunk = createAsyncThunk<
     }
   }
 );
+
 export const deleteStockThunk = createAsyncThunk<
   IServerResponse<IStock>,
-  { ingredientTypeId: number; userId: number },
+  { id: number; userId: number },
   { rejectValue: IServerResponse }
 >(
   STOCK_THUNK_TYPES.DELETE_STOCK,
-  async ({ ingredientTypeId, userId }, { rejectWithValue }) => {
+  async ({ id, userId }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.delete(
-        `${STOCK_ENDPOINT}/${userId}/${ingredientTypeId}`
+        `${STOCK_ENDPOINT}/${userId}/item/${id}`
       );
       return data;
     } catch (error) {
