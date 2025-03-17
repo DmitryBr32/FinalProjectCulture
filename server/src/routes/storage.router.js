@@ -29,7 +29,10 @@ router.get('/', async (req, res) => {
 
 router.post("/", verifyAccessToken, async (req, res) => {
     const user = res.locals.user;
-    const { id, name, image, price, description, quantity } = req.body;
+    const { 
+        id, name, image, price, description, quantity, 
+        article, brand, material, dimensions, weight, 
+    } = req.body;
 
     try {
         if (!user.isAdmin) {
@@ -37,15 +40,36 @@ router.post("/", verifyAccessToken, async (req, res) => {
         }
 
         const result = await Product.sequelize.transaction(async (t) => {
-            // Создаем или обновляем продукт
+            // Создаем или обновляем продукт с новыми полями
             const [product, created] = await Product.findOrCreate({
                 where: { id },
-                defaults: { name, image, price, description },
+                defaults: { 
+                    name, 
+                    image, 
+                    price, 
+                    description, 
+                    article, 
+                    brand, 
+                    material, 
+                    dimensions, 
+                    weight, 
+                },
                 transaction: t,
             });
 
             if (!created) {
-                await product.update({ name, image, price, description }, { transaction: t });
+                // Обновляем продукт с новыми полями
+                await product.update({ 
+                    name, 
+                    image, 
+                    price, 
+                    description, 
+                    article, 
+                    brand, 
+                    material, 
+                    dimensions, 
+                    weight, 
+                }, { transaction: t });
             }
 
             let shopStorage = null;

@@ -26,6 +26,27 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      article: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      brand: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      material: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      dimensions: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      weight: {
+        type: Sequelize.STRING, 
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

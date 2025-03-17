@@ -20,6 +20,27 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       description: DataTypes.TEXT,
+      article: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      brand: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      material: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      dimensions: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      weight: {
+        type: DataTypes.STRING, 
+        allowNull: true,
+      },
     },
     {
       sequelize,

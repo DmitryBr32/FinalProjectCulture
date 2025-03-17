@@ -3,8 +3,9 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class ShopStorage extends Model {
-    static associate({ Product }) {
+    static associate({ Product, Basket }) {
       ShopStorage.belongsTo(Product, { foreignKey: "productId" });
+      ShopStorage.hasMany(Basket, { foreignKey: "productId" });
     }
   }
 
