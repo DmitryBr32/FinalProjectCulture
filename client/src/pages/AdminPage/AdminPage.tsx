@@ -1,23 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShopStorages } from "../ShopStorages/ShopStorages";
 import styles from "./AdminPage.module.css";
 import Orders from "@/pages/OrdersPage/OrdersPage";
+import { useAppSelector } from "@/shared/hooks/reduxHook";
+import { useNavigate } from "react-router-dom";
+import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 
 export function AdminPage() {
-  const [activeModule, setActiveModule] = useState<"orders" | "shopStorages">("orders");
+  const [activeModule, setActiveModule] = useState<"orders" | "shopStorages">(
+    "orders"
+  );
+  const user = useAppSelector((state) => state.user.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!user || user?.isAdmin === false) {
+        navigate(CLIENT_ROUTES.MAIN);
+        console.log('user', user?.isAdmin);
+      }
+    }, 500); // Задержка 200 мс
+
+    return () => clearTimeout(timer); // Очистка таймера при размонтировании
+  }, [navigate, user]);
+
+  if (!user) {
+    return <></>; // Возвращаем пустой фрагмент, если пользователь не загружен
+  }
 
   return (
     <div className={styles.container}>
       {/* Панель с вкладками */}
       <div className={styles.tabs}>
         <button
-          className={`${styles.tabButton} ${activeModule === "orders" ? styles.active : ""}`}
+          className={`${styles.tabButton} ${
+            activeModule === "orders" ? styles.active : ""
+          }`}
           onClick={() => setActiveModule("orders")}
         >
           Заказы
         </button>
         <button
-          className={`${styles.tabButton} ${activeModule === "shopStorages" ? styles.active : ""}`}
+          className={`${styles.tabButton} ${
+            activeModule === "shopStorages" ? styles.active : ""
+          }`}
           onClick={() => setActiveModule("shopStorages")}
         >
           Склад
