@@ -6,6 +6,7 @@
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   font-family: var(--font-h1);
+  backdrop-filter: blur(8px);
 }
 
 .modalContainer {
@@ -15,21 +16,20 @@
   justify-content: center;
   width: 60%;
   height: 80%;
-  /* background-color: rgba(255, 255, 255, 0.1);  */
   border-radius: 12px;
-  /* backdrop-filter: blur(8px);  */
   overflow: visible;
 }
 
 .modal {
   position: relative;
-  width: 80%;
+  width: 75%;
   height: 85%;
   padding: 40px;
   overflow: visible;
   background-color: rgba(171, 171, 171, 0.275);
   border-radius: 10px;
   backdrop-filter: blur(8px);
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.796); 
 }
 
 .closeButton {
@@ -45,34 +45,34 @@
 .modalContent {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  /* gap: 5px; */
+  justify-content: flex-start;
+  gap: 1px;
 }
 
 .modalLeft {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
 }
 
 .modalRight {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
+  margin-left: 1px;
 }
 
 .modalImage {
-  width: 300px;
-  height: 450px;
-  object-fit: cover;
-  border-radius: 10px;
   position: relative;
   top: -15px; 
   left: 15%;
+  width: 350px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 20px 20px 50px rgba(107, 104, 104, 0.587); 
   transform: translateX(-50%); 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .modal h2 {
