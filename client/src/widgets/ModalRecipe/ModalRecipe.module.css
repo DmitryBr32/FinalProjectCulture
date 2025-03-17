@@ -92,3 +92,15 @@
   display: flex;
   justify-content: space-between;
 }
+
+.modal button {
+  background-color: transparent; 
+  color: inherit; 
+  border: none;
+  transition: none; 
+}
+
+.modal button:hover {
+  background-color: transparent; 
+  color: inherit; 
+}
