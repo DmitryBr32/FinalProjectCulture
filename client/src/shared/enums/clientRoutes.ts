@@ -7,7 +7,7 @@ export enum CLIENT_ROUTES {
   MY_BAR = "/bar",
   SHOP_FORM= "/shop",
   BASKETS="/baskets",
-  PRODUCTID="/product/:productId",
+  SHOPID="/shop/:productId",
   ORDERS="/orders",
   ADMIN="/admin",
 }

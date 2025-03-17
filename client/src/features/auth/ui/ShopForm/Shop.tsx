@@ -5,11 +5,12 @@ import { Product } from "@/entities/product/product";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { addToCart, initializeCart } from "@/app/store/cartSlice";
 import { addToCart as addToCartAPI } from "@/shared/api/api";
-import { NavLink, useNavigate } from "react-router"; 
+import { NavLink, useNavigate, useParams } from "react-router"; 
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import ProductDetailsModal from "./ProductDetailsModal";
 
 export default function Shop(): JSX.Element {
+  const { productId } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +29,20 @@ export default function Shop(): JSX.Element {
 
     fetchData();
   }, [dispatch]);
+  
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const isOpenModal = searchParams.get('isOpenModal');
+    if(productId) {
+      const [filteredProduct] = products.filter((product) => product.id === Number(productId))
+      setSelectedProduct(filteredProduct)
+    }
+
+   if(isOpenModal === 'true' && selectedProduct) {
+    setIsModalOpen(true)
+   }
+   
+  }, [productId, products, selectedProduct])
 
   const handleQuantityChange = async (product: Product, change: number) => {
     const existingItem = cart.find((item) => item.productId === product.id);
@@ -56,11 +71,13 @@ export default function Shop(): JSX.Element {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
+    if(productId) {
+      navigate(CLIENT_ROUTES.SHOP_FORM)
+    }
   };
 
   return (
     <div className={styles.container}>
-      <h1>Culture - Магазин</h1>
       <nav className={styles.navContainer}>
         <NavLink
           to={CLIENT_ROUTES.BASKETS}
@@ -80,7 +97,6 @@ export default function Shop(): JSX.Element {
       </nav>
       <div className={styles.content}>
         <div className={styles.productList}>
-          <h2>Товары</h2>
           <div className={styles.products}>
             {products.map((product) => {
               const cartItem = cart.find(

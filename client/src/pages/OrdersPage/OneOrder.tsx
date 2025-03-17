@@ -11,7 +11,7 @@ type Props = {
 };
 
 export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
-  const defaultStatus = order.status
+  const defaultStatus = order.status;
   const [status, setStatus] = useState(defaultStatus);
   const navigate = useNavigate();
 
@@ -33,13 +33,11 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
   }
 
   async function onChangeStatus() {
-    const response = await changeStatusOrder(order.id, status);
-    console.log(response);
+    await changeStatusOrder(order.id, status);
   }
 
   async function onClickDelete() {
-    const response = await deleteOrder(order.id);
-    console.log(response);
+    await deleteOrder(order.id);
     deleteOneOrder(order.id);
   }
 
@@ -79,7 +77,9 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
               <div
                 key={item.Product.id}
                 className={styles.product}
-                onClick={() => navigate(`/product/${item.Product.id}`)}
+                onClick={() =>
+                  navigate(`/shop/${item.Product.id}?isOpenModal=true`)
+                }
               >
                 Карточка товара
               </div>
@@ -91,28 +91,25 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
         <strong>Общая сумма заказа:</strong>{" "}
         {calculateTotalOrderAmount(order).toFixed(2)} руб.
       </p>
-      {!isAdmin && 
-      <p>
-        Статус: {order.status}
-        </p>}
+      {!isAdmin && <p>Статус: {order.status}</p>}
       {isAdmin && (
         <div>
-      <p>
-        <strong>Статус:</strong>
-        <select onChange={onChangeHandler} value={status}>
-          {statusOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </p>
-        <div className={styles.buttonBlock}>
-          <button onClick={onChangeStatus}>Изменить статус</button>
-          <button onClick={onClickDelete} className={styles.buttonDelete}>
-            Удалить
-          </button>
-        </div>
+          <p>
+            <strong>Статус:</strong>
+            <select onChange={onChangeHandler} value={status}>
+              {statusOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </p>
+          <div className={styles.buttonBlock}>
+            <button onClick={onChangeStatus}>Изменить статус</button>
+            <button onClick={onClickDelete} className={styles.buttonDelete}>
+              Удалить
+            </button>
+          </div>
         </div>
       )}
     </div>
