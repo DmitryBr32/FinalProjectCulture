@@ -30,6 +30,7 @@ class RecipeController {
 
   static async getRecipeByTitle(req, res) {
     const { title } = req.body;
+
     try {
       const recipe = await RecipeService.getRecipeByTitle(title);
       if (!recipe) {

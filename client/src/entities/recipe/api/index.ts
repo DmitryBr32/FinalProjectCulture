@@ -1,7 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "@/shared/lib/axiosInstance";
 import { IServerResponse } from "@/shared/types";
-import { IRecipe, IRecipeRowData, IRecipeArrayType } from "../model";
+import {
+  IRecipe,
+  IRecipeRowData,
+  IRecipeArrayType,
+  IRecipeTitle,
+} from "../model";
 import { handleAxiosError } from "@/shared/utils/handleAxiosError";
 import { IIngredientResArrayType } from "@/entities/ingredient/model";
 
@@ -74,7 +79,7 @@ export const getRecipeByIdThunk = createAsyncThunk<
 
 export const getRecipeByTitleThunk = createAsyncThunk<
   IServerResponse<IRecipe>,
-  string,
+  IRecipeTitle,
   { rejectValue: IServerResponse }
 >(
   RECIPE_THUNK_TYPES.GET_RECIPE_BY_TITLE,
@@ -84,7 +89,7 @@ export const getRecipeByTitleThunk = createAsyncThunk<
         RECIPES_API_ENDPOINTS.GET_RECIPE_BY_TITLE,
         title
       );
-      return data;
+      return { statusCode: 200, data, message: "все ок" };
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
     }
@@ -101,7 +106,7 @@ export const createRecipeThunk = createAsyncThunk<
       RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT,
       recipeData
     );
-    return data;
+    return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }
@@ -119,7 +124,7 @@ export const updateRecipeByIdThunk = createAsyncThunk<
         `${RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT}/${id}`,
         recipeData
       );
-      return data;
+      return { statusCode: 200, data, message: "все ок" };
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
     }
@@ -135,7 +140,7 @@ export const deleteRecipeThunk = createAsyncThunk<
     const { data } = await axiosInstance.delete(
       `${RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT}/${id}`
     );
-    return data;
+    return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }
