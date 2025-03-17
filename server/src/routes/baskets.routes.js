@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Basket, Product } = require('../db/models');
+const { Basket, Product, ShopStorage } = require('../db/models');
 const verifyAccessToken = require("../middleware/verifyAccessToken");
 
 // Пост-запрос для добавления товара в корзину
@@ -39,13 +39,29 @@ router.get('/', verifyAccessToken, async (req, res) => {
       include: [
         {
           model: Product,
-          attributes: ['id', 'name', 'image', 'price', 'description']
+          attributes: ['id', 'name', 'image', 'price', 'description', 'article', 'brand','material','dimensions','weight'],
+          include: [
+            {
+              model: ShopStorage,
+              attributes: ['quantity'],
+            },
+          ],
         },
       ],
     });
 
-    res.status(200).json(cartItems || []);
+    // Форматируем ответ, чтобы включить количество остатков со склада
+    const formattedCartItems = cartItems.map(item => ({
+      ...item.toJSON(),
+      Product: {
+        ...item.Product.toJSON(),
+        stockQuantity: item.Product.ShopStorage ? item.Product.ShopStorage.quantity : 0,
+      },
+    }));
+
+    res.status(200).json(formattedCartItems || []);
   } catch (error) {
+    console.log('errorerrorerror', error);
     res.status(500).json({ error: error.message });
   }
 });

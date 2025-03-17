@@ -14,6 +14,11 @@ const defaultItem = {
   price: 0,
   description: "",
   quantity: 0,
+  article: "",
+  brand: "",
+  material: "",
+  dimensions: "",
+  weight: "",
 };
 
 export function ShopStorages() {
