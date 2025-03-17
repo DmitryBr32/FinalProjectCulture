@@ -11,21 +11,6 @@
   text-align: center;
 }
 
-.filter {
-  margin-bottom: 10px;
-  font-family: var(--font-h1);
-  font-size: large;
-  color: #d0d0d0;
-}
-
-.filter select {
-  padding: 8px 10px;
-  font-size: 15px;
-  cursor: pointer;
-  border: 1px solid #d0d0d0;
-  border-radius: 9px;
-}
-
 .recipeButton {
   padding: 8px 16px;
   margin-top: auto;

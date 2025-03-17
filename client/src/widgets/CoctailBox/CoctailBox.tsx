@@ -1,7 +1,15 @@
 import { IRecipeArrayType } from "@/entities/recipe/model";
-import { useRef } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "./CoctailBox.module.css";
-import IngredientsList from "./IngredientsList";
+
+import CoctailCard from "../CoctailCard/CoctailCard";
 
 type Prop = {
   recipes: IRecipeArrayType;
@@ -9,52 +17,150 @@ type Prop = {
 };
 export default function CoctailBox({ recipes, onOpen }: Prop) {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [selectedStrength, setSelectedStrength] = useState<string>("Все");
+  const [isShotFilter, setIsShotFilter] = useState<boolean | null>(null);
+  const [sortByLikes, setSortByLikes] = useState<"asc" | "desc" | null>(null);
+  const [resipesState, setResipesState] = useState<IRecipeArrayType>(recipes);
 
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({
-        left: -300, // Прокрутка влево на 200 пикселей
-        behavior: "smooth", // Добавляем плавную анимацию
-      });
+  useEffect(() => {
+    if (!(!Array.isArray(recipes) || recipes.length === 0)) {
+      setResipesState(recipes);
     }
-  };
+  }, [recipes]);
 
-  const scrollRight = () => {
+  const scrollLeft = useCallback(() => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
-        left: 300, // Прокрутка вправо на 200 пикселей
+        left: -300,
         behavior: "smooth",
       });
     }
-  };
+  }, []);
+
+  const scrollRight = useCallback(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
+  const handleStrengthChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      setSelectedStrength(e.target.value);
+    },
+    []
+  );
+
+  const handleShotChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setIsShotFilter(value === "true" ? true : value === "false" ? false : null);
+  }, []);
+
+  const handleSortByLikesChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const value = e.target.value;
+      if (value === "asc") {
+        setSortByLikes("asc");
+      } else if (value === "desc") {
+        setSortByLikes("desc");
+      } else {
+        setSortByLikes(null);
+      }
+    },
+    []
+  );
+
+  const filteredRecipes = useMemo(() => {
+    if (!Array.isArray(resipesState) || resipesState.length === 0) {
+      return [];
+    }
+
+    const filtered = resipesState.filter((recipe) => {
+      const strengthFilter =
+        selectedStrength === "Все" || recipe.strengthLevel === selectedStrength;
+
+      const shotFilter =
+        isShotFilter === null || recipe.isShot === isShotFilter;
+
+      return strengthFilter && shotFilter;
+    });
+
+    if (sortByLikes === "asc") {
+      filtered.sort((a, b) => a.likes - b.likes);
+    } else if (sortByLikes === "desc") {
+      filtered.sort((a, b) => b.likes - a.likes);
+    }
+
+    return filtered;
+  }, [resipesState, selectedStrength, isShotFilter, sortByLikes]);
 
   return (
-    <div className={styles.carouselContainer}>
-      <button className={styles.scrollButton} onClick={scrollLeft}></button>{" "}
-      <div className={styles.carousel} ref={carouselRef}>
-        <div className={styles.recipeList}>
-          {recipes.map((recipe) => (
-            <div
-              key={recipe.id}
-              className={styles.recipeContainer}
-              onClick={() => onOpen(recipe.id)}
+    <div className={styles.filterContainer}>
+      {filteredRecipes.length !== 0 && (
+        <>
+          <div className={styles.filter}>
+            <label htmlFor="strength">По крепости </label>
+            <select
+              id="strength"
+              value={selectedStrength}
+              onChange={handleStrengthChange}
             >
-              <div className={styles.ingrList}>
-                <IngredientsList recipe={recipe} />
+              <option value="Все">Все</option>
+              <option value="крепкий">Мужицкие</option>
+              <option value="средний">Средние</option>
+              <option value="слабый">Лёгенькие</option>
+            </select>
+          </div>
+          <div className={styles.filter}>
+            <label htmlFor="strength">По объему </label>
+            <select
+              id="strength"
+              value={selectedStrength}
+              onChange={handleShotChange}
+            >
+              <option value="Все">Все</option>
+              <option value="false">Лонг-дринк</option>
+              <option value="true">Шот-дринк</option>
+            </select>
+          </div>
+          <div className={styles.filter}>
+            <label htmlFor="sortByLikes">Популярные</label>
+            <select
+              id="sortByLikes"
+              value={sortByLikes || ""}
+              onChange={handleSortByLikesChange}
+            >
+              <option value="">Не сортировать</option>
+              <option value="asc">По возрастанию</option>
+              <option value="desc">По убыванию</option>
+            </select>
+          </div>
+
+          <div className={styles.carouselContainer}>
+            <button
+              className={styles.scrollButton}
+              onClick={scrollLeft}
+            ></button>
+            <div className={styles.carousel} ref={carouselRef}>
+              <div className={styles.recipeList}>
+                {filteredRecipes.map((recipe) => (
+                  <CoctailCard
+                    key={recipe.id}
+                    recipe={recipe}
+                    onOpen={onOpen}
+                  />
+                ))}
               </div>
-              <div
-                className={styles.recipeCard}
-                style={{
-                  backgroundImage: recipe.img ? `url(${recipe.img})` : "none",
-                  backgroundSize: "cover",
-                }}
-              ></div>{" "}
-              <h3 className={styles.recipeTitle}>{recipe.title}</h3>
             </div>
-          ))}
-        </div>
-      </div>
-      <button className={styles.scrollButton} onClick={scrollRight}></button>{" "}
+            <button
+              className={styles.scrollButton}
+              onClick={scrollRight}
+            ></button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

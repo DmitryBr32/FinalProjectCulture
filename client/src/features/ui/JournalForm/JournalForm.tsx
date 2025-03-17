@@ -4,6 +4,7 @@ import { getRecipesThunk } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
 import CoctailBox from "@/widgets/CoctailBox/CoctailBox";
+import ResponseByIngrsForm from "../ResponseByIngrsForm/ResponseByIngrsForm";
 
 export default function JournalForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -30,14 +31,7 @@ export default function JournalForm(): JSX.Element {
       <h1 className={styles.title}>Рецепты</h1>
 
       <div className={styles.selector}>
-        <div className={styles.filter}>
-          <label htmlFor="category">По крепости </label>
-          <select id="category">
-            <option value="Крепкие">Мужицкие</option>
-            <option value="Средние">Средние</option>
-            <option value="Слабые">Лёгенькие</option>
-          </select>
-        </div>
+        <ResponseByIngrsForm />
         <div className={styles.banner}>
           <h1 className={styles.title}>Найдите идеальное сочетание</h1>
           <p className={styles.text}>
@@ -54,6 +48,7 @@ export default function JournalForm(): JSX.Element {
             напитков.
           </p>
         </div>
+
         <CoctailBox recipes={recipes} onOpen={openModal} />
       </div>
 

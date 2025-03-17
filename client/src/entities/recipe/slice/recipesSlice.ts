@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getRecipesThunk, getRecipesByStrengthThunk } from "../api";
+import { getRecipesThunk, getRecipesByIngrsThunk } from "../api";
 import { IRecipeArrayType } from "../model";
 
 type RecipesState = {
@@ -35,16 +35,16 @@ const recipesSlice = createSlice({
         state.error = action.payload?.error ?? "Ошибка загрузки рецептов";
       })
 
-      .addCase(getRecipesByStrengthThunk.pending, (state) => {
+      .addCase(getRecipesByIngrsThunk.pending, (state) => {
         state.isLoading = true;
         console.log("state.recipes pending");
       })
-      .addCase(getRecipesByStrengthThunk.fulfilled, (state, action) => {
+      .addCase(getRecipesByIngrsThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.recipes = action.payload.data;
         console.log("state.recipes");
       })
-      .addCase(getRecipesByStrengthThunk.rejected, (state, action) => {
+      .addCase(getRecipesByIngrsThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload?.error ?? "Ошибка загрузки рецептов";
       });
