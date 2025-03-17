@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     basket: DataTypes.JSONB,
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'pending',
+      defaultValue: 'заказ принят',
     },
     userId: {
       type: DataTypes.INTEGER,
