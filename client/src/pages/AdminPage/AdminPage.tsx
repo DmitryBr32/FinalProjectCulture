@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 
 export function AdminPage() {
-  const [activeModule, setActiveModule] = useState<"orders" | "shopStorages">(
+  const [activeModule, setActiveModule] = useState<"orders" | "shopStorages" | 'recipes' | 'drinks' >(
     "orders"
   );
   const user = useAppSelector((state) => state.user.user);
@@ -48,12 +48,30 @@ export function AdminPage() {
         >
           Склад
         </button>
+        <button
+          className={`${styles.tabButton} ${
+            activeModule === "recipes" ? styles.active : ""
+          }`}
+          onClick={() => setActiveModule("recipes")}
+        >
+          Рецепты
+        </button>
+        <button
+          className={`${styles.tabButton} ${
+            activeModule === "drinks" ? styles.active : ""
+          }`}
+          onClick={() => setActiveModule("drinks")}
+        >
+          Напитки
+        </button>
       </div>
 
       {/* Рендерим активный модуль */}
       <div className={styles.moduleContainer}>
         {activeModule === "orders" && <Orders />}
         {activeModule === "shopStorages" && <ShopStorages />}
+        {activeModule === "recipes" && <h1>Рецепты</h1>}
+        {activeModule === "drinks" && <h1>Напитки</h1>}
       </div>
     </div>
   );
