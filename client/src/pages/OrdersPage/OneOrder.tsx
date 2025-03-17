@@ -11,12 +11,17 @@ type Props = {
 };
 
 export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
-  const defaultStatus =
-    order.status === "pending" ? "заказ принят" : order.status;
+  const defaultStatus = order.status
   const [status, setStatus] = useState(defaultStatus);
   const navigate = useNavigate();
 
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const statusOptions = [
+    "заказ принят",
+    "заказ в обработке",
+    "товар отправлен покупателю",
+  ];
+
+  const onChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(event.target.value);
   };
 
@@ -88,16 +93,22 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
       </p>
       {!isAdmin && 
       <p>
-        Статус заказа: {order.status}
+        Статус: {order.status}
         </p>}
       {isAdmin && (
         <div>
       <p>
         <strong>Статус:</strong>
-        <input onChange={onChangeHandler} value={status} type="text" />
+        <select onChange={onChangeHandler} value={status}>
+          {statusOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </p>
         <div className={styles.buttonBlock}>
-          <button onClick={onChangeStatus}>Изменить стаус</button>
+          <button onClick={onChangeStatus}>Изменить статус</button>
           <button onClick={onClickDelete} className={styles.buttonDelete}>
             Удалить
           </button>
