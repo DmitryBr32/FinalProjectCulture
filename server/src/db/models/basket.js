@@ -3,9 +3,10 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Basket extends Model {
-    static associate({ User, Product }) {
+    static associate({ User, Product, ShopStorage }) {
       Basket.belongsTo(User, { foreignKey: "userId" });
       Basket.belongsTo(Product, { foreignKey: "productId" });
+      Basket.belongsTo(ShopStorage, { foreignKey: "productId" });
     }
   }
 

@@ -1,9 +1,19 @@
 import { JSX, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { removeFromCart, updateCartItemQuantity, initializeCart, clearCart } from "@/app/store/cartSlice";
-import { getCart, addToCart as addToCartAPI, removeFromCart as removeFromCartAPI, addToOrder } from "@/shared/api/api";
+import {
+  removeFromCart,
+  updateCartItemQuantity,
+  initializeCart,
+  clearCart,
+} from "@/app/store/cartSlice";
+import {
+  getCart,
+  addToCart as addToCartAPI,
+  removeFromCart as removeFromCartAPI,
+  addToOrder,
+} from "@/shared/api/api";
 import styles from "./BasketsPage.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 
 const INITIAL_INPUTS_DATA = {
@@ -20,9 +30,8 @@ export default function Baskets(): JSX.Element {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
-
- const [ step, setStep ] = useState(1)
-
+  const navigate = useNavigate();
+  const [step, setStep] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,6 +92,13 @@ export default function Baskets(): JSX.Element {
       await deleteProduct(productId);
       return;
     }
+    // console.log("existingItem.quantity",existingItem.quantity)
+    // console.log("newQuantity",newQuantity)
+    // console.log("existingItem",existingItem)
+
+    if (existingItem.Product.ShopStorage.quantity < newQuantity) {
+      return;
+    }
 
     try {
       const price = parseFloat(existingItem.Product.price);
@@ -111,38 +127,29 @@ export default function Baskets(): JSX.Element {
   const totalPrice = calculateTotalPrice();
 
   const handleOrderSubmit = async () => {
-
-    await addToOrder(inputs, cart)
+    await addToOrder(inputs, cart);
     setIsModalOpen(false);
-    setInputs(INITIAL_INPUTS_DATA)
-    dispatch(clearCart())
-    setStep(2)
+    setInputs(INITIAL_INPUTS_DATA);
+    dispatch(clearCart());
+    setStep(2);
   };
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  if(step === 2) {
+  if (step === 2) {
     return (
       <div className={styles.container}>
         <div className={styles.notification}>
-       <h1>Заказ успешно создан!</h1> 
-      <nav className={styles.navContainer}>
-      <NavLink
-            to={CLIENT_ROUTES.SHOP_FORM}
-          >
-            Вернуться в магазин
-          </NavLink>
-          <NavLink
-            to={CLIENT_ROUTES.ORDERS} 
-          >
-            Мои заказы
-          </NavLink>
+          <h1>Заказ успешно создан!</h1>
+          <nav className={styles.navContainer}>
+            <NavLink to={CLIENT_ROUTES.SHOP_FORM}>Вернуться в магазин</NavLink>
+            <NavLink to={CLIENT_ROUTES.ORDERS}>Мои заказы</NavLink>
           </nav>
-          </div>
-          </div>
-    )
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -157,14 +164,20 @@ export default function Baskets(): JSX.Element {
               <img
                 src={product.Product?.image}
                 alt={product.Product?.name}
-                className={styles.cartItemImage} />
+                className={styles.cartItemImage}
+              />
               <div className={styles.cartItemDetails}>
-                <h3>{product.Product?.name}</h3>
-                <p>{product.Product?.description}</p>
+                <h3>
+                  <strong>{product.Product?.name}</strong>
+                </h3>
+                <p>Артикул: {product.Product?.article}</p>
+                <p>Вес: {product.Product?.weight}</p>
+                <p>Бренд: {product.Product?.brand}</p>
+                <p>Габариты: {product.Product?.dimensions}</p>
                 <p>Цена: {product.Product?.price} руб.</p>
-                <div className={styles.quantityControls}>
+                <div className={styles.quantityBlock}>
                   <button
-                    className={styles.button}
+                    className={styles.quantityButton}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (product.id !== undefined) {
@@ -175,9 +188,12 @@ export default function Baskets(): JSX.Element {
                   >
                     -
                   </button>
-                  <span>{product.quantity}</span>
+                  <span className={styles.quantityValue}
+                  >
+                    {product.quantity}
+                  </span>
                   <button
-                    className={styles.button}
+                    className={styles.quantityButton}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (product.id !== undefined) {
@@ -195,6 +211,12 @@ export default function Baskets(): JSX.Element {
           <div className={styles.total}>
             <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
           </div>
+          <button
+            className={styles.orderButton}
+            onClick={() => navigate(CLIENT_ROUTES.SHOP_FORM)}
+          >
+            Продолжить покупки
+          </button>
           <button
             className={styles.orderButton}
             onClick={() => setIsModalOpen(true)}
