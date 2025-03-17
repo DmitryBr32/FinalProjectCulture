@@ -3,13 +3,18 @@ import { axiosInstance } from "@/shared/lib/axiosInstance";
 import { IServerResponse } from "@/shared/types";
 import { IRecipe, IRecipeRowData, IRecipeArrayType } from "../model";
 import { handleAxiosError } from "@/shared/utils/handleAxiosError";
+import { IIngredientResArrayType } from "@/entities/ingredient/model";
 
-export const RECIPES_ENDPOINT = "/recipe" as const;
+enum RECIPES_API_ENDPOINTS {
+  RECIPES_ENDPOINT = "recipe/",
+  GET_RECIPES_BY_INGRS = "recipe/getRecipesBySeveralIngrs",
+  GET_RECIPE_BY_TITLE = "recipe/getByTitle",
+}
 
 enum RECIPE_THUNK_TYPES {
   GET_RECIPES = "recipe/getRecipes",
-  GET_RECIPES_BY_STRENGTH = "recipe/getRecipesByStrength",
-  GET_RECIPE_BY_ID = "recipe/getRecipeById",
+  GET_RECIPES_BY_INGRS = "recipe/getRecipesBySeveralIngrs",
+  GET_RECIPE_BY_ID = "recipe/",
   GET_RECIPE_BY_TITLE = "recipe/getRecipeByTitle",
   CREATE_RECIPE = "recipe/createRecipe",
   UPDATE_RECIPE = "recipe/updateRecipeById",
@@ -22,7 +27,9 @@ export const getRecipesThunk = createAsyncThunk<
   { rejectValue: IServerResponse }
 >(RECIPE_THUNK_TYPES.GET_RECIPES, async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.get(RECIPES_ENDPOINT);
+    const { data } = await axiosInstance.get(
+      RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT
+    );
     console.log(data);
     return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
@@ -30,17 +37,17 @@ export const getRecipesThunk = createAsyncThunk<
   }
 });
 
-export const getRecipesByStrengthThunk = createAsyncThunk<
+export const getRecipesByIngrsThunk = createAsyncThunk<
   IServerResponse<IRecipeArrayType>,
-  string,
+  IIngredientResArrayType,
   { rejectValue: IServerResponse }
 >(
-  RECIPE_THUNK_TYPES.GET_RECIPES_BY_STRENGTH,
-  async (strengthLevel, { rejectWithValue }) => {
+  RECIPE_THUNK_TYPES.GET_RECIPES_BY_INGRS,
+  async (typesData, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post(
-        RECIPES_ENDPOINT,
-        strengthLevel
+        RECIPES_API_ENDPOINTS.GET_RECIPES_BY_INGRS,
+        typesData
       );
       console.log(data);
       return { statusCode: 200, data, message: "все ок" };
@@ -56,7 +63,9 @@ export const getRecipeByIdThunk = createAsyncThunk<
   { rejectValue: IServerResponse }
 >(RECIPE_THUNK_TYPES.GET_RECIPE_BY_ID, async (id, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.get(`${RECIPES_ENDPOINT}/${id}`);
+    const { data } = await axiosInstance.get(
+      `${RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT}/${id}`
+    );
     return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
@@ -71,7 +80,10 @@ export const getRecipeByTitleThunk = createAsyncThunk<
   RECIPE_THUNK_TYPES.GET_RECIPE_BY_TITLE,
   async (title, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post(RECIPES_ENDPOINT, title);
+      const { data } = await axiosInstance.post(
+        RECIPES_API_ENDPOINTS.GET_RECIPE_BY_TITLE,
+        title
+      );
       return data;
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
@@ -85,7 +97,10 @@ export const createRecipeThunk = createAsyncThunk<
   { rejectValue: IServerResponse }
 >(RECIPE_THUNK_TYPES.CREATE_RECIPE, async (recipeData, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.post(RECIPES_ENDPOINT, recipeData);
+    const { data } = await axiosInstance.post(
+      RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT,
+      recipeData
+    );
     return data;
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
@@ -101,7 +116,7 @@ export const updateRecipeByIdThunk = createAsyncThunk<
   async ({ id, recipeData }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.put(
-        `${RECIPES_ENDPOINT}/${id}`,
+        `${RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT}/${id}`,
         recipeData
       );
       return data;
@@ -117,7 +132,9 @@ export const deleteRecipeThunk = createAsyncThunk<
   { rejectValue: IServerResponse }
 >(RECIPE_THUNK_TYPES.DELETE_RECIPE, async (id, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.delete(`${RECIPES_ENDPOINT}/${id}`);
+    const { data } = await axiosInstance.delete(
+      `${RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT}/${id}`
+    );
     return data;
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));

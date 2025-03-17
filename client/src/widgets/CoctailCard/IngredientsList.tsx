@@ -1,5 +1,5 @@
 import { JSX, memo } from "react";
-import styles from "./CoctailBox.module.css";
+import styles from "./CoctailCard.module.css";
 import { IRecipe } from "@/entities/recipe";
 
 type Props = {
