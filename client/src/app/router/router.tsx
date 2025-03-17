@@ -28,6 +28,7 @@ export default function Router() {
           <Route path={CLIENT_ROUTES.BASKETS} element={<Baskets />} />
           <Route path={CLIENT_ROUTES.ORDERS} element={<Orders />} />
           <Route path={CLIENT_ROUTES.ADMIN} element={<AdminPage />} />
+          <Route path={CLIENT_ROUTES.SHOPID} element={<ShopForm />} />
           <Route path={CLIENT_ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>
