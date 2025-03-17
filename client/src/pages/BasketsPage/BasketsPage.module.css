@@ -140,18 +140,23 @@
 
 .quantityBlock {
   display: flex;
-  justify-content: space-between; /* Раздвигаем элементы по краям */
   align-items: center;
-  height: 24px;
+  justify-content: space-between; /* Раздвигаем элементы по краям */
   width: 91px;
+  height: 24px;
+  padding: 2px; /* Уменьшенный внутренний отступ */
   background-color: white; /* Белый фон */
   border-radius: 4px;
-  padding: 2px; /* Уменьшенный внутренний отступ */
 }
 
 .quantityButton {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Центрируем текст внутри кнопки */
   width: 30px; /* Фиксированная ширина */
   height: 24px; /* Фиксированная высота */
+  padding: 0; /* Убираем внутренние отступы */
+  margin: 0; /* Убираем внешние отступы */
   font-size: 12px; /* Уменьшенный размер шрифта */
   color: #000; /* Черный текст */
   cursor: pointer;
@@ -159,12 +164,8 @@
   border: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Центрируем текст внутри кнопки */
-  margin: 0; /* Убираем внешние отступы */
-  padding: 0; /* Убираем внутренние отступы */
 }
+
 .quantityButton:hover {
   background-color: #f0f0f0; /* Светлый фон при наведении */
 }
