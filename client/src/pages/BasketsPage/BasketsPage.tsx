@@ -165,7 +165,22 @@ export default function Baskets(): JSX.Element {
                 src={product.Product?.image}
                 alt={product.Product?.name}
                 className={styles.cartItemImage}
+                onClick={() =>
+                  navigate(`/shop/${product?.Product?.id}?isOpenModal=true`)
+                }
               />
+
+                 {/* <div
+                key={item.Product.id}
+                className={styles.product}
+                onClick={() =>
+                  navigate(`/shop/${item.Product.id}?isOpenModal=true`)
+                }
+              >
+                Карточка товара
+              </div>
+               */}
+
               <div className={styles.cartItemDetails}>
                 <h3>
                   <strong>{product.Product?.name}</strong>
