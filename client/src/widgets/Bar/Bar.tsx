@@ -38,13 +38,13 @@ export default function Bar() {
   const stockByType = typesOrder.reduce<Record<string, typeof stock>>(
     (acc, type) => {
       if (!type) return acc;
-
       const filteredItems = stock.filter(
         (item) => item.ingredientType?.type === type
       );
-
       if (filteredItems.length > 0) {
-        acc[type] = filteredItems;
+        acc[type] = filteredItems.sort((a, b) =>
+          (a.title || "").localeCompare(b.title || "")
+        );
       }
       return acc;
     },
@@ -56,10 +56,7 @@ export default function Bar() {
 
   return (
     <div className={styles.bar}>
-      <img
-        src="https://torgpit.ru/upload/images/stories/kartinki/bisnes-plan/otkritie-bara.jpg"
-        alt="Бар"
-      />
+      <img src="/bar.jpg" alt="Бар" />
 
       <div className={styles.barCollection}>
         {loading ? (

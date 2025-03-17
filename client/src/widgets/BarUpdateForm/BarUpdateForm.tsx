@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { useEffect, useState } from "react";
 import { IIngredientRowData } from "@/entities/ingredient/model";
 import { IStock, IStockRowData } from "@/entities/stock/model";
-import { createStockThunk, getStockThunk } from "@/entities/stock";
+import { createOrUpdateStockThunk, getStockThunk } from "@/entities/stock";
 
 type Props = {
   setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +14,7 @@ type Props = {
   initialData?: IStock | null;
 };
 
-export default function BarAddForm({ setShowAddForm, initialData }: Props) {
+export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   const user = useAppSelector((state) => state.user.user?.id ?? 0);
   const [ingredientInputs, setIngredientInputs] = useState<IIngredientRowData>({
     type: "",
@@ -113,7 +113,7 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
       }
       if (ingredientId) {
         const resultStock = await dispatch(
-          createStockThunk({
+          createOrUpdateStockThunk({
             ingredientTypeId: ingredientId,
             ingredientBalance: stockInputs.ingredientBalance,
             userId: user,

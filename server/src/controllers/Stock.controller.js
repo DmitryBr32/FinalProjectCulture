@@ -13,6 +13,28 @@ class StockController {
     }
   }
 
+  static async createUserStock(req, res) {
+    const { id } = req.params;
+    const { ingredientTypeId, ingredientBalance, title, strength } = req.body;
+    try {
+      const stock = await StockService.createUserStock(
+        id,
+        ingredientTypeId,
+        ingredientBalance,
+        title,
+        strength
+      );
+      res.status(200).json({
+        statusCode: 200,
+        message: "Stock created successfully",
+        stock,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Server error", message: error.message });
+    }
+  }
+
   static async createOrUpdateUserStock(req, res) {
     const { id } = req.params;
     const { ingredientTypeId, ingredientBalance, title, strength } = req.body;
@@ -36,12 +58,12 @@ class StockController {
   }
 
   static async deleteUserStock(req, res) {
-    const { id, ingredientTypeId } = req.params;
-    if (!ingredientTypeId) {
-      return res.status(400).json({ error: "ingredientTypeId is required" });
+    const { id: userId, itemId } = req.params;
+    if (!itemId) {
+      return res.status(400).json({ error: "Stock item ID is required" });
     }
     try {
-      await StockService.delete(id, Number(ingredientTypeId));
+      await StockService.delete(userId, Number(itemId));
       res.status(204).end();
     } catch (error) {
       console.error(error);
