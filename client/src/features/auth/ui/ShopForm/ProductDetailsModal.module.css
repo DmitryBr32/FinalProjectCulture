@@ -1,0 +1,209 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: auto;
+}
+
+.modalContent {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-height: 90vh; /* Максимальная высота окна */
+  position: relative; /* Для кнопки закрытия */
+  display: flex; /* Для расположения картинки и описания рядом */
+  flex-direction: column;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent; /* Убираем фон */
+  color: #ffffff; /* Цвет текста (крестика) */
+  padding: 5px; /* Уменьшаем отступы */
+  border-radius: 50%; /* Делаем кнопку круглой */
+  cursor: pointer;
+  font-size: 1.5rem; /* Уменьшаем размер текста */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Плавное изменение фона и эффекта */
+}
+
+.closeButton:hover {
+  background-color: rgba(255, 255, 255, 0.5); /* Полупрозрачный красный фон */
+  border-color: #ffdada; /* Светлый оттенок границы при наведении */
+  padding: 2px;
+  width: 35px; /* Увеличиваем ширину при наведении */
+  height: 35px; /* Увеличиваем высоту при наведении */
+}
+
+.modalBody {
+  display: flex;
+  gap: 20px;
+}
+
+.image {
+  max-width: 500px;
+  max-height: 500px; /* Зафиксируем высоту */
+  border-radius: 10px;
+  object-fit: cover; /* Чтобы изображение заполнило контейнер без искажения */
+}
+
+.productDetails {
+  flex-grow: 1; /* Позволяет описанию занимать доступное пространство */
+}
+
+.title {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.price {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fcfcfc;
+}
+
+.description {
+  background: #1f1f1f;
+  border-radius: 8px;
+  padding: 15px 20px;
+  color: #e0e0e0;
+  font-family: "Arial", sans-serif;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+
+}
+
+.description h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ff8c00;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.specifications {
+  background: #1f1f1f;
+  border-radius: 8px;
+  padding: 15px 20px;
+  color: #e0e0e0;
+  font-family: "Arial", sans-serif;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.specifications h3 {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ff8c00;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.quantityControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.quantityControls span {
+  color: #fff;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #777;
+  cursor: not-allowed;
+}
+
+.quantityBlock {
+  display: flex;
+  justify-content: space-between; /* Раздвигаем элементы по краям */
+  align-items: center;
+  height: 24px;
+  width: 91px;
+  background-color: white; /* Белый фон */
+  border-radius: 4px;
+  padding: 2px; /* Уменьшенный внутренний отступ */
+}
+
+.quantityButton {
+  width: 30px; /* Фиксированная ширина */
+  height: 24px; /* Фиксированная высота */
+  font-size: 12px; /* Уменьшенный размер шрифта */
+  color: #000; /* Черный текст */
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Центрируем текст внутри кнопки */
+  margin: 0; /* Убираем внешние отступы */
+  padding: 0; /* Убираем внутренние отступы */
+}
+.quantityButton:hover {
+  background-color: #f0f0f0; /* Светлый фон при наведении */
+}
+
+.quantityValue {
+  font-size: 12px; /* Уменьшенный размер шрифта */
+  font-weight: bold;
+  color: #000; /* Черный текст */
+}
+
+.controlsWrapper {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px; /* Отступ между блоком с количеством и кнопкой "➜Корзина" */
+}
+
+.cartButton {
+  max-height: 30px;
+  padding: 6px 12px;
+  margin: 0;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  background-color: #fb0;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.cartButton:hover {
+  background-color: #494d52;
+}

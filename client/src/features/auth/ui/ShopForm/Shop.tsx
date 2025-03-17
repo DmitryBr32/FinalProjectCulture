@@ -1,15 +1,18 @@
 import { JSX, useEffect, useState } from "react";
-import styles from "./ShopForm.module.css";
+import styles from "./Shop.module.css";
 import { getCart, getShopStorage } from "@/shared/api/api";
 import { Product } from "@/entities/product/product";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { addToCart, initializeCart } from "@/app/store/cartSlice";
 import { addToCart as addToCartAPI } from "@/shared/api/api";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router"; 
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
+import ProductDetailsModal from "./ProductDetailsModal";
 
-export default function ShopForm(): JSX.Element {
+export default function Shop(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const cart = useAppSelector((state) => state.cart.items);
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
@@ -45,9 +48,19 @@ export default function ShopForm(): JSX.Element {
 
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const openModal = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <div className={styles.container}>
-      <h1>Мини - Магазин</h1>
+      <h1>Culture - Магазин</h1>
       <nav className={styles.navContainer}>
         <NavLink
           to={CLIENT_ROUTES.BASKETS}
@@ -74,13 +87,14 @@ export default function ShopForm(): JSX.Element {
                 (item) => item.productId === product.id
               );
               const quantity = cartItem ? cartItem.quantity : 0;
+
               return (
                 <div
                   key={product.id}
                   className={styles.product}
-                  onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <img
+                    onClick={() => openModal(product)}
                     src={product.image}
                     alt={product.name}
                     className={styles.productImage}
@@ -90,28 +104,46 @@ export default function ShopForm(): JSX.Element {
                   <p>Остаток: {product.quantity} шт.</p>
                   <p>Цена: {product.price} руб.</p>
                   <div className={styles.buttonContainer}>
-                    <button className={styles.button}>Подробнее</button>
                     {user && (
-                      <div className={styles.quantityControls}>
+                      <div className={styles.controlsWrapper}>
+                        {/* Блок с кнопками "+", "-" и количеством */}
+                        {quantity > 0 && (
+                          <div className={styles.quantityBlock}>
+                            <button
+                              className={styles.quantityButton}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleQuantityChange(product, -1);
+                              }}
+                            >
+                              -
+                            </button>
+                            <div className={styles.quantityValue}>{quantity}</div>
+                            <button
+                              className={styles.quantityButton}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleQuantityChange(product, 1);
+                              }}
+                            >
+                              +
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Кнопка "В корзину" или "➜Корзина" */}
                         <button
-                          className={styles.button}
+                          className={styles.cartButton}
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleQuantityChange(product, -1);
-                          }}
-                          disabled={quantity === 0}
-                        >
-                          -
-                        </button>
-                        <div>{quantity}</div>
-                        <button
-                          className={styles.button}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleQuantityChange(product, 1);
+                            if (quantity === 0) {
+                              handleQuantityChange(product, 1);
+                            } else {
+                              navigate(CLIENT_ROUTES.BASKETS); // Переход в корзину
+                            }
                           }}
                         >
-                          +
+                          {quantity === 0 ? "В корзину" : "➜Корзина"}
                         </button>
                       </div>
                     )}
@@ -122,6 +154,13 @@ export default function ShopForm(): JSX.Element {
           </div>
         </div>
       </div>
+      {isModalOpen && selectedProduct && (
+        <ProductDetailsModal
+          product={selectedProduct}
+          onClose={closeModal}
+          handleQuantityChange={handleQuantityChange}
+        />
+      )}
     </div>
   );
 }
