@@ -1,37 +1,28 @@
+import { getUserFavRecipesThunk } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import styles from "./AvailableCocktails.module.css";
 import { useEffect } from "react";
-import { getRecipesThunk } from "@/entities/recipe";
-// import { getStockThunk } from "@/entities/stock";
+import styles from "./FavouritesCocktails.module.css";
 
-export default function AvailableCocktails() {
-  const recipes = useAppSelector((state) => state.recipes.recipes);
-  // const stock = useAppSelector((state) => state.stock.stock);
+export default function FavouritesCocktails() {
+  const recipes = useAppSelector((state) => state.userfavrecipes.recipes);
   const user = useAppSelector((state) => state.user.user?.id);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    void dispatch(getRecipesThunk());
+    if (user) {
+      dispatch(getUserFavRecipesThunk(user));
+    }
   }, [dispatch, user]);
 
-  console.log(recipes);
-
-  const filteredRecipes = recipes;
-
-  // .filter((recipe) => {
-  //   const recipeTypes = recipe.Components.map((comp) => comp.ingredient.type);
-  //   return recipe.Components.some((comp) =>
-  //     recipeTypes.includes(comp.ingredient.type)
-  //   );
-  // });
+  console.log("favrecipes", recipes);
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Доступные коктейли</h1>
       <div className={styles.recipesGrid}>
-        {Array.isArray(filteredRecipes) && filteredRecipes.length > 0 ? (
-          filteredRecipes.map((recipe) => (
+        {Array.isArray(recipes) && recipes.length > 0 ? (
+          recipes.map((recipe) => (
             <div key={recipe.id} className={styles.recipeCard}>
               <div className={styles.recipeHeader}>
                 <img

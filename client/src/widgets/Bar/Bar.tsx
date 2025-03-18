@@ -13,7 +13,6 @@ export default function Bar() {
 
   useEffect(() => {
     if (user) {
-      console.log("Fetching stock for user:", user);
       void dispatch(getStockThunk(user));
     }
   }, [dispatch, user]);
@@ -28,12 +27,9 @@ export default function Bar() {
       setHoveredType(null);
     }, 1000);
   };
-  console.log("stock", stock);
   const typesOrder = Array.from(
     new Set(stock.map((item) => item.ingredientType?.type))
   ).filter(Boolean);
-
-  console.log("typesOrder", typesOrder);
 
   const stockByType = typesOrder.reduce<Record<string, typeof stock>>(
     (acc, type) => {
@@ -50,9 +46,6 @@ export default function Bar() {
     },
     {}
   );
-
-  console.log("typesOrder", typesOrder);
-  console.log("stockByType", stockByType);
 
   return (
     <div className={styles.bar}>

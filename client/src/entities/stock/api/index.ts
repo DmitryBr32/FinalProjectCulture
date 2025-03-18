@@ -20,7 +20,6 @@ export const getStockThunk = createAsyncThunk<
 >(STOCK_THUNK_TYPES.GET_STOCK, async (id, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.get(`${STOCK_ENDPOINT}/${id}`);
-    console.log("Response data:", data);
     return {
       statusCode: 200,
       message: "Stock retrieved",

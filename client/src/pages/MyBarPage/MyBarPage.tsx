@@ -1,11 +1,11 @@
 import Bar from "@/widgets/Bar/Bar";
 import BarStorage from "@/widgets/BarStorage/BarStorage";
 import styles from "./MyBarPage.module.css";
-import AvailableCocktails from "@/widgets/AvailableCocktails/AvailableCocktails";
 import { useAppSelector } from "@/shared/hooks/reduxHook";
 import { useNavigate } from "react-router";
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import { useEffect } from "react";
+import Cocktails from "@/widgets/Cocktails/Cocktails";
 
 export default function MyBarPage() {
   const user = useAppSelector((state) => state.user.user?.id);
@@ -28,7 +28,7 @@ export default function MyBarPage() {
       <div className={styles.container}>
         <BarStorage />
         <Bar />
-        <AvailableCocktails />
+        <Cocktails />
       </div>
     </div>
   );
