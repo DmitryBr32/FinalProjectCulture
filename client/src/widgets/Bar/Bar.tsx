@@ -55,7 +55,7 @@ export default function Bar() {
         {loading ? (
           <p>Загрузка...</p>
         ) : (
-          typesOrder.slice(0, 18).map((type) => (
+          typesOrder.slice(0, 24).map((type) => (
             <div
               key={type}
               className={styles.barItem}
@@ -79,7 +79,7 @@ export default function Bar() {
               <img
                 src={
                   stockByType[type][0]?.ingredientType?.imgUrl ||
-                  "https://cdn-img.perekrestok.ru/i/800x800-fit/xdelivery/files/a7/24/15aa8a53a002522a88eee56f35f4.jpg"
+                  "/ingredients/Биттер Пейшо.png"
                 }
                 alt={`${type} bottle`}
               />

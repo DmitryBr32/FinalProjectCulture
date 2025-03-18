@@ -2,29 +2,28 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import styles from "./AvailableCocktails.module.css";
 import { useEffect } from "react";
 import { getRecipesThunk } from "@/entities/recipe";
-// import { getStockThunk } from "@/entities/stock";
 
 export default function AvailableCocktails() {
   const recipes = useAppSelector((state) => state.recipes.recipes);
-  // const stock = useAppSelector((state) => state.stock.stock);
+  const stock = useAppSelector((state) => state.stock.stock);
   const user = useAppSelector((state) => state.user.user?.id);
-
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     void dispatch(getRecipesThunk());
   }, [dispatch, user]);
-
-  console.log(recipes);
-
-  const filteredRecipes = recipes;
-
-  // .filter((recipe) => {
-  //   const recipeTypes = recipe.Components.map((comp) => comp.ingredient.type);
-  //   return recipe.Components.some((comp) =>
-  //     recipeTypes.includes(comp.ingredient.type)
-  //   );
-  // });
+  
+  const filteredRecipes = recipes.filter((recipe) => {
+    const recipeIngredients =
+      recipe.Components?.map((comp) => ({
+        type: comp.ingredient.type,
+        isAlko: comp.ingredient.isAlko,
+      })) || [];
+    const stockIngredients = stock.map((item) => item.ingredientType?.type);
+    return recipeIngredients.every(
+      (ingredient) =>
+        !ingredient.isAlko || stockIngredients.includes(ingredient.type)
+    );
+  });
 
   return (
     <div className={styles.container}>

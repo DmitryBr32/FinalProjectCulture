@@ -13,13 +13,17 @@ export default function BarStorage() {
   const loading = useAppSelector((state) => state.stock.isLoading);
   const error = useAppSelector((state) => state.stock.error);
 
+  const alkoStock = stock.filter(
+    (ingredient) => ingredient.ingredientType?.isAlko
+  );
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [editingStock, setEditingStock] = useState<IStock | null>(null);
   const deleteHandler = async (id: number) => {
     if (!user) return;
     try {
-      const stockItem = stock.find((item) => item.id === id);
+      const stockItem = alkoStock.find((item) => item.id === id);
       if (stockItem) {
         await dispatch(deleteStockThunk({ id: stockItem.id, userId: user }));
         await dispatch(getStockThunk(user));
@@ -29,7 +33,7 @@ export default function BarStorage() {
     }
   };
   const editHandler = (id: number) => {
-    const stockItem = stock.find((item) => item.id === id);
+    const stockItem = alkoStock.find((item) => item.id === id);
     if (stockItem) {
       setEditingStock(stockItem);
       setShowUpdateForm(true);
@@ -59,14 +63,14 @@ export default function BarStorage() {
 
   return (
     <div className={styles.container}>
-      <h1>Хранилище ваших напитков</h1>
+      <h1>Ваши напитки</h1>
       {loading && <p>Загрузка...</p>}
       {error && <p>Ошибка: {error}</p>}
 
-      {!Array.isArray(stock) || stock.length === 0 ? (
+      {!Array.isArray(alkoStock) || alkoStock.length === 0 ? (
         <p>Ваш бар в данный момент пуст</p>
       ) : (
-        stock.map((ingredient) => (
+        alkoStock.map((ingredient) => (
           <div key={ingredient.id} className={styles.ingrCard}>
             <div className={styles.ingrHeader}>
               <span className={styles.ingredientType}>

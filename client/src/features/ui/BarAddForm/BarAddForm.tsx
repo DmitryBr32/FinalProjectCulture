@@ -152,11 +152,13 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
           className={styles.input}
         />
         <datalist id="ingredientsType">
-          {ingredients.map((ingredient) =>
-            ingredient.type ? (
-              <option key={ingredient.id} value={ingredient.type} />
-            ) : null
-          )}
+          {ingredients
+            .filter((ingredient) => ingredient.isAlko)
+            .map((ingredient) =>
+              ingredient.type ? (
+                <option key={ingredient.id} value={ingredient.type} />
+              ) : null
+            )}
         </datalist>
       </div>
       <div className={styles.formGroup}>
