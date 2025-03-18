@@ -1,9 +1,10 @@
-
+.container {
+  font-family: var(--font-h1);
+}
 
 .tabButton {
   color: white;
   background-color: transparent;
-  border: 1px #f39c12 groove;
 }
 
 .tabs {
@@ -21,7 +22,7 @@
 .tabButton.active {
   font-weight: bold;
   color: white;
-  background-color: #f39c12;
+  background-color: var(--color-green);
 }
 
 .moduleContainer {

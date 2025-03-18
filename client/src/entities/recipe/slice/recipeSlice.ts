@@ -21,7 +21,7 @@ const initialState: RecipeState = {
 };
 
 const recipeSlice = createSlice({
-  name: "ingredient",
+  name: "recipe",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

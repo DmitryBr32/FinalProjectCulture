@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getStockThunk,
-  createOrUpdateStockThunk,
+  updateStockThunk,
   deleteStockThunk,
   createStockThunk,
 } from "../api";
@@ -33,17 +33,16 @@ const stockSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.stock = action.payload.data;
-        console.log("Updated stock state:", state.stock);
       })
       .addCase(getStockThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload?.error ?? "Ошибка загрузки ингредиента";
       })
 
-      .addCase(createOrUpdateStockThunk.pending, (state) => {
+      .addCase(updateStockThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createOrUpdateStockThunk.fulfilled, (state, action) => {
+      .addCase(updateStockThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         const updatedStock = action.payload.data;
 
@@ -64,7 +63,7 @@ const stockSlice = createSlice({
           state.stock.push(updatedStock);
         }
       })
-      .addCase(createOrUpdateStockThunk.rejected, (state, action) => {
+      .addCase(updateStockThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload?.error ?? "Ошибка обновления ингредиента";
       })

@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 80vh;
   padding: 20px;
+  font-family: var(--font-h1);
   color: #d3d3d3;
-}
-
-.name {
-  color: #fb0;
 }
 
 .cartItems {
@@ -89,44 +88,48 @@
   padding: 8px 16px;
   color: white;
   cursor: pointer;
-  background-color: #fb0;
   border: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-}
-
-.deleteButton:hover {
-  background-color: #808080;
 }
 
 .orderButton {
   padding: 10px 20px;
   color: white;
   cursor: pointer;
-  background-color: #fb0;
   border: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-}
-
-.orderButton:hover {
-  background-color: #808080;
 }
 
 .modal {
   position: fixed;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: rgb(0 0 0 / 50%);
 }
 
 .modalContent {
-  width: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 450px;
+  height: 550px;
   padding: 20px;
   background: white;
-  border-radius: 8px;
+  background: #1a181a;
+  border-radius: 8px
+}
+
+.modalContent h3 {
+  margin-top: 20px;
+  font-size: 20px;
 }
 
 .formField {
@@ -134,7 +137,6 @@
 }
 
 .formField label {
-  display: block;
   margin-bottom: 5px;
 }
 
@@ -148,7 +150,9 @@
 
 .modalActions {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .modalActions button {
@@ -160,7 +164,7 @@
 }
 
 .modalActions button.confirmButton {
-  background-color: #28a745;
+  background-color: var(--color-green);
 }
 
 .modalActions button.cancelButton {
@@ -168,8 +172,14 @@
 }
 
 .notification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 400px;
   height: 300px;
+  padding: 20px;
+  background-color: #2c2c2c;
   border: white 1px groove;
   border-radius: 10px;
 }
@@ -197,7 +207,21 @@
   transition: all 0.3s ease;
 }
 
-.navContainer a:hover {
-  background-color: #fb0;
-  transform: translateY(-2px);
+.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 38px;
+  padding: 5px; /* Уменьшаем отступы */
+  font-size: 1.5rem; /* Уменьшаем размер текста */
+  color: #fff; /* Цвет текста (крестика) */
+  cursor: pointer;
+  background-color: transparent; /* Убираем фон */
+  border-radius: 50%; /* Делаем кнопку круглой */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Плавное изменение фона и эффекта */
+}
+
+.closeButton:hover {
+  background-color: rgb(255 255 255 / 50%); /* Полупрозрачный красный фон */
+  border-color: #ffdada; /* Светлый оттенок границы при наведении */
 }

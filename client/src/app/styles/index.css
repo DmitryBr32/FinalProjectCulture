@@ -1,3 +1,18 @@
 body {
   background-color: var(--background-color);
+  color: var(--color-white);
+}
+
+button {
+  background-color: var(--background-color);
+  border: var(--background-color);
+}
+
+button:hover {
+  background-color: var(--background-color);
+  transform: var(--button-hover-transform);
+}
+
+h3 {
+  color: var(--font-green-h3);
 }

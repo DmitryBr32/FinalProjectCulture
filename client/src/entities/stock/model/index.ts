@@ -6,6 +6,10 @@ export interface IStockRowData {
   userId: number;
 }
 
+export interface IStockUpdate extends IStockRowData {
+  id: number;
+}
+
 export interface IStock extends IStockRowData {
   id: number;
   createdAt: Date;

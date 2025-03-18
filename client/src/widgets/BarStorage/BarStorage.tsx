@@ -2,9 +2,9 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import styles from "./BarStorage.module.css";
 import { useEffect, useState } from "react";
 import { deleteStockThunk, getStockThunk, IStock } from "@/entities/stock";
-import BarAddForm from "../BarAddForm/BarAddForm";
-import BarUpdateForm from "../BarUpdateForm/BarUpdateForm";
 import { getIngredientsThunk } from "@/entities/ingredient";
+import BarUpdateForm from "@/features/ui/BarUpdateForm/BarUpdateForm";
+import BarAddForm from "@/features/ui/BarAddForm/BarAddForm";
 export default function BarStorage() {
   const stock = useAppSelector((state) => state.stock.stock);
   const ingredients = useAppSelector((state) => state.ingredients.ingredients);
@@ -13,15 +13,17 @@ export default function BarStorage() {
   const loading = useAppSelector((state) => state.stock.isLoading);
   const error = useAppSelector((state) => state.stock.error);
 
-  // Состояния для управления формами
+  const alkoStock = stock.filter(
+    (ingredient) => ingredient.ingredientType?.isAlko
+  );
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [editingStock, setEditingStock] = useState<IStock | null>(null);
-  // Обработчик удаления
   const deleteHandler = async (id: number) => {
     if (!user) return;
     try {
-      const stockItem = stock.find((item) => item.id === id);
+      const stockItem = alkoStock.find((item) => item.id === id);
       if (stockItem) {
         await dispatch(deleteStockThunk({ id: stockItem.id, userId: user }));
         await dispatch(getStockThunk(user));
@@ -30,9 +32,8 @@ export default function BarStorage() {
       console.error("Error deleting stock item:", error);
     }
   };
-  // Обработчик редактирования
   const editHandler = (id: number) => {
-    const stockItem = stock.find((item) => item.id === id);
+    const stockItem = alkoStock.find((item) => item.id === id);
     if (stockItem) {
       setEditingStock(stockItem);
       setShowUpdateForm(true);
@@ -40,7 +41,6 @@ export default function BarStorage() {
     }
   };
 
-  // Загрузка данных при монтировании
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -54,7 +54,6 @@ export default function BarStorage() {
     };
     fetchData();
   }, [dispatch, user]);
-  // Обработчик закрытия форм
   const handleFormClose = () => {
     setShowAddForm(false);
     setShowUpdateForm(false);
@@ -64,14 +63,14 @@ export default function BarStorage() {
 
   return (
     <div className={styles.container}>
-      <h1>Хранилище ваших напитков</h1>
+      <h1>Ваши напитки</h1>
       {loading && <p>Загрузка...</p>}
       {error && <p>Ошибка: {error}</p>}
 
-      {!Array.isArray(stock) || stock.length === 0 ? (
+      {!Array.isArray(alkoStock) || alkoStock.length === 0 ? (
         <p>Ваш бар в данный момент пуст</p>
       ) : (
-        stock.map((ingredient) => (
+        alkoStock.map((ingredient) => (
           <div key={ingredient.id} className={styles.ingrCard}>
             <div className={styles.ingrHeader}>
               <span className={styles.ingredientType}>
@@ -98,7 +97,7 @@ export default function BarStorage() {
                   alt={ingredient.title}
                 />
               </div>
-              <div>
+              <div className={styles.buttonContainer}>
                 <button onClick={() => editHandler(ingredient.id)}>
                   Отредактировать
                 </button>
@@ -112,6 +111,7 @@ export default function BarStorage() {
       )}
       {!showAddForm && !showUpdateForm ? (
         <button
+          className={styles.addButton}
           onClick={() => {
             setShowAddForm(true);
             setShowUpdateForm(false);

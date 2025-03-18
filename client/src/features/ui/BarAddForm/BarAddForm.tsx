@@ -3,10 +3,11 @@ import {
   getIngredientsThunk,
 } from "@/entities/ingredient";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IIngredientRowData } from "@/entities/ingredient/model";
 import { IStock, IStockRowData } from "@/entities/stock/model";
-import { createOrUpdateStockThunk, getStockThunk } from "@/entities/stock";
+import { createStockThunk, getStockThunk } from "@/entities/stock";
+import styles from "./BarAddForm.module.css";
 
 type Props = {
   setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +15,7 @@ type Props = {
   initialData?: IStock | null;
 };
 
-export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
+export default function BarAddForm({ setShowAddForm, initialData }: Props) {
   const user = useAppSelector((state) => state.user.user?.id ?? 0);
   const [ingredientInputs, setIngredientInputs] = useState<IIngredientRowData>({
     type: "",
@@ -30,6 +31,16 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
     strength: "",
   });
 
+  const resetForm = useCallback(() => {
+    setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
+    setStockInputs({
+      ingredientTypeId: 0,
+      ingredientBalance: "0",
+      userId: user,
+      title: "",
+      strength: "",
+    });
+  }, [user]);
   useEffect(() => {
     if (initialData) {
       setIngredientInputs({
@@ -47,23 +58,11 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
     } else {
       resetForm();
     }
-  }, [initialData]);
-
-  const resetForm = () => {
-    setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
-    setStockInputs({
-      ingredientTypeId: 0,
-      ingredientBalance: "0",
-      userId: user,
-      title: "",
-      strength: "",
-    });
-  };
+  }, [initialData, user, resetForm]);
 
   const dispatch = useAppDispatch();
   const ingredients =
     useAppSelector((state) => state.ingredients.ingredients) || [];
-  console.log(ingredients, "ingredients");
 
   useEffect(() => {
     void dispatch(getIngredientsThunk());
@@ -113,7 +112,7 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
       }
       if (ingredientId) {
         const resultStock = await dispatch(
-          createOrUpdateStockThunk({
+          createStockThunk({
             ingredientTypeId: ingredientId,
             ingredientBalance: stockInputs.ingredientBalance,
             userId: user,
@@ -140,61 +139,77 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Введите тип напитка</label>
-      <input
-        type="text"
-        name="type"
-        value={ingredientInputs.type}
-        onChange={handleChange}
-        list="ingredientsType"
-        required
-      />
-      <datalist id="ingredientsType">
-        {ingredients.map((ingredient) =>
-          ingredient.type ? (
-            <option key={ingredient.id} value={ingredient.type} />
-          ) : null
-        )}
-      </datalist>
-
-      <label>Введите марку напитка</label>
-      <input
-        type="text"
-        name="title"
-        value={stockInputs.title}
-        onChange={handleChange}
-        required
-      />
-
-      <label>Введите сколько напитка осталось (мл)</label>
-      <input
-        type="number"
-        name="ingredientBalance"
-        value={stockInputs.ingredientBalance}
-        onChange={handleChange}
-        min="0"
-      />
-      <label>
-        Алкогольный:
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Введите тип напитка</label>
         <input
-          type="checkbox"
-          name="isAlko"
-          checked={ingredientInputs.isAlko}
+          type="text"
+          name="type"
+          value={ingredientInputs.type}
           onChange={handleChange}
+          list="ingredientsType"
+          required
+          className={styles.input}
         />
-      </label>
-
-      <label>Введите крепость напитка</label>
-      <input
-        type="text"
-        name="strength"
-        value={stockInputs.strength}
-        onChange={handleChange}
-        required
-      />
-
-      <button type="submit">Добавить</button>
+        <datalist id="ingredientsType">
+          {ingredients
+            .filter((ingredient) => ingredient.isAlko)
+            .map((ingredient) =>
+              ingredient.type ? (
+                <option key={ingredient.id} value={ingredient.type} />
+              ) : null
+            )}
+        </datalist>
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Введите марку напитка</label>
+        <input
+          type="text"
+          name="title"
+          value={stockInputs.title}
+          onChange={handleChange}
+          required
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>
+          Введите сколько напитка осталось (мл)
+        </label>
+        <input
+          type="number"
+          name="ingredientBalance"
+          value={stockInputs.ingredientBalance}
+          onChange={handleChange}
+          min="0"
+          className={styles.input}
+        />
+      </div>
+      <div className={`${styles.formGroup} ${styles.checkbox}`}>
+        <label className={styles.label}>
+          Алкогольный:
+          <input
+            type="checkbox"
+            name="isAlko"
+            checked={ingredientInputs.isAlko}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Введите крепость напитка</label>
+        <input
+          type="text"
+          name="strength"
+          value={stockInputs.strength}
+          onChange={handleChange}
+          required
+          className={styles.input}
+        />
+      </div>
+      <button type="submit" className={styles.button}>
+        Добавить
+      </button>
     </form>
   );
 }

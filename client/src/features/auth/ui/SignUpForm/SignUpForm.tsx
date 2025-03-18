@@ -48,41 +48,54 @@ export default function SignUpForm() {
   const { username, email, password, repeatPassword } = inputs;
 
   return (
-    <form className={styles.signUpform} onSubmit={onSubmitHandler}>
-      <input
-        type="text"
-        name="username"
-        placeholder="username"
-        autoFocus
-        onChange={onChangeHandler}
-        value={username}
-      />
+    <form className={styles.form} onSubmit={onSubmitHandler}>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Введите ваше имя</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="имя"
+          autoFocus
+          onChange={onChangeHandler}
+          value={username}
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Введите почту</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="почта"
+          onChange={onChangeHandler}
+          value={email}
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Введите пароль</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="пароль"
+          onChange={onChangeHandler}
+          value={password}
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Повторите пароль</label>
+        <input
+          type="password"
+          name="repeatPassword"
+          placeholder="повторите пароль"
+          onChange={onChangeHandler}
+          value={repeatPassword}
+          className={styles.input}
+        />
+      </div>
 
-      <input
-        type="email"
-        name="email"
-        placeholder="email?"
-        onChange={onChangeHandler}
-        value={email}
-      />
-
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        onChange={onChangeHandler}
-        value={password}
-      />
-
-      <input
-        type="password"
-        name="repeatPassword"
-        placeholder="repeat password"
-        onChange={onChangeHandler}
-        value={repeatPassword}
-      />
-
-      <button type="submit">Sign Up</button>
+      <button type="submit" className={styles.button}>Зарегистрироваться</button>
     </form>
   );
 }

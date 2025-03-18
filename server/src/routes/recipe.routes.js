@@ -7,6 +7,7 @@ router.get("/:id", RecipeController.getRecipe);
 router.post("/getRecipesByIngrType", RecipeController.getRecipesByIngrType);
 router.post("/getRecipesBySeveralIngrs", RecipeController.getRecipesByIngrs);
 router.post("/getByTitle", RecipeController.getRecipeByTitle);
+router.post("/getUserFav", RecipeController.getUserFavRecipes);
 router.post("/", RecipeController.addRecipe);
 router.put("/:id", verifyAccessToken, RecipeController.updateRecipe);
 router.delete("/:id", verifyAccessToken, RecipeController.removeRecipe);

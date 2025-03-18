@@ -36,19 +36,15 @@ class StockService {
     return newStock;
   }
 
-  static async findOrCreateUserStock(
+  static async updateUserStock(
     userId,
+    itemId,
     ingredientTypeId,
     ingredientBalance,
     title,
     strength
   ) {
-    const existingStock = await UserStock.findOne({
-      where: {
-        userId,
-        ingredientTypeId,
-      },
-    });
+    const existingStock = await UserStock.findByPk(Number(itemId));
     if (existingStock) {
       existingStock.title = title;
       existingStock.ingredientBalance = ingredientBalance;
@@ -65,23 +61,6 @@ class StockService {
       });
       return existingStock;
     }
-    const newStock = await UserStock.create({
-      userId,
-      ingredientTypeId,
-      ingredientBalance,
-      title,
-      strength,
-    });
-    await newStock.reload({
-      include: [
-        {
-          model: Ingredient,
-          as: "ingredientType",
-          attributes: ["id", "type", "isAlko", "imgUrl"],
-        },
-      ],
-    });
-    return newStock;
   }
 
   static async delete(userId, id) {

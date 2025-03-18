@@ -14,6 +14,7 @@ class RecipeController {
       res.status(500).json({ error: "Ошибка сервера" });
     }
   }
+
   static async getRecipe(req, res) {
     const { id } = req.params;
     try {
@@ -30,6 +31,7 @@ class RecipeController {
 
   static async getRecipeByTitle(req, res) {
     const { title } = req.body;
+
     try {
       const recipe = await RecipeService.getRecipeByTitle(title);
       if (!recipe) {
@@ -56,6 +58,19 @@ class RecipeController {
     }
   }
 
+  static async getUserFavRecipes(req, res) {
+    const { userId } = req.body;
+    try {
+      const recipes = await RecipeService.getRecipesUserFav(userId);
+      if (!recipes) {
+        return res.status(404).json({ error: "Рецепты не найдены" });
+      }
+      res.status(200).json(recipes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Ошибка сервера" });
+    }
+  }
   static async getRecipesByIngrs(req, res) {
     const typesArr = req.body;
     try {

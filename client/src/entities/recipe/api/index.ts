@@ -1,7 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "@/shared/lib/axiosInstance";
 import { IServerResponse } from "@/shared/types";
-import { IRecipe, IRecipeRowData, IRecipeArrayType } from "../model";
+import {
+  IRecipe,
+  IRecipeRowData,
+  IRecipeArrayType,
+  IRecipeTitle,
+} from "../model";
 import { handleAxiosError } from "@/shared/utils/handleAxiosError";
 import { IIngredientResArrayType } from "@/entities/ingredient/model";
 
@@ -9,6 +14,7 @@ enum RECIPES_API_ENDPOINTS {
   RECIPES_ENDPOINT = "recipe/",
   GET_RECIPES_BY_INGRS = "recipe/getRecipesBySeveralIngrs",
   GET_RECIPE_BY_TITLE = "recipe/getByTitle",
+  GET_USER_FAV_RECIPES = "recipe/getUserFav",
 }
 
 enum RECIPE_THUNK_TYPES {
@@ -16,6 +22,7 @@ enum RECIPE_THUNK_TYPES {
   GET_RECIPES_BY_INGRS = "recipe/getRecipesBySeveralIngrs",
   GET_RECIPE_BY_ID = "recipe/",
   GET_RECIPE_BY_TITLE = "recipe/getRecipeByTitle",
+  GET_USER_FAV_RECIPES = "recipe/getUserFav",
   CREATE_RECIPE = "recipe/createRecipe",
   UPDATE_RECIPE = "recipe/updateRecipeById",
   DELETE_RECIPE = "recipe/deleteRecipe",
@@ -57,6 +64,26 @@ export const getRecipesByIngrsThunk = createAsyncThunk<
   }
 );
 
+export const getUserFavRecipesThunk = createAsyncThunk<
+  IServerResponse<IRecipeArrayType>,
+  number,
+  { rejectValue: IServerResponse }
+>(
+  RECIPE_THUNK_TYPES.GET_USER_FAV_RECIPES,
+  async (userId, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(
+        RECIPES_API_ENDPOINTS.GET_USER_FAV_RECIPES,
+        { userId }
+      );
+      console.log(data);
+      return { statusCode: 200, data, message: "все ок" };
+    } catch (error) {
+      return rejectWithValue(handleAxiosError(error));
+    }
+  }
+);
+
 export const getRecipeByIdThunk = createAsyncThunk<
   IServerResponse<IRecipe>,
   number,
@@ -74,7 +101,7 @@ export const getRecipeByIdThunk = createAsyncThunk<
 
 export const getRecipeByTitleThunk = createAsyncThunk<
   IServerResponse<IRecipe>,
-  string,
+  IRecipeTitle,
   { rejectValue: IServerResponse }
 >(
   RECIPE_THUNK_TYPES.GET_RECIPE_BY_TITLE,
@@ -84,7 +111,7 @@ export const getRecipeByTitleThunk = createAsyncThunk<
         RECIPES_API_ENDPOINTS.GET_RECIPE_BY_TITLE,
         title
       );
-      return data;
+      return { statusCode: 200, data, message: "все ок" };
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
     }
@@ -101,7 +128,7 @@ export const createRecipeThunk = createAsyncThunk<
       RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT,
       recipeData
     );
-    return data;
+    return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }
@@ -119,7 +146,7 @@ export const updateRecipeByIdThunk = createAsyncThunk<
         `${RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT}/${id}`,
         recipeData
       );
-      return data;
+      return { statusCode: 200, data, message: "все ок" };
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
     }
@@ -135,7 +162,7 @@ export const deleteRecipeThunk = createAsyncThunk<
     const { data } = await axiosInstance.delete(
       `${RECIPES_API_ENDPOINTS.RECIPES_ENDPOINT}/${id}`
     );
-    return data;
+    return { statusCode: 200, data, message: "все ок" };
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }

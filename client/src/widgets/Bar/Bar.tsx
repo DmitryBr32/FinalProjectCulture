@@ -13,7 +13,6 @@ export default function Bar() {
 
   useEffect(() => {
     if (user) {
-      console.log("Fetching stock for user:", user);
       void dispatch(getStockThunk(user));
     }
   }, [dispatch, user]);
@@ -28,12 +27,9 @@ export default function Bar() {
       setHoveredType(null);
     }, 1000);
   };
-  console.log("stock", stock);
   const typesOrder = Array.from(
     new Set(stock.map((item) => item.ingredientType?.type))
   ).filter(Boolean);
-
-  console.log("typesOrder", typesOrder);
 
   const stockByType = typesOrder.reduce<Record<string, typeof stock>>(
     (acc, type) => {
@@ -51,9 +47,6 @@ export default function Bar() {
     {}
   );
 
-  console.log("typesOrder", typesOrder);
-  console.log("stockByType", stockByType);
-
   return (
     <div className={styles.bar}>
       <img src="/bar.jpg" alt="Бар" />
@@ -62,7 +55,7 @@ export default function Bar() {
         {loading ? (
           <p>Загрузка...</p>
         ) : (
-          typesOrder.slice(0, 18).map((type) => (
+          typesOrder.slice(0, 24).map((type) => (
             <div
               key={type}
               className={styles.barItem}
@@ -86,7 +79,7 @@ export default function Bar() {
               <img
                 src={
                   stockByType[type][0]?.ingredientType?.imgUrl ||
-                  "https://cdn-img.perekrestok.ru/i/800x800-fit/xdelivery/files/a7/24/15aa8a53a002522a88eee56f35f4.jpg"
+                  "/ingredients/Биттер Пейшо.png"
                 }
                 alt={`${type} bottle`}
               />

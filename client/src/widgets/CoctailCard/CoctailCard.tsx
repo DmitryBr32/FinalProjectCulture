@@ -16,11 +16,11 @@ export default function CoctailCard({ recipe, onOpen }: Prop) {
       <div
         className={styles.recipeCard}
         style={{
-          backgroundImage: recipe.img ? `url(${recipe.img})` : "none",
+          backgroundImage: recipe?.img ? `url(${recipe.img})` : "none",
           backgroundSize: "cover",
         }}
       ></div>{" "}
-      <h3 className={styles.recipeTitle}>{recipe.title}</h3>
+      <h3 className={styles.recipeTitle}>{recipe?.title}</h3>
     </div>
   );
 }

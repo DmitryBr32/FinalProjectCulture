@@ -4,6 +4,7 @@ import { recipeReducer, recipesReducer } from "@/entities/recipe";
 import { stockReducer } from "@/entities/stock";
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
+import { userRecipesReducer } from "@/entities/recipe/slice/userFavRecipesSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     ingredients: ingredientsReducer,
     recipe: recipeReducer,
     recipes: recipesReducer,
+    userfavrecipes: userRecipesReducer,
     stock: stockReducer,
   },
 });
