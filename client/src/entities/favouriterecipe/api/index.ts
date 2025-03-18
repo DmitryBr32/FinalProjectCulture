@@ -26,7 +26,7 @@ export const addFavouriteRecipeThunk = createAsyncThunk<
         RECIPES_API_ENDPOINTS.ADD_FAVOURIT_RES,
         favoriteData
       );
-      console.log(data);
+      console.log("санка", data);
       return { statusCode: 200, data, message: "все ок" };
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
