@@ -26,6 +26,13 @@ class RecFavouriteService {
       where: { userId: userId, recipeId: recipeId },
     });
   }
+
+  static async getLikesCount(recipeId) {
+    const favStrings = await RecFavourite.findAll({
+      where: { recipeId: recipeId },
+    });
+    return favStrings.length;
+  }
 }
 
 module.exports = RecFavouriteService;

@@ -15,8 +15,10 @@ class RecFavouriteController {
         return res.status(404).json({ message: "Рецепт не найден" });
       }
 
-      await recipe.increment("likes");
-      res.status(200).json({ message: "Рецепт понравился!" });
+      const likesCount = await RecFavouriteService.getLikesCount(recipeId); //
+      await recipe.update({ likes: likesCount });
+
+      res.status(200).json({ message: `Рецепт ${likesCount} понравился!` });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Ошибка при лайке рецепта" });
@@ -39,7 +41,10 @@ class RecFavouriteController {
       if (!recipe) {
         return res.status(404).json({ message: "Рецепт не найден" });
       }
-      await recipe.decrement("likes");
+
+      const likesCount = await RecFavouriteService.getLikesCount(recipeId); //
+      await recipe.update({ likes: likesCount });
+
       res.status(200).json({ message: "Рецепт удалён из избранного!" });
     } catch (error) {
       console.error(error);
