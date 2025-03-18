@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ShopStorages.module.css";
 
 interface Props {
   product: StorageItem;
   onUpdate: (data: StorageItem) => void;
-  handleDelete: (id: number) => Promise<void>;
+  handleDelete: (id: number | null) => Promise<void>;
   textFirstButton: string;
   textSecondButton?: string;
   isClearInput?: boolean;
 }
 
 export type StorageItem = {
-  id: number;
+  id: number | null;
   name: string;
   image: string;
   price: number;
@@ -25,7 +25,7 @@ export type StorageItem = {
 };
 
 const defaultItem = {
-  id: 0,
+  id: null,
   name: "",
   image: "",
   price: 0,
@@ -70,7 +70,6 @@ export function ShopStorageItem({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Преобразуем строки в числа перед отправкой
     const updatedData = {
       ...formData,
       price: parseFloat(formData.price),
@@ -96,6 +95,26 @@ export function ShopStorageItem({
     }
   };
 
+  function updateFormData(product: StorageItem) {
+    setFormData({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price.toString(),
+      description: product.description,
+      quantity: product.quantity.toString(),
+      article: product.article,
+      brand: product.brand || "",
+      material: product.material || "",
+      dimensions: product.dimensions || "",
+      weight: product.weight?.toString() || "",
+    });
+  }
+
+  useEffect(() => {
+    updateFormData(product);
+  }, [product]);
+
   return (
     <div className={styles.card}>
       <form onSubmit={handleSubmit}>
@@ -107,107 +126,86 @@ export function ShopStorageItem({
           />
         )}
 
-        <label>
-          Название:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Название:"
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
 
-        <label>
-          Изображение (URL):
-          <input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Изображение: (URL)"
+          type="text"
+          name="image"
+          value={formData.image}
+          onChange={handleChange}
+        />
 
-        <label>
-          Цена:
-          <input
-            min="0"
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Цена:"
+          min="0"
+          type="number"
+          name="price"
+          value={formData.price === "0" ? "" : formData.price}
+          onChange={handleChange}
+        />
 
-        <label>
-          Описание:
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Количество на складе:"
+          min="0"
+          type="number"
+          name="quantity"
+          value={formData.quantity === "0" ? "" : formData.quantity}
+          onChange={handleChange}
+        />
 
-        <label>
-          Количество на складе:
-          <input
-            min="0"
-            type="number"
-            name="quantity"
-            value={formData.quantity}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Артикул:"
+          type="text"
+          name="article"
+          value={formData.article}
+          onChange={handleChange}
+        />
 
-        <label>
-          Артикул:
-          <input
-            type="text"
-            name="article"
-            value={formData.article}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Бренд:"
+          type="text"
+          name="brand"
+          value={formData.brand}
+          onChange={handleChange}
+        />
 
-        <label>
-          Бренд:
-          <input
-            type="text"
-            name="brand"
-            value={formData.brand}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Материал:"
+          type="text"
+          name="material"
+          value={formData.material}
+          onChange={handleChange}
+        />
 
-        <label>
-          Материал:
-          <input
-            type="text"
-            name="material"
-            value={formData.material}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Размеры:"
+          type="text"
+          name="dimensions"
+          value={formData.dimensions}
+          onChange={handleChange}
+        />
 
-        <label>
-          Размеры:
-          <input
-            type="text"
-            name="dimensions"
-            value={formData.dimensions}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-          Вес:
-          <input
-            min="0"
-            type="text"
-            name="weight"
-            value={formData.weight}
-            onChange={handleChange}
-          />
-        </label>
+        <input
+          placeholder="Вес:"
+          min="0"
+          type="text"
+          name="weight"
+          value={formData.weight}
+          onChange={handleChange}
+        />
+        <textarea
+          placeholder="Описание:"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+        />
 
         <button className={styles.buttonUpdate} type="submit">
           {textFirstButton}

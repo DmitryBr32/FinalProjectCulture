@@ -1,21 +1,17 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  font-family: var(--font-h1);
 }
 
 .tabButton {
-    color: white;
-    background-color: transparent;
-    border: 1px #f39c12 groove;
-
+  color: white;
+  background-color: transparent;
 }
 
 .tabs {
   display: flex;
   gap: 10px;
+  align-items: center;
+  justify-content: center;
   padding-bottom: 10px;
 }
 
@@ -26,7 +22,7 @@
 .tabButton.active {
   font-weight: bold;
   color: white;
-  background-color: #f39c12;
+  background-color: var(--color-green);
 }
 
 .moduleContainer {

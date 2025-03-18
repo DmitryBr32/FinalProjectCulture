@@ -42,74 +42,49 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
   }
 
   return (
-    <div key={order.id} className={styles.order}>
-      <h2>Заказ №{order.id}</h2>
-      <p>
-        <strong>Адрес:</strong> {order.address}
-      </p>
-      <p>
-        <strong>Комментарий:</strong> {order.comment}
-      </p>
-      <p>
-        <strong>Дата заказа:</strong>{" "}
-        {new Date(order.date).toLocaleDateString()}
-      </p>
-      <p>
-        <strong>Получатель:</strong> {order.recipient}
-      </p>
-      <p>
-        <strong>Телефон:</strong> {order.telephone}
-      </p>
-      <h3>Товары:</h3>
-      <ul>
+    <div className={styles.order}>
+      <h2 className={styles.numberOrder}>Заказ №{order.id}</h2>
+
+      <div className={styles.clientInfo}>
+        <p><strong>Адрес:</strong> {order.address}</p>
+        <p><strong>Комментарий:</strong> {order.comment}</p>
+        <p><strong>Дата доставки:</strong> {new Date(order.date).toLocaleDateString()}</p>
+        <p><strong>Получатель:</strong> {order.recipient}</p>
+        <p><strong>Телефон:</strong> {order.telephone}</p>
+      </div>
+
+      {/* Список товаров */}
+      <div className={styles.productsList}>
         {order.basket.map((item) => (
-          <li key={item.id}>
-            <p>
-              <strong>Товар:</strong> {item.Product.name}
-            </p>
-            <p>
-              <strong>Количество:</strong> {item.quantity}
-            </p>
-            <p>
-              <strong>Цена за штуку:</strong> {item.Product.price} руб.
-            </p>
-            <button>
-              <div
-                key={item.Product.id}
-                className={styles.product}
-                onClick={() =>
-                  navigate(`/shop/${item.Product.id}?isOpenModal=true`)
-                }
-              >
-                Карточка товара
-              </div>
-            </button>
-          </li>
-        ))}
-      </ul>
-      <p>
-        <strong>Общая сумма заказа:</strong>{" "}
-        {calculateTotalOrderAmount(order).toFixed(2)} руб.
-      </p>
-      {!isAdmin && <p>Статус: {order.status}</p>}
-      {isAdmin && (
-        <div>
-          <p>
-            <strong>Статус:</strong>
-            <select onChange={onChangeHandler} value={status}>
-              {statusOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </p>
-          <div className={styles.buttonBlock}>
-            <button onClick={onChangeStatus}>Изменить статус</button>
-            <button onClick={onClickDelete} className={styles.buttonDelete}>
-              Удалить
+          <div key={item.id} className={styles.productItem}>
+            <p><strong>{item.Product.name}</strong> x {item.quantity}</p>
+            <p>{item.Product.price} руб.</p>
+            <button onClick={() => navigate(`/shop/${item.Product.id}?isOpenModal=true`)}>
+              Карточка товара
             </button>
           </div>
+        ))}
+      </div>
+
+      {/* Общая сумма заказа */}
+      <p className={styles.totalAmount}>
+        <strong >Общая сумма:</strong> {calculateTotalOrderAmount(order).toFixed(2)} руб.
+      </p>
+
+      {/* Статус заказа (только для администратора) */}
+      {isAdmin && (
+        <div className={styles.buttonBlock}>
+          <select onChange={onChangeHandler} value={status}>
+            {statusOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <button onClick={onChangeStatus}>Изменить статус</button>
+          <button onClick={onClickDelete} className={styles.buttonDelete}>
+            Удалить
+          </button>
         </div>
       )}
     </div>

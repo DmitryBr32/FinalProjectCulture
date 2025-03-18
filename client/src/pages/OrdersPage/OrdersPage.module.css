@@ -3,31 +3,137 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%; 
+  max-width: none;
+  padding: 20px;
+  margin: 0 auto; 
+  font-family: var(--font-h1);
   color: white;
 }
 
-.order {
-  padding: 14px;
-  border: white 1px groove;
-  border-radius: 10px;
+.ordersGrid {
+  display: grid;
+  grid-template-columns: 1fr; 
+  gap: 20px; 
+  width: 100%;
+  margin: 0 auto; 
 }
 
-.order p {
-  margin-top: 4px;
-  margin-bottom: 4px;
+.order {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  background-color: #2c2c2c;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  
+}
+
+.numberOrder {
+  margin-bottom: 8px;
+  font-size: 1.3rem; 
+  font-weight: bold;
+  text-align: center;
+}
+
+.clientInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px; 
+}
+
+.clientInfo p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #d3d3d3;
+}
+
+.productsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Уменьшили отступы между товарами */
+}
+
+.productItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px; 
+  background-color: #3a3a3a;
+  border-radius: 5px;
+}
+
+.productItem p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #d3d3d3; 
+}
+
+.buttonBlock button {
+  height: 40px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; 
+}
+
+.productItem button {
+  padding: 6px 12px; 
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.totalAmount {
+  margin-top: 8px;
+  font-size: 1.1rem; 
+  font-weight: bold;
+  text-align: right; 
 }
 
 .buttonBlock {
   display: flex;
-  flex-direction: row;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.buttonDelete {
-background-color: red;
+  gap: 10px;
+  justify-content: flex-end; 
+  margin-top: 15px; 
 }
 
 
+.buttonBlock button:first-child {
+  color: white;
+  background-color: #f39c12;
+}
+
+.buttonBlock button:last-child {
+  color: white;
+  background-color: #ff4d4d;
+}
+
+.buttonBlock button:first-child:hover {
+  background-color: #e67e22;
+}
+
+
+.buttonBlock button:last-child:hover {
+  background-color: #c00;
+}
+
+.buttonBlock select {
+  height: 40px;
+  padding: 8px 16px; 
+  font-size: 14px;
+  color: rgb(0 0 0);
+  cursor: pointer;
+  background-color: white; /* Цвет, как у первой кнопки */ 
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
