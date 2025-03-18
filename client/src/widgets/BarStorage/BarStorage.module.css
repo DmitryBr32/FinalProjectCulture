@@ -86,10 +86,6 @@
   transition: transform 0.3s ease;
 }
 
-.ingrImg:hover img {
-  transform: scale(1.05);
-}
-
 .buttonContainer {
   display: flex;
   gap: 10px;

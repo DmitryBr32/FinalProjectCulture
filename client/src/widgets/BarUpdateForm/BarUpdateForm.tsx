@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { useCallback, useEffect, useState } from "react";
 import { IIngredientRowData } from "@/entities/ingredient/model";
 import { IStock, IStockRowData } from "@/entities/stock/model";
-import { createOrUpdateStockThunk, getStockThunk } from "@/entities/stock";
+import { updateStockThunk, getStockThunk } from "@/entities/stock";
 import styles from "./BarUpdateForm.module.css";
 
 type Props = {
@@ -98,22 +98,28 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      if (!ingredientInputs.type || !stockInputs.ingredientBalance) {
+        throw new Error("Пожалуйста, заполните все обязательные поля");
+      }
       const existingIngredient = ingredients.find(
-        (ingredient) => ingredient.type === ingredientInputs.type
+        (ingredient) =>
+          ingredient.type.toLowerCase() === ingredientInputs.type.toLowerCase()
       );
       let ingredientId = existingIngredient?.id;
-
       if (!ingredientId) {
         const resultIngredient = await dispatch(
           createIngredientThunk(ingredientInputs)
         );
         if (resultIngredient.payload && "id" in resultIngredient.payload) {
           ingredientId = (resultIngredient.payload as { id: number }).id;
+        } else {
+          throw new Error("Ошибка при создании ингредиента");
         }
       }
       if (ingredientId) {
         const resultStock = await dispatch(
-          createOrUpdateStockThunk({
+          updateStockThunk({
+            id: initialData?.id || 0,
             ingredientTypeId: ingredientId,
             ingredientBalance: stockInputs.ingredientBalance,
             userId: user,
@@ -121,21 +127,19 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
             strength: stockInputs.strength,
           })
         );
-        if (resultStock.payload?.statusCode === 200) {
-          setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
-          setStockInputs({
-            ingredientTypeId: 0,
-            ingredientBalance: "0",
-            userId: user,
-            title: "",
-            strength: "",
-          });
-          dispatch(getStockThunk(user));
+        if (resultStock.payload?.data) {
+          await dispatch(getStockThunk(user));
           setShowAddForm(false);
+        } else {
+          throw new Error(
+            "Ошибка при обновлении запаса: " +
+              (resultStock.payload?.error || "Неизвестная ошибка")
+          );
         }
       }
     } catch (error) {
-      console.error("Ошибка при добавлении ингредиента:", error);
+      console.error("Ошибка при обновлении:", error);
+      await dispatch(getStockThunk(user));
     }
   };
 
