@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ShopStorages.module.css";
 
 interface Props {
   product: StorageItem;
   onUpdate: (data: StorageItem) => void;
-  handleDelete: (id: number) => Promise<void>;
+  handleDelete: (id: number | null) => Promise<void>;
   textFirstButton: string;
   textSecondButton?: string;
   isClearInput?: boolean;
 }
 
 export type StorageItem = {
-  id: number;
+  id: number | null;
   name: string;
   image: string;
   price: number;
@@ -25,7 +25,7 @@ export type StorageItem = {
 };
 
 const defaultItem = {
-  id: 0,
+  id: null,
   name: "",
   image: "",
   price: 0,
@@ -70,7 +70,6 @@ export function ShopStorageItem({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Преобразуем строки в числа перед отправкой
     const updatedData = {
       ...formData,
       price: parseFloat(formData.price),
@@ -95,6 +94,24 @@ export function ShopStorageItem({
       });
     }
   };
+
+     function updateFormData(product: StorageItem) {
+    setFormData(({ id: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price.toString(),
+      description: product.description,
+      quantity: product.quantity.toString(),
+      article: product.article,
+      brand: product.brand || "",
+      material: product.material || "",
+      dimensions: product.dimensions || "",
+      weight: product.weight?.toString() || "", }))
+   }
+
+    useEffect(() => {
+      updateFormData(product)
+    }, [product])
 
   return (
     <div className={styles.card}>

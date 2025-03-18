@@ -74,15 +74,11 @@ export function Header(): JSX.Element {
       )}
       {user && (
         <>
-        {user.isAdmin &&
-          <NavLink
-            to={CLIENT_ROUTES.ADMIN}
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            Администратор
-          </NavLink>
-          }
-          <UserAvatar user={user} />
+          <NavLink 
+           to={user.isAdmin ? CLIENT_ROUTES.ADMIN : CLIENT_ROUTES.MAIN}>
+            <UserAvatar 
+            user={user} />
+            </NavLink>
           <button onClick={onLogoutHandler} className={styles.button}>
             Выйти
           </button>

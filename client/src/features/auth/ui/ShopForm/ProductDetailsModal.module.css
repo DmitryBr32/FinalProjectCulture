@@ -22,10 +22,19 @@
   box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
 }
 
+.name{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 .closeButton {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 5px;
+  right: 5px;
+  width: 38px;
   padding: 5px; /* Уменьшаем отступы */
   font-size: 1.5rem; /* Уменьшаем размер текста */
   color: #fff; /* Цвет текста (крестика) */
@@ -36,9 +45,6 @@
 }
 
 .closeButton:hover {
-  width: 35px; /* Увеличиваем ширину при наведении */
-  height: 35px; /* Увеличиваем высоту при наведении */
-  padding: 2px;
   background-color: rgb(255 255 255 / 50%); /* Полупрозрачный красный фон */
   border-color: #ffdada; /* Светлый оттенок границы при наведении */
 }
@@ -59,12 +65,6 @@
   flex-grow: 1; /* Позволяет описанию занимать доступное пространство */
 }
 
-.title {
-  margin-bottom: 10px;
-  font-size: 1.8rem;
-  color: #fff;
-}
-
 .price {
   display: flex;
   align-items: center;
@@ -82,7 +82,6 @@
   background: #1f1f1f;
   border-radius: 8px;
   box-shadow: 0 6px 15px rgb(0 0 0 / 15%);
-
 }
 
 .description h3 {

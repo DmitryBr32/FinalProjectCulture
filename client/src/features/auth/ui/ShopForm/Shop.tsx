@@ -106,65 +106,72 @@ export default function Shop(): JSX.Element {
 
               return (
                 <div
-                  key={product.id}
-                  className={styles.product}
-                >
-                  <img
-                    onClick={() => openModal(product)}
-                    src={product.image}
-                    alt={product.name}
-                    className={styles.productImage}
-                  />
-                  <h3>{product.name}</h3>
-                  <p>{product.description.slice(0, 20) + "..."}</p>
-                  <p>Остаток: {product.quantity} шт.</p>
-                  <p>Цена: {product.price} руб.</p>
-                  <div className={styles.buttonContainer}>
-                    {user && (
-                      <div className={styles.controlsWrapper}>
-                        {/* Блок с кнопками "+", "-" и количеством */}
-                        {quantity > 0 && (
-                          <div className={styles.quantityBlock}>
-                            <button
-                              className={styles.quantityButton}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleQuantityChange(product, -1);
-                              }}
-                            >
-                              -
-                            </button>
-                            <div className={styles.quantityValue}>{quantity}</div>
-                            <button
-                              className={styles.quantityButton}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleQuantityChange(product, 1);
-                              }}
-                            >
-                              +
-                            </button>
-                          </div>
-                        )}
+  key={product.id}
+  className={styles.product}
+>
+  <div
+    className={styles.imageWrapper}
+    onClick={() => openModal(product)} // Открытие модального окна
+  >
+    <img
+      src={product.image}
+      alt={product.name}
+      className={styles.productImage}
+    />
+    <div className={styles.imageOverlay}>
+      <span className={styles.overlayText}>Подробнее</span>
+    </div>
+  </div>
+  <h3>{product.name}</h3>
+  <p>{product.description.slice(0, 20) + "..."}</p>
+  <p>В наличии: {product.quantity} шт.</p>
+  <p>Цена: {product.price} руб.</p>
+  <div className={styles.buttonContainer}>
+    {user && (
+      <div className={styles.controlsWrapper}>
+        {/* Блок с кнопками "+", "-" и количеством */}
+        {quantity > 0 && (
+          <div className={styles.quantityBlock}>
+            <button
+              className={styles.quantityButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleQuantityChange(product, -1);
+              }}
+            >
+              -
+            </button>
+            <div className={styles.quantityValue}>{quantity}</div>
+            <button
+              className={styles.quantityButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleQuantityChange(product, 1);
+              }}
+            >
+              +
+            </button>
+          </div>
+        )}
 
-                        {/* Кнопка "В корзину" или "➜Корзина" */}
-                        <button
-                          className={styles.cartButton}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (quantity === 0) {
-                              handleQuantityChange(product, 1);
-                            } else {
-                              navigate(CLIENT_ROUTES.BASKETS); // Переход в корзину
-                            }
-                          }}
-                        >
-                          {quantity === 0 ? "В корзину" : "➜Корзина"}
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+        {/* Кнопка "В корзину" или "➜Корзина" */}
+        <button
+          className={styles.cartButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (quantity === 0) {
+              handleQuantityChange(product, 1);
+            } else {
+              navigate(CLIENT_ROUTES.BASKETS); // Переход в корзину
+            }
+          }}
+        >
+          {quantity === 0 ? "В корзину" : "➜Корзина"}
+        </button>
+      </div>
+    )}
+  </div>
+</div>
               );
             })}
           </div>

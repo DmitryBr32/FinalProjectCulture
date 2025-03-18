@@ -92,9 +92,6 @@ export default function Baskets(): JSX.Element {
       await deleteProduct(productId);
       return;
     }
-    // console.log("existingItem.quantity",existingItem.quantity)
-    // console.log("newQuantity",newQuantity)
-    // console.log("existingItem",existingItem)
 
     if (existingItem.Product.ShopStorage.quantity < newQuantity) {
       return;
@@ -169,21 +166,9 @@ export default function Baskets(): JSX.Element {
                   navigate(`/shop/${product?.Product?.id}?isOpenModal=true`)
                 }
               />
-
-                 {/* <div
-                key={item.Product.id}
-                className={styles.product}
-                onClick={() =>
-                  navigate(`/shop/${item.Product.id}?isOpenModal=true`)
-                }
-              >
-                Карточка товара
-              </div>
-               */}
-
               <div className={styles.cartItemDetails}>
                 <h3>
-                  <strong>{product.Product?.name}</strong>
+                  <strong className={styles.name}>{product.Product?.name}</strong>
                 </h3>
                 <p>Артикул: {product.Product?.article}</p>
                 <p>Вес: {product.Product?.weight}</p>
@@ -203,8 +188,7 @@ export default function Baskets(): JSX.Element {
                   >
                     -
                   </button>
-                  <span className={styles.quantityValue}
-                  >
+                  <span className={styles.quantityValue}>
                     {product.quantity}
                   </span>
                   <button
@@ -220,11 +204,16 @@ export default function Baskets(): JSX.Element {
                   </button>
                 </div>
               </div>
-              <button onClick={() => deleteProduct(product.id)}>Удалить</button>
+              <button 
+                className={styles.deleteButton}
+                onClick={() => deleteProduct(product.id)}
+              >
+                Удалить
+              </button>
             </div>
           ))}
           <div className={styles.total}>
-            <h3>Общая сумма: {totalPrice.toFixed(2)} руб.</h3>
+            <h3>Итого: {totalPrice.toFixed(2)} руб.</h3>
           </div>
           <button
             className={styles.orderButton}
@@ -237,6 +226,12 @@ export default function Baskets(): JSX.Element {
             onClick={() => setIsModalOpen(true)}
           >
             Оформить заказ
+          </button>
+          <button
+            className={styles.orderButton}
+            onClick={() => navigate(CLIENT_ROUTES.ORDERS)}
+          >
+            Мои заказы
           </button>
         </div>
       )}
@@ -299,7 +294,6 @@ export default function Baskets(): JSX.Element {
                   name="comment"
                   value={inputs.comment}
                   onChange={onChangeHandler}
-                  required
                 />
               </div>
               <div className={styles.modalActions}>

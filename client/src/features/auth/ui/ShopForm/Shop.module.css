@@ -78,30 +78,26 @@
   height: 400px;
   padding: 15px;
   text-align: center;
-  background: linear-gradient(145deg, #2c2c2c, #1f1f1f);
+  background: #2c2c2c;
   border: 2px solid #a7a7a7;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgb(0 0 0 / 30%);
-  transition: all 0.3s ease;
+  transform: translateZ(0); 
+  transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+  will-change: transform, box-shadow, border-color; 
+  backface-visibility: hidden;
 }
 
 .product:hover {
   border-color: #fff;
-  box-shadow: 5px 5px 15px rgba(255, 255, 255, 0.4), 5px 5px 30px rgba(240, 239, 238, 0.3), 5px 5px 30px rgba(240, 240, 240, 0.3);
-  transform: translateY(-5px);
+  box-shadow: 3px 3px 10px rgb(255 255 255 / 30%), 
+              3px 3px 20px rgb(240 239 238 / 20%),
+              3px 3px 20px rgb(240 240 240 / 20%);
 }
 
-.productImage {
-  width: 100%;
-  height: 220px;
-  cursor: pointer;
-  object-fit: cover;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-}
-
-.productImage:hover {
-  transform: scale(1.05);
+.product * {
+  transform: translateZ(0); 
+  backface-visibility: hidden; 
 }
 
 .product h3 {
@@ -126,7 +122,7 @@
 
 .buttonContainer {
   display: flex;
-  justify-content: center; /* Центрируем кнопку "В корзину" */
+  justify-content: center; 
   width: 100%;
   margin-top: 10px;
 }
@@ -140,24 +136,24 @@
 .quantityBlock {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Раздвигаем элементы по краям */
-  width: 91px;
+  justify-content: space-between; 
+  width: 90px;
   height: 24px;
-  padding: 2px; /* Уменьшенный внутренний отступ */
-  background-color: white; /* Белый фон */
+  padding: 2px; 
+  background-color: white; 
   border-radius: 4px;
 }
 
 .quantityButton {
   display: flex;
   align-items: center;
-  justify-content: center; /* Центрируем текст внутри кнопки */
-  width: 30px; /* Фиксированная ширина */
-  height: 24px; /* Фиксированная высота */
-  padding: 0; /* Убираем внутренние отступы */
-  margin: 0; /* Убираем внешние отступы */
-  font-size: 12px; /* Уменьшенный размер шрифта */
-  color: #000; /* Черный текст */
+  justify-content: center;
+  width: 30px; 
+  height: 24px; 
+  padding: 0; 
+  margin: 0; 
+  font-size: 12px;
+  color: #000; 
   cursor: pointer;
   background-color: transparent;
   border: none;
@@ -166,13 +162,13 @@
 }
 
 .quantityButton:hover {
-  background-color: #f0f0f0; /* Светлый фон при наведении */
+  background-color: #f0f0f0; 
 }
 
 .quantityValue {
-  font-size: 12px; /* Уменьшенный размер шрифта */
+  font-size: 12px; 
   font-weight: bold;
-  color: #000; /* Черный текст */
+  color: #000; 
 }
 
 .cartButton {
@@ -190,4 +186,52 @@
 
 .cartButton:hover {
   background-color: #494d52;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 10px;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: filter 0.3s ease; /* Анимация затемнения */
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(31 31 31 / 50%); /* Полупрозрачный белый фон */
+  border-radius: 10px;
+  opacity: 0; /* По умолчанию невидим */
+  transition: opacity 0.3s ease; /* Анимация появления */
+}
+
+.overlayText {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(253 253 253); /* Черный текст */
+  text-transform: uppercase;
+}
+
+.imageWrapper:hover .productImage {
+  filter: brightness(0.7); /* Затемнение картинки */
+}
+
+.imageWrapper:hover .imageOverlay {
+  opacity: 1; /* Показ подсказки при наведении */
 }

@@ -86,8 +86,7 @@ router.post("/", verifyAccessToken, async (req, res) => {
 
                 shopStorage = storage;
             }
-
-            return { product, shopStorage };
+            return { product, shopStorage }; 
         });
 
         res.status(200).json(formatResponse(200, "Success", result));

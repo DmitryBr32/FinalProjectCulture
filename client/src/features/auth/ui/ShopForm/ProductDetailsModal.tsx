@@ -36,7 +36,7 @@ export default function ProductDetailsModal({
       
       {/* Описание и характеристики справа от картинки */}
       <div className={styles.productDetails}>
-        <h1 className={styles.title}>{product.name}</h1>
+        <h1 className={styles.name}>{product.name}</h1>
 
         {/* Описание */}
         <div className={styles.description}>
@@ -83,7 +83,7 @@ export default function ProductDetailsModal({
             if (quantity === 0) {
               handleQuantityChange(product, 1);
             } else {
-              navigate(CLIENT_ROUTES.BASKETS); // Переход в корзину
+              navigate(CLIENT_ROUTES.BASKETS);
             }
           }}
         >
