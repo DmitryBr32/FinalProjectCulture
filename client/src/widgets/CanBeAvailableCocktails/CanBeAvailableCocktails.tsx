@@ -5,22 +5,26 @@ import styles from "./CanBeAvailableCocktails.module.css";
 
 export default function CanBeAvailableCocktails() {
   const recipes = useAppSelector((state) => state.recipes.recipes);
+  const stock = useAppSelector((state) => state.stock.stock);
   const user = useAppSelector((state) => state.user.user?.id);
-
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     void dispatch(getRecipesThunk());
   }, [dispatch, user]);
-
-  console.log(recipes);
-
+  const filteredRecipes = recipes.filter((recipe) => {
+    const recipeIngredients =
+      recipe.Components?.map((comp) => comp.ingredient.type) || [];
+    const stockIngredients = stock.map((item) => item.ingredientType?.type);
+    return recipeIngredients.some((ingredient) =>
+      stockIngredients.includes(ingredient)
+    );
+  });
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Доступные коктейли</h1>
       <div className={styles.recipesGrid}>
-        {Array.isArray(recipes) && recipes.length > 0 ? (
-          recipes.map((recipe) => (
+        {Array.isArray(filteredRecipes) && filteredRecipes.length > 0 ? (
+          filteredRecipes.map((recipe) => (
             <div key={recipe.id} className={styles.recipeCard}>
               <div className={styles.recipeHeader}>
                 <img

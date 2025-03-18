@@ -74,7 +74,7 @@ export const getUserFavRecipesThunk = createAsyncThunk<
     try {
       const { data } = await axiosInstance.post(
         RECIPES_API_ENDPOINTS.GET_USER_FAV_RECIPES,
-        userId
+        { userId }
       );
       console.log(data);
       return { statusCode: 200, data, message: "все ок" };

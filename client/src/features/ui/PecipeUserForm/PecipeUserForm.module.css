@@ -22,12 +22,12 @@
 }
 
 .userRecipeCard {
-  display: flex; 
+  display: flex;
   align-items: center;
-  width: 300px; 
+  width: 350px;
   max-width: 500px;
-  padding: 16px; 
-  background-color: #fff; 
+  padding: 16px;
+  background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
@@ -40,7 +40,7 @@
 }
 
 .userRecipeImage {
-  width: 100px; 
+  width: 100px;
   height: 100px;
   margin-right: 16px;
   object-fit: cover;
@@ -50,7 +50,7 @@
 .userRecipeContent {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
 }
 
 .userRecipeName {
