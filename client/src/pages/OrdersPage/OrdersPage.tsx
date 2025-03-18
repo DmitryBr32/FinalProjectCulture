@@ -3,8 +3,9 @@ import styles from "./OrdersPage.module.css";
 import { getOrders } from "@/shared/api/api";
 import { OneOrder } from "./OneOrder";
 import { useAppSelector } from "@/shared/hooks/reduxHook";
+import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
+import { useNavigate } from "react-router-dom";
 
-// Определяем интерфейсы
 interface Product {
   id: number;
   name: string;
@@ -43,6 +44,7 @@ interface ApiResponse {
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const user = useAppSelector((state) => state.user.user);
+  const navigate = useNavigate();
 
   function deleteOneOrder(id: number) {
     const filteredOrders = orders.filter((order) => order.id !== id);
@@ -61,6 +63,12 @@ export default function OrdersPage() {
   return (
     <div className={styles.container}>
       <h1>Заказы</h1>
+          {!user?.isAdmin && user && <button
+            className={styles.order}
+            onClick={() => navigate(CLIENT_ROUTES.SHOP_FORM)}
+          >
+            Продолжить покупки
+          </button>}
       {orders.map((order) => (
         <OneOrder
           key={order.id}

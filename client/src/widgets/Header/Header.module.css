@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 3rem;
+  font-family: var(--font-h1);
   color: white;
   background: var(--background-color);
   border-bottom: none;
@@ -27,7 +28,7 @@
 .active {
   font-weight: 600;
   color: white;
-  background-color: #f39c12;
+  background-color: var(--color-green);
   box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
 }
 

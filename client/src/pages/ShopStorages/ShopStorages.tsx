@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { ShopStorageItem, StorageItem } from "./ShopStorageItem";
 
 const defaultItem = {
-  id: 0,
+  id: null,
   name: "",
   image: "",
   price: 0,
@@ -23,6 +23,10 @@ const defaultItem = {
 
 export function ShopStorages() {
   const [products, setProducts] = useState<StorageItem[] | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<StorageItem | null>(
+    null
+  );
+  const [mode, setMode] = useState<"add" | "edit">("add");
 
   async function getShopStorageData() {
     const response = await getShopStorage();
@@ -34,37 +38,92 @@ export function ShopStorages() {
   }, []);
 
   const handleUpdate = async (data: StorageItem) => {
-    await updateShopStorage(data);
-    getShopStorageData();
+    if (!data.name || !data.price) {
+      console.error("Некорректные данные для обновления карточки!");
+      return;
+    }
+
+    try {
+      if (mode === "edit") {
+        await updateShopStorage(data);
+        const updatedProducts = products?.map((product) =>
+          product.id === data.id ? data : product
+        );
+        setProducts(updatedProducts ?? null);
+      } else if (mode === "add") {
+        await updateShopStorage(data); // Здесь предполагаем, что для добавления также используется updateShopStorage
+        setProducts((prevProducts) =>
+          prevProducts ? [...prevProducts, data] : [data]
+        );
+      }
+
+      
+    } catch (error) {
+      console.error("Ошибка при обновлении данных склада:", error);
+    }
   };
 
-  const handleDelete = async (id: number) => {
-    const response = await deleteShopStorage(id);
+  const handleDelete = async (id: number | null) => {
+    if (!id) {
+      return;
+    }
+    await deleteShopStorage(id);
     const filteredProducts = products?.filter((product) => product.id !== id);
     setProducts(filteredProducts ?? null);
-    console.log("response", response);
+    setSelectedProduct(null); // Сброс выбора после удаления
+  };
+
+  const handleAddNewCard = () => {
+    setMode("add");
+    setSelectedProduct(null);
+  };
+
+  const handleEditCard = () => {
+    getShopStorageData()
+    setMode("edit");
   };
 
   return (
     <div className={styles.container}>
       <h2>Склад</h2>
-      <ShopStorageItem
-        isClearInput={true}
-        textFirstButton={"Создать"}
-        handleDelete={handleDelete}
-        product={defaultItem}
-        onUpdate={handleUpdate}
-      />
-      {products?.map((product) => (
+      <div className={styles.buttonBlock}>
+        <button onClick={handleAddNewCard}>Добавить карточку</button>
+        <button onClick={handleEditCard}>Редактировать карточку</button>
+      </div>
+
+      {mode === "edit" && (
+        <select
+          onChange={(e) => {
+            const selectedId = parseInt(e.target.value, 10);
+            const selected =
+              products?.find((product) => product.id === selectedId) || null;
+            setSelectedProduct(selected);
+          }}
+        >
+          <option value="">Выберите карточку</option>
+          {products?.map((product) => (
+              product?.id && (
+                <option  key={product.article} value={product?.id}>
+                  {product.name}
+                </option>
+              )
+            
+          ))}
+        </select>
+      )}
+
+      {(mode === "add" || selectedProduct) && (
         <ShopStorageItem
-          textSecondButton={"Удалить"}
-          textFirstButton={"Обновить"}
+          isClearInput={mode === "add"}
+          textFirstButton={mode === "add" ? "Создать" : "Обновить"}
+          textSecondButton={mode === "edit" ? "Удалить" : undefined}
           handleDelete={handleDelete}
-          key={product.id}
-          product={product}
+          product={
+            mode === "add" ? defaultItem : selectedProduct || defaultItem
+          }
           onUpdate={handleUpdate}
         />
-      ))}
+      )}
     </div>
   );
 }

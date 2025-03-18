@@ -1,6 +1,13 @@
 :root {
   --background-color: #1a181a;
-
+  --button-background-color: rgb(76 175 80 / 30%);
+  --button-border: 1px solid rgb(76 175 80 / 50%);
+  --button-hover-background-color: rgb(76 175 80 / 50%);
+  --button-hover-transform: translateY(-1px);
   --font-h1: "Montserrat Alternates";
+  --font-green-h3: rgb(76 175 80 / 50%);
+  --color-white: aliceblue;
+  --color-green: rgb(76 175 80 / 50%);
+  --color-red: #e74c3c;
   /* --font-text: "Oswald"; */
 }
