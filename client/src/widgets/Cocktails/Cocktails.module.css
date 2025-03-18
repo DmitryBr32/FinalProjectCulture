@@ -14,11 +14,11 @@
 }
 
 .tabs {
-  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
+  margin-bottom: 24px;
 }
 
 .tab {
