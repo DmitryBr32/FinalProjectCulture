@@ -2,11 +2,11 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import styles from "./AvailableCocktails.module.css";
 import { useEffect } from "react";
 import { getRecipesThunk } from "@/entities/recipe";
-import { getStockThunk } from "@/entities/stock";
+// import { getStockThunk } from "@/entities/stock";
 
 export default function AvailableCocktails() {
   const recipes = useAppSelector((state) => state.recipes.recipes);
-  const stock = useAppSelector((state) => state.stock.stock);
+  // const stock = useAppSelector((state) => state.stock.stock);
   const user = useAppSelector((state) => state.user.user?.id);
 
   const dispatch = useAppDispatch();
