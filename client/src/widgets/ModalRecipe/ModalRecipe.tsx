@@ -1,7 +1,11 @@
 import { JSX, useEffect, useState } from "react";
 import styles from "./ModalRecipe.module.css";
-import { getRecipeByIdThunk } from "@/entities/recipe";
+import { getRecipeByIdThunk, getUserFavRecipesThunk } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
+import {
+  addFavouriteRecipeThunk,
+  delFavouriteRecipeThunk,
+} from "@/entities/favouriterecipe";
 
 type Props = {
   recId: number;
@@ -14,20 +18,32 @@ export default function ModalRecipe({
   recipesLength,
   onClose,
 }: Props): JSX.Element {
-  const [isFavorite, setIsFavorite] = useState(false);
   const recipe = useAppSelector((state) => state.recipe.recipe);
   const [recipeId, setRecipeId] = useState(recId);
   const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.user.user?.id);
+  const userFavorites = useAppSelector((state) => state.userfavrecipes.recipes);
+
+  const isFavorite = userFavorites.some((recipe) => recipe.id === recipeId);
 
   useEffect(() => {
-    console.log("Recipe:", recipeId);
-    dispatch(getRecipeByIdThunk(recipeId));
-  }, [recipeId, dispatch]);
+    if (userId) {
+      dispatch(getRecipeByIdThunk(recipeId));
+      dispatch(getUserFavRecipesThunk(userId));
+    }
+  }, [recipeId, userId, dispatch]);
 
-  const addToFavorite = () => {
-    setIsFavorite((prev) => !prev);
-    alert(isFavorite ? "Удален из избранного" : "Добавлен в избранное");
+  const switchToFavorite = async () => {
+    if (userId) {
+      const action = isFavorite
+        ? delFavouriteRecipeThunk({ userId: userId, recipeId: recipeId })
+        : addFavouriteRecipeThunk({ userId: userId, recipeId: recipeId });
+
+      await dispatch(action);
+      dispatch(getUserFavRecipesThunk(userId));
+    }
   };
+
   return (
     <div className={styles.modalOverlay}>
       {recipeId > 1 && (
@@ -73,16 +89,16 @@ export default function ModalRecipe({
               </div>
             </div>
           </div>
-          <button className={styles.favoriteButton} onClick={addToFavorite}>
+          <button className={styles.favoriteButton} onClick={switchToFavorite}>
             {isFavorite ? (
               <img
-                src="../../../public/free-icon-bookmark-4305474.png"
+                src="/free-icon-bookmark-4305474.png"
                 alt="favorite"
                 className={styles.favoriteIcon}
               />
             ) : (
               <img
-                src="../../../public/free-icon-bookmark-4305497.png"
+                src="/free-icon-bookmark-4305497.png"
                 alt="favorite"
                 className={styles.favoriteIcon}
               />
