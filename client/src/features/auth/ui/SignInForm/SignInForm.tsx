@@ -46,25 +46,30 @@ export default function SignInForm() {
   const { email, password } = inputs;
 
   return (
-    <div>
-      <form className={styles.signInform} onSubmit={onSubmitHandler}>
+      <form className={styles.form} onSubmit={onSubmitHandler}>
+        <div className={styles.formGroup}>
+        <label className={styles.label}>Введите почту</label>
         <input
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="почта"
           onChange={onChangeHandler}
           value={email}
+          className={styles.input}
         />
-
+        </div>
+        <div className={styles.formGroup}>
+        <label className={styles.label}>Введите пароль</label>
         <input
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="пароль"
           onChange={onChangeHandler}
           value={password}
+          className={styles.input}
         />
-        <button type="submit">Войти</button>
+        </div>
+        <button type="submit" className={styles.button}>Войти</button>
       </form>
-    </div>
   );
 }
