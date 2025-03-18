@@ -29,7 +29,7 @@ export default function ModalRecipe({
   useEffect(() => {
     if (userId) {
       dispatch(getRecipeByIdThunk(recipeId));
-      dispatch(getUserFavRecipesThunk(userId));
+      // dispatch(getUserFavRecipesThunk(userId));
     }
   }, [recipeId, userId, dispatch]);
 

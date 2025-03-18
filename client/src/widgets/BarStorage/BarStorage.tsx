@@ -64,8 +64,6 @@ export default function BarStorage() {
   return (
     <div className={styles.container}>
       <h1>Ваши напитки</h1>
-      {loading && <p>Загрузка...</p>}
-      {error && <p>Ошибка: {error}</p>}
       {!showAddForm && !showUpdateForm ? (
         <button
           className={styles.addButton}
@@ -90,6 +88,8 @@ export default function BarStorage() {
           initialData={null}
         />
       )}
+      {loading && <p>Загрузка...</p>}
+      {error && <p>Ошибка: {error}</p>}
       <div className={styles.ingredients}>
         {!Array.isArray(alkoStock) || alkoStock.length === 0 ? (
           <p>Ваш бар в данный момент пуст</p>

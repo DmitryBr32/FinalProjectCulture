@@ -19,7 +19,7 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   const user = useAppSelector((state) => state.user.user?.id ?? 0);
   const [ingredientInputs, setIngredientInputs] = useState<IIngredientRowData>({
     type: "",
-    isAlko: false,
+    isAlko: true,
     imgUrl: "",
   });
 
@@ -32,7 +32,7 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   });
 
   const resetForm = useCallback(() => {
-    setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
+    setIngredientInputs({ type: "", isAlko: true, imgUrl: "" });
     setStockInputs({
       ingredientTypeId: 0,
       ingredientBalance: "0",
@@ -45,7 +45,7 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
     if (initialData) {
       setIngredientInputs({
         type: initialData.ingredientType?.type || "",
-        isAlko: initialData.ingredientType?.isAlko || false,
+        isAlko: true,
         imgUrl: initialData.ingredientType?.imgUrl || "",
       });
       setStockInputs({
@@ -69,17 +69,12 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   }, [dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, checked } = e.target;
+    const { name, value } = e.target;
 
     if (name === "ingredientBalance") {
       setStockInputs((prev) => ({
         ...prev,
         ingredientBalance: value,
-      }));
-    } else if (name === "isAlko") {
-      setIngredientInputs((prev) => ({
-        ...prev,
-        isAlko: checked,
       }));
     } else if (name === "title" || name === "strength") {
       setStockInputs((prev) => ({
@@ -130,6 +125,7 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
           await dispatch(getStockThunk(user));
           setShowAddForm(false);
         } else {
+          setShowAddForm(false);
           throw new Error(
             "Ошибка при обновлении запаса: " +
               (resultStock.payload?.error || "Неизвестная ошибка")
@@ -188,17 +184,6 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
           min="0"
           className={styles.input}
         />
-      </div>
-      <div className={`${styles.formGroup} ${styles.checkbox}`}>
-        <label className={styles.label}>
-          Алкогольный:
-          <input
-            type="checkbox"
-            name="isAlko"
-            checked={ingredientInputs.isAlko}
-            onChange={handleChange}
-          />
-        </label>
       </div>
       <div className={styles.formGroup}>
         <label className={styles.label}>Введите крепость напитка</label>

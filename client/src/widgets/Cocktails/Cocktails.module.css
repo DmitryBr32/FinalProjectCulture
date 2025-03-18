@@ -5,7 +5,16 @@
   color: #fff;
 }
 
+.title {
+  margin-bottom: 24px;
+  font-family: var(--font-h1);
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .tabs {
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;

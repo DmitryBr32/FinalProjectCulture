@@ -4,14 +4,6 @@
   color: #fff;
 }
 
-.title {
-  margin-bottom: 24px;
-  font-family: var(--font-h1);
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-}
-
 .recipesGrid {
   display: flex;
   flex-direction: column;
