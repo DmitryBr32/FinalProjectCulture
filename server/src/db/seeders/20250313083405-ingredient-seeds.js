@@ -117,9 +117,9 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/Биттер Апельсиновый.png",
         },
-        { type: "Анчо Рейес (ликер чили)", isAlko: true, imgUrl: "" },
-        { type: "Ягермейстер", isAlko: true, imgUrl: "" },
-        { type: "Бехеровка", isAlko: true, imgUrl: "" },
+        { type: "Анчо Рейес (ликер чили)", isAlko: true, imgUrl: "/ingredients/Анчо Рейес (ликер чили).png" },
+        { type: "Ягермейстер", isAlko: true, imgUrl: "/ingredients/Ягермейстер.png" },
+        { type: "Бехеровка", isAlko: true, imgUrl: "/ingredients/Бехеровка.png" },
 
         // Безалкогольные напитки (19)
         { type: "Сок апельсиновый", isAlko: false, imgUrl: "" },
@@ -169,9 +169,9 @@ module.exports = {
         { type: "Клубника", isAlko: false, imgUrl: "" },
         { type: "Лайм (долька)", isAlko: false, imgUrl: "" },
         { type: "Корица", isAlko: false, imgUrl: "" },
-        { type: "Самбука", isAlko: true, imgUrl: "" },
-        { type: "Irish cream", isAlko: true, imgUrl: "" },
-        { type: "Бенедиктин", isAlko: true, imgUrl: "" },
+        { type: "Самбука", isAlko: true, imgUrl: "/ingredients/Самбука.png" },
+        { type: "Irish cream", isAlko: true, imgUrl: "/ingredients/Irish cream.png" },
+        { type: "Бенедиктин", isAlko: true, imgUrl: "/ingredients/Бенедиктин.png" },
 
         // Лёд (1)
         { type: "Лёд", isAlko: false, imgUrl: "" },

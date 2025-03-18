@@ -64,51 +64,6 @@ export default function BarStorage() {
   return (
     <div className={styles.container}>
       <h1>Ваши напитки</h1>
-      {loading && <p>Загрузка...</p>}
-      {error && <p>Ошибка: {error}</p>}
-
-      {!Array.isArray(alkoStock) || alkoStock.length === 0 ? (
-        <p>Ваш бар в данный момент пуст</p>
-      ) : (
-        alkoStock.map((ingredient) => (
-          <div key={ingredient.id} className={styles.ingrCard}>
-            <div className={styles.ingrHeader}>
-              <span className={styles.ingredientType}>
-                {ingredient?.ingredientType?.type ||
-                  ingredients.find((i) => i.id === ingredient.ingredientTypeId)
-                    ?.type ||
-                  "Тип не указан"}
-              </span>
-              <span className={styles.ingredientTitle}>
-                {ingredient.title ||
-                  ingredient?.ingredientType?.type ||
-                  "Название не указано"}
-              </span>
-            </div>
-            <div className={styles.ingrBody}>
-              <div className={styles.ingredientDetails}>
-                <p className={styles.ingredientBalance}>
-                  Остаток: {ingredient.ingredientBalance} мл.
-                </p>
-              </div>
-              <div className={styles.ingrImg}>
-                <img
-                  src={ingredient.ingredientType.imgUrl}
-                  alt={ingredient.title}
-                />
-              </div>
-              <div className={styles.buttonContainer}>
-                <button onClick={() => editHandler(ingredient.id)}>
-                  Отредактировать
-                </button>
-                <button onClick={() => deleteHandler(ingredient.id)}>
-                  Закончилось
-                </button>
-              </div>
-            </div>
-          </div>
-        ))
-      )}
       {!showAddForm && !showUpdateForm ? (
         <button
           className={styles.addButton}
@@ -133,6 +88,53 @@ export default function BarStorage() {
           initialData={null}
         />
       )}
+      {loading && <p>Загрузка...</p>}
+      {error && <p>Ошибка: {error}</p>}
+      <div className={styles.ingredients}>
+        {!Array.isArray(alkoStock) || alkoStock.length === 0 ? (
+          <p>Ваш бар в данный момент пуст</p>
+        ) : (
+          alkoStock.map((ingredient) => (
+            <div key={ingredient.id} className={styles.ingrCard}>
+              <div className={styles.ingrHeader}>
+                <span className={styles.ingredientType}>
+                  {ingredient?.ingredientType?.type ||
+                    ingredients.find(
+                      (i) => i.id === ingredient.ingredientTypeId
+                    )?.type ||
+                    "Тип не указан"}
+                </span>
+                <span className={styles.ingredientTitle}>
+                  {ingredient.title ||
+                    ingredient?.ingredientType?.type ||
+                    "Название не указано"}
+                </span>
+              </div>
+              <div className={styles.ingrBody}>
+                <div className={styles.ingredientDetails}>
+                  <p className={styles.ingredientBalance}>
+                    Остаток: {ingredient.ingredientBalance} мл.
+                  </p>
+                </div>
+                <div className={styles.ingrImg}>
+                  <img
+                    src={ingredient.ingredientType.imgUrl}
+                    alt={ingredient.title}
+                  />
+                </div>
+                <div className={styles.buttonContainer}>
+                  <button onClick={() => editHandler(ingredient.id)}>
+                    Отредактировать
+                  </button>
+                  <button onClick={() => deleteHandler(ingredient.id)}>
+                    Закончилось
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

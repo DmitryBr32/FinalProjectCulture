@@ -9,6 +9,7 @@ export default function Cocktails() {
   >("available");
   return (
     <div className={styles.container}>
+      <h1 className={styles.title}>Коктейли</h1>
       <div className={styles.tabs}>
         <button
           className={`${styles.tab} ${

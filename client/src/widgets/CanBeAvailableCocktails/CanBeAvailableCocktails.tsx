@@ -1,7 +1,8 @@
 import { getRecipesThunk } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./CanBeAvailableCocktails.module.css";
+import ModalRecipe from "../ModalRecipe/ModalRecipe";
 
 export default function CanBeAvailableCocktails() {
   const recipes = useAppSelector((state) => state.recipes.recipes);
@@ -11,6 +12,19 @@ export default function CanBeAvailableCocktails() {
   useEffect(() => {
     void dispatch(getRecipesThunk());
   }, [dispatch, user]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
+
+  const openModal = (id: number) => {
+    setSelectedRecipeId(id);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRecipeId(null);
+  };
   const filteredRecipes = recipes.filter((recipe) => {
     const recipeIngredients =
       recipe.Components?.map((comp) => comp.ingredient.type) || [];
@@ -21,11 +35,14 @@ export default function CanBeAvailableCocktails() {
   });
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Доступные коктейли</h1>
       <div className={styles.recipesGrid}>
         {Array.isArray(filteredRecipes) && filteredRecipes.length > 0 ? (
           filteredRecipes.map((recipe) => (
-            <div key={recipe.id} className={styles.recipeCard}>
+            <div
+              key={recipe.id}
+              className={styles.recipeCard}
+              onClick={() => openModal(recipe.id)}
+            >
               <div className={styles.recipeHeader}>
                 <img
                   src={recipe.img || "/default-cocktail.jpg"}
@@ -51,6 +68,13 @@ export default function CanBeAvailableCocktails() {
           <p>Нет доступных коктейлей</p>
         )}
       </div>
+      {isModalOpen && selectedRecipeId && (
+        <ModalRecipe
+          recId={selectedRecipeId}
+          onClose={closeModal}
+          recipesLength={recipes.length}
+        />
+      )}
     </div>
   );
 }

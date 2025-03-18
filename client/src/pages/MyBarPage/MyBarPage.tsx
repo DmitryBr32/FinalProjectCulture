@@ -24,7 +24,6 @@ export default function MyBarPage() {
 
   return (
     <div>
-      <h1>Мой бар</h1>
       <div className={styles.container}>
         <BarStorage />
         <Bar />
