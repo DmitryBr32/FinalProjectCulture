@@ -170,17 +170,20 @@ export default function Baskets(): JSX.Element {
                   navigate(`/shop/${product?.Product?.id}?isOpenModal=true`)
                 }
               />
-              <div className={styles.cartItemDetails}>
+              <div className={styles.cartItemDetailsContainer}>
                 <h3>
                   <strong className={styles.name}>
                     {product.Product?.name}
                   </strong>
                 </h3>
+              <div className={styles.cartItemDetails}>
                 <p>Артикул: {product.Product?.article}</p>
                 <p>Вес: {product.Product?.weight}</p>
                 <p>Бренд: {product.Product?.brand}</p>
                 <p>Габариты: {product.Product?.dimensions}</p>
                 <p>Цена: {product.Product?.price} руб.</p>
+              </div>
+              </div>
                 <div className={styles.quantityBlock}>
                   <button
                     className={styles.quantityButton}
@@ -209,7 +212,6 @@ export default function Baskets(): JSX.Element {
                     +
                   </button>
                 </div>
-              </div>
               <button
                 className={styles.deleteButton}
                 onClick={() => deleteProduct(product.id)}
@@ -221,6 +223,7 @@ export default function Baskets(): JSX.Element {
           <div className={styles.total}>
             <h3>Итого: {totalPrice.toFixed(2)} руб.</h3>
           </div>
+          <div>
           <button
             className={styles.orderButton}
             onClick={() => navigate(CLIENT_ROUTES.SHOP_FORM)}
@@ -233,12 +236,7 @@ export default function Baskets(): JSX.Element {
           >
             Оформить заказ
           </button>
-          <button
-            className={styles.orderButton}
-            onClick={() => navigate(CLIENT_ROUTES.ORDERS)}
-          >
-            Мои заказы
-          </button>
+          </div>
         </div>
       )}
 
