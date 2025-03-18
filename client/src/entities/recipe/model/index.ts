@@ -1,7 +1,10 @@
 import { IRecipeComponentArrayType } from "@/entities/component/model";
 
-export interface IRecipeRowData {
+export interface IRecipeTitle {
   title: string;
+}
+
+export interface IRecipeRowData extends IRecipeTitle {
   text: string;
   img: string;
   strengthLevel: string;

@@ -1,5 +1,10 @@
 const { Op } = require("sequelize");
-const { Recipe, Ingredient, RecComponent } = require("../db/models");
+const {
+  Recipe,
+  Ingredient,
+  RecComponent,
+  RecFavourite,
+} = require("../db/models");
 const IngredientService = require("./Ingredient.service");
 
 class RecipeService {
@@ -56,6 +61,22 @@ class RecipeService {
     });
   }
 
+  static async getRecipesUserFav(userId) {
+    if (!userId) {
+      return [];
+    }
+    return await Recipe.findAll({
+      include: [
+        {
+          model: RecFavourite,
+          as: "Favourites",
+          where: {
+            userId: userId,
+          },
+        },
+      ],
+    });
+  }
   static async getRecipeById(id) {
     return await Recipe.findByPk(id, {
       include: [

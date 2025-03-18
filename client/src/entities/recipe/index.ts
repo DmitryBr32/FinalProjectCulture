@@ -6,6 +6,7 @@ export {
   getRecipesByIngrsThunk,
   getRecipeByIdThunk,
   getRecipeByTitleThunk,
+  getUserFavRecipesThunk,
   createRecipeThunk,
   updateRecipeByIdThunk,
   deleteRecipeThunk,
