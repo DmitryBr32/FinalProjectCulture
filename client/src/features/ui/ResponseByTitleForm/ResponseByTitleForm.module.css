@@ -1,0 +1,59 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.componentContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.input {
+  box-sizing: border-box; /* Очень важно, чтобы padding не увеличивал ширину */
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.removeButton {
+  padding: 8px 12px;
+  margin-top: 5px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  background-color: #f44336;
+  border: none;
+  border-radius: 3px;
+}
+
+.removeButton:hover {
+  background-color: #da190b;
+}
+
+.submitButton {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 5px;
+}
+
+.submitButton:hover {
+  background-color: #367c39;
+}

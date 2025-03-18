@@ -115,6 +115,8 @@ module.exports = {
 
         // Лёд (1)
         { type: "Лёд", isAlko: false, imgUrl: "" },
+        { type: "Сок томатный", isAlko: false, imgUrl: "" },
+        //допы
       ],
       {}
     );
