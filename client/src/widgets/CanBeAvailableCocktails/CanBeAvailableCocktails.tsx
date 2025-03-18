@@ -21,7 +21,7 @@ export default function CanBeAvailableCocktails() {
   });
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Доступные коктейли</h1>
+      <h1 className={styles.title}>Почти доступные коктейли</h1>
       <div className={styles.recipesGrid}>
         {Array.isArray(filteredRecipes) && filteredRecipes.length > 0 ? (
           filteredRecipes.map((recipe) => (

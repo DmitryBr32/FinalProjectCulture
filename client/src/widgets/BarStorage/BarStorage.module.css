@@ -14,6 +14,14 @@
   text-align: center;
 }
 
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 87vh;
+  overflow-y: scroll;
+}
+
 .ingrCard {
   position: relative;
   display: flex;

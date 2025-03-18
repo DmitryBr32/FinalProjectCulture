@@ -19,7 +19,7 @@ export default function FavouritesCocktails() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Доступные коктейли</h1>
+      <h1 className={styles.title}>Избранные коктейли</h1>
       <div className={styles.recipesGrid}>
         {Array.isArray(recipes) && recipes.length > 0 ? (
           recipes.map((recipe) => (
