@@ -3,8 +3,8 @@ import styles from "./BarStorage.module.css";
 import { useEffect, useState } from "react";
 import { deleteStockThunk, getStockThunk, IStock } from "@/entities/stock";
 import { getIngredientsThunk } from "@/entities/ingredient";
-import BarUpdateForm from "@/features/auth/ui/BarUpdateForm/BarUpdateForm";
-import BarAddForm from "@/features/auth/ui/BarAddForm/BarAddForm";
+import BarUpdateForm from "@/features/ui/BarUpdateForm/BarUpdateForm";
+import BarAddForm from "@/features/ui/BarAddForm/BarAddForm";
 export default function BarStorage() {
   const stock = useAppSelector((state) => state.stock.stock);
   const ingredients = useAppSelector((state) => state.ingredients.ingredients);
