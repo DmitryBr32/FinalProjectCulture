@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "@/shared/lib/axiosInstance";
 import { IServerResponse } from "@/shared/types";
-import { IFavouriteRecipe } from "../model";
+import { IFavouriteRecipe, IFavouriteRecipeRowData } from "../model";
 import { handleAxiosError } from "@/shared/utils/handleAxiosError";
 
 enum RECIPES_API_ENDPOINTS {
@@ -16,7 +16,7 @@ enum RECIPE_THUNK_TYPES {
 
 export const addFavouriteRecipeThunk = createAsyncThunk<
   IServerResponse<IFavouriteRecipe>,
-  void,
+  IFavouriteRecipeRowData,
   { rejectValue: IServerResponse }
 >(
   RECIPE_THUNK_TYPES.ADD_FAVOURIT_RES,
@@ -36,14 +36,14 @@ export const addFavouriteRecipeThunk = createAsyncThunk<
 
 export const delFavouriteRecipeThunk = createAsyncThunk<
   IServerResponse<IFavouriteRecipe>,
-  void,
+  IFavouriteRecipeRowData,
   { rejectValue: IServerResponse }
 >(
   RECIPE_THUNK_TYPES.ADD_FAVOURIT_RES,
   async (favoriteData, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post(
-        RECIPES_API_ENDPOINTS.ADD_FAVOURIT_RES,
+        RECIPES_API_ENDPOINTS.DEL_FAVOURIT_RES,
         favoriteData
       );
       console.log(data);
