@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "@/shared/lib/axiosInstance";
 import { IServerResponse } from "@/shared/types";
-import { IStock, IStockRowData } from "../model";
+import { IStock, IStockRowData, IStockUpdate } from "../model";
 import { handleAxiosError } from "@/shared/utils/handleAxiosError";
 
 export const STOCK_ENDPOINT = "/stock" as const;
 
 enum STOCK_THUNK_TYPES {
   GET_STOCK = "stock/getUserStock",
-  CREATE_OR_UPDATE_STOCK = "stock/findOrCreateUserStock",
+  UPDATE_STOCK = "stock/updateUserStock",
   CREATE_STOCK = "stock/сreateUserStock",
   DELETE_STOCK = "stock/deleteUserStock",
 }
@@ -53,29 +53,26 @@ export const createStockThunk = createAsyncThunk<
   }
 });
 
-export const createOrUpdateStockThunk = createAsyncThunk<
+export const updateStockThunk = createAsyncThunk<
   IServerResponse<IStock>,
-  IStockRowData,
+  IStockUpdate,
   { rejectValue: IServerResponse }
->(
-  STOCK_THUNK_TYPES.CREATE_OR_UPDATE_STOCK,
-  async (stockData, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.put(
-        `${STOCK_ENDPOINT}/${stockData.userId}`,
-        {
-          ingredientTypeId: stockData.ingredientTypeId,
-          ingredientBalance: stockData.ingredientBalance,
-          title: stockData.title,
-          strength: stockData.strength,
-        }
-      );
-      return data;
-    } catch (error) {
-      return rejectWithValue(handleAxiosError(error));
-    }
+>(STOCK_THUNK_TYPES.UPDATE_STOCK, async (stockData, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.put(
+      `${STOCK_ENDPOINT}/${stockData.userId}/item/${stockData.id}`,
+      {
+        ingredientTypeId: stockData.ingredientTypeId,
+        ingredientBalance: stockData.ingredientBalance,
+        title: stockData.title,
+        strength: stockData.strength,
+      }
+    );
+    return data;
+  } catch (error) {
+    return rejectWithValue(handleAxiosError(error));
   }
-);
+});
 
 export const deleteStockThunk = createAsyncThunk<
   IServerResponse<IStock>,

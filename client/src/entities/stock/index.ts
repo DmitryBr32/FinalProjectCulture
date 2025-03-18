@@ -2,7 +2,7 @@ export { stockReducer } from "./slice/stockSlice";
 
 export {
   getStockThunk,
-  createOrUpdateStockThunk,
+  updateStockThunk,
   createStockThunk,
   deleteStockThunk,
 } from "./api";

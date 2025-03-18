@@ -4,7 +4,11 @@ const verifyAccessToken = require("../middleware/verifyAccessToken");
 
 router.get("/:id", verifyAccessToken, StockController.getUserStock);
 router.post("/:id", verifyAccessToken, StockController.createUserStock);
-router.put("/:id", verifyAccessToken, StockController.createOrUpdateUserStock);
+router.put(
+  "/:id/item/:itemId",
+  verifyAccessToken,
+  StockController.updateStockThunk
+);
 router.delete(
   "/:id/item/:itemId",
   verifyAccessToken,
