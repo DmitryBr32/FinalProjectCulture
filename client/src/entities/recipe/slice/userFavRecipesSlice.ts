@@ -15,7 +15,7 @@ const initialState: RecipesState = {
 };
 
 const recipesSlice = createSlice({
-  name: "recipes",
+  name: "favoriterecipes",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
