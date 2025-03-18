@@ -14,6 +14,7 @@ enum RECIPES_API_ENDPOINTS {
   RECIPES_ENDPOINT = "recipe/",
   GET_RECIPES_BY_INGRS = "recipe/getRecipesBySeveralIngrs",
   GET_RECIPE_BY_TITLE = "recipe/getByTitle",
+  GET_USER_FAV_RECIPES = "recipe/getUserFav",
 }
 
 enum RECIPE_THUNK_TYPES {
@@ -21,6 +22,7 @@ enum RECIPE_THUNK_TYPES {
   GET_RECIPES_BY_INGRS = "recipe/getRecipesBySeveralIngrs",
   GET_RECIPE_BY_ID = "recipe/",
   GET_RECIPE_BY_TITLE = "recipe/getRecipeByTitle",
+  GET_USER_FAV_RECIPES = "recipe/getUserFav",
   CREATE_RECIPE = "recipe/createRecipe",
   UPDATE_RECIPE = "recipe/updateRecipeById",
   DELETE_RECIPE = "recipe/deleteRecipe",
@@ -53,6 +55,26 @@ export const getRecipesByIngrsThunk = createAsyncThunk<
       const { data } = await axiosInstance.post(
         RECIPES_API_ENDPOINTS.GET_RECIPES_BY_INGRS,
         typesData
+      );
+      console.log(data);
+      return { statusCode: 200, data, message: "все ок" };
+    } catch (error) {
+      return rejectWithValue(handleAxiosError(error));
+    }
+  }
+);
+
+export const getUserFavRecipesThunk = createAsyncThunk<
+  IServerResponse<IRecipeArrayType>,
+  number,
+  { rejectValue: IServerResponse }
+>(
+  RECIPE_THUNK_TYPES.GET_USER_FAV_RECIPES,
+  async (userId, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(
+        RECIPES_API_ENDPOINTS.GET_USER_FAV_RECIPES,
+        userId
       );
       console.log(data);
       return { statusCode: 200, data, message: "все ок" };
