@@ -3,7 +3,7 @@ import {
   getIngredientsThunk,
 } from "@/entities/ingredient";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IIngredientRowData } from "@/entities/ingredient/model";
 import { IStock, IStockRowData } from "@/entities/stock/model";
 import { createStockThunk, getStockThunk } from "@/entities/stock";
@@ -31,6 +31,16 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
     strength: "",
   });
 
+  const resetForm = useCallback(() => {
+    setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
+    setStockInputs({
+      ingredientTypeId: 0,
+      ingredientBalance: "0",
+      userId: user,
+      title: "",
+      strength: "",
+    });
+  }, [user]);
   useEffect(() => {
     if (initialData) {
       setIngredientInputs({
@@ -48,18 +58,7 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
     } else {
       resetForm();
     }
-  }, [initialData]);
-
-  const resetForm = () => {
-    setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
-    setStockInputs({
-      ingredientTypeId: 0,
-      ingredientBalance: "0",
-      userId: user,
-      title: "",
-      strength: "",
-    });
-  };
+  }, [initialData, user, resetForm]);
 
   const dispatch = useAppDispatch();
   const ingredients =
