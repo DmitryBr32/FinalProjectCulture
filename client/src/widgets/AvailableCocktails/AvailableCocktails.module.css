@@ -53,10 +53,6 @@
   transition: transform 0.3s ease;
 }
 
-.recipeCard:hover .recipeImage {
-  transform: scale(1.05);
-}
-
 .recipeTitle {
   margin: 0;
   font-family: var(--font-h1);

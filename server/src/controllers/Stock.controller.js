@@ -35,12 +35,16 @@ class StockController {
     }
   }
 
-  static async createOrUpdateUserStock(req, res) {
-    const { id } = req.params;
+  static async updateStockThunk(req, res) {
+    const { id: userId, itemId } = req.params;
     const { ingredientTypeId, ingredientBalance, title, strength } = req.body;
+    if (!itemId) {
+      return res.status(400).json({ error: "Stock item ID is required" });
+    }
     try {
-      const stock = await StockService.findOrCreateUserStock(
-        id,
+      const stock = await StockService.updateUserStock(
+        userId,
+        itemId,
         ingredientTypeId,
         ingredientBalance,
         title,

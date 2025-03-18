@@ -2,9 +2,9 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import styles from "./BarStorage.module.css";
 import { useEffect, useState } from "react";
 import { deleteStockThunk, getStockThunk, IStock } from "@/entities/stock";
-import BarAddForm from "../BarAddForm/BarAddForm";
-import BarUpdateForm from "../BarUpdateForm/BarUpdateForm";
 import { getIngredientsThunk } from "@/entities/ingredient";
+import BarUpdateForm from "@/features/ui/BarUpdateForm/BarUpdateForm";
+import BarAddForm from "@/features/ui/BarAddForm/BarAddForm";
 export default function BarStorage() {
   const stock = useAppSelector((state) => state.stock.stock);
   const ingredients = useAppSelector((state) => state.ingredients.ingredients);

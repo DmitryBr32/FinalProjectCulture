@@ -3,11 +3,11 @@ import {
   getIngredientsThunk,
 } from "@/entities/ingredient";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IIngredientRowData } from "@/entities/ingredient/model";
 import { IStock, IStockRowData } from "@/entities/stock/model";
-import { createStockThunk, getStockThunk } from "@/entities/stock";
-import styles from "./BarAddForm.module.css";
+import { updateStockThunk, getStockThunk } from "@/entities/stock";
+import styles from "./BarUpdateForm.module.css";
 
 type Props = {
   setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +15,7 @@ type Props = {
   initialData?: IStock | null;
 };
 
-export default function BarAddForm({ setShowAddForm, initialData }: Props) {
+export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   const user = useAppSelector((state) => state.user.user?.id ?? 0);
   const [ingredientInputs, setIngredientInputs] = useState<IIngredientRowData>({
     type: "",
@@ -31,6 +31,16 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
     strength: "",
   });
 
+  const resetForm = useCallback(() => {
+    setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
+    setStockInputs({
+      ingredientTypeId: 0,
+      ingredientBalance: "0",
+      userId: user,
+      title: "",
+      strength: "",
+    });
+  }, [user]);
   useEffect(() => {
     if (initialData) {
       setIngredientInputs({
@@ -48,18 +58,7 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
     } else {
       resetForm();
     }
-  }, [initialData]);
-
-  const resetForm = () => {
-    setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
-    setStockInputs({
-      ingredientTypeId: 0,
-      ingredientBalance: "0",
-      userId: user,
-      title: "",
-      strength: "",
-    });
-  };
+  }, [initialData, user, resetForm]);
 
   const dispatch = useAppDispatch();
   const ingredients =
@@ -99,22 +98,28 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      if (!ingredientInputs.type || !stockInputs.ingredientBalance) {
+        throw new Error("Пожалуйста, заполните все обязательные поля");
+      }
       const existingIngredient = ingredients.find(
-        (ingredient) => ingredient.type === ingredientInputs.type
+        (ingredient) =>
+          ingredient.type.toLowerCase() === ingredientInputs.type.toLowerCase()
       );
       let ingredientId = existingIngredient?.id;
-
       if (!ingredientId) {
         const resultIngredient = await dispatch(
           createIngredientThunk(ingredientInputs)
         );
         if (resultIngredient.payload && "id" in resultIngredient.payload) {
           ingredientId = (resultIngredient.payload as { id: number }).id;
+        } else {
+          throw new Error("Ошибка при создании ингредиента");
         }
       }
       if (ingredientId) {
         const resultStock = await dispatch(
-          createStockThunk({
+          updateStockThunk({
+            id: initialData?.id || 0,
             ingredientTypeId: ingredientId,
             ingredientBalance: stockInputs.ingredientBalance,
             userId: user,
@@ -122,21 +127,19 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
             strength: stockInputs.strength,
           })
         );
-        if (resultStock.payload?.statusCode === 200) {
-          setIngredientInputs({ type: "", isAlko: false, imgUrl: "" });
-          setStockInputs({
-            ingredientTypeId: 0,
-            ingredientBalance: "0",
-            userId: user,
-            title: "",
-            strength: "",
-          });
-          dispatch(getStockThunk(user));
+        if (resultStock.payload?.data) {
+          await dispatch(getStockThunk(user));
           setShowAddForm(false);
+        } else {
+          throw new Error(
+            "Ошибка при обновлении запаса: " +
+              (resultStock.payload?.error || "Неизвестная ошибка")
+          );
         }
       }
     } catch (error) {
-      console.error("Ошибка при добавлении ингредиента:", error);
+      console.error("Ошибка при обновлении:", error);
+      await dispatch(getStockThunk(user));
     }
   };
 
