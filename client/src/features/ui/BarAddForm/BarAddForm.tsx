@@ -63,7 +63,6 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
   const dispatch = useAppDispatch();
   const ingredients =
     useAppSelector((state) => state.ingredients.ingredients) || [];
-  console.log(ingredients, "ingredients");
 
   useEffect(() => {
     void dispatch(getIngredientsThunk());
