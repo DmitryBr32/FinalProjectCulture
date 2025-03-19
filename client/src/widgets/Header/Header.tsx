@@ -7,13 +7,13 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 import { signOutThunk } from "@/entities/user";
 import { initializeCart } from "@/app/store/cartSlice";
 import { getCart } from "@/shared/api/api";
-//import { useAlert } from "@/features/alerts";
+import { useAlert } from "@/features/alert";
 
 export function Header(): JSX.Element {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
-  //const { showAlert } = useAlert();
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +26,7 @@ export function Header(): JSX.Element {
 
   const onLogoutHandler = async () => {
     dispatch(signOutThunk());
-    //showAlert("Вы вышли из системы", 200);
+    showAlert("Будем рады видеть вас снова!");
     navigate(CLIENT_ROUTES.SIGN_IN);
   };
 

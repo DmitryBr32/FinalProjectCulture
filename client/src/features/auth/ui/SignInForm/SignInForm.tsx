@@ -5,7 +5,7 @@ import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import styles from "./SignInForm.module.css";
 import { useAppDispatch } from "@/shared/hooks/reduxHook";
 import { signInThunk } from "@/entities/user";
-//import { useAlert } from "@/features/alerts";
+import { useAlert } from "@/features/alert";
 
 const INITIAL_INPUTS_DATA = {
   email: "",
@@ -16,7 +16,7 @@ export default function SignInForm() {
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  //const { showAlert } = useAlert();
+  const { showAlert } = useAlert();
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -25,21 +25,23 @@ export default function SignInForm() {
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { isValid, error } = UserValidator.validateSignIn(inputs);
-
-    if (!isValid) return alert(error);
-
+    if (!isValid) return showAlert(error || "Ошибка валидации");
+    let result
+    
     try {
-      const result = await dispatch(signInThunk(inputs));
+      result = await dispatch(signInThunk(inputs));
       if (result.payload?.statusCode === 200) {
-        // showAlert(
-        //   result.payload?.message ?? "Ошибка входа",
-        //   result.payload.statusCode
-        // );
+        showAlert(
+          result.payload?.message ?? "Вход выполнен",
+        );
         setInputs(INITIAL_INPUTS_DATA);
         navigate(CLIENT_ROUTES.MAIN);
       }
     } catch (error) {
       console.error("Ошибка:", error);
+      showAlert(
+        "Ошибка входа",
+      );
     }
   };
 

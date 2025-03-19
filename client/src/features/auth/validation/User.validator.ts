@@ -81,7 +81,7 @@ export default class UserValidator {
     ) {
       return {
         isValid: false,
-        error: "Password is required, must be a non-empty string.",
+        error: "Требуется пароль, который должен быть непустой строкой.",
       };
     }
 

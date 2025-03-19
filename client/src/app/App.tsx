@@ -1,14 +1,16 @@
 import { Provider } from "react-redux";
 import Router from "./router/router";
 
-//import { AlertProvider } from "@/features/alerts";
 import store from "./store/store";
+import { AlertProvider } from "@/features/alert";
 
 function App() {
   return (
     <>
-      <Provider store={store}>
+      <Provider store={store}> 
+      <AlertProvider>
         <Router />
+        </AlertProvider>
       </Provider>
     </>
   );

@@ -6,6 +6,7 @@ import {
 import styles from "./ShopStorages.module.css";
 import { useEffect, useState } from "react";
 import { ShopStorageItem, StorageItem } from "./ShopStorageItem";
+import { useAlert } from "@/features/alert";
 
 const defaultItem = {
   id: null,
@@ -27,6 +28,7 @@ export function ShopStorages() {
     null
   );
   const [mode, setMode] = useState<"add" | "edit">("add");
+  const { showAlert } = useAlert();
 
   async function getShopStorageData() {
     const response = await getShopStorage();
@@ -50,11 +52,13 @@ export function ShopStorages() {
           product.id === data.id ? data : product
         );
         setProducts(updatedProducts ?? null);
+        showAlert(`Карточка "${data.name}" успешно обновлена!`);
       } else if (mode === "add") {
         await updateShopStorage(data); // Здесь предполагаем, что для добавления также используется updateShopStorage
         setProducts((prevProducts) =>
           prevProducts ? [...prevProducts, data] : [data]
         );
+        showAlert(`Карточка "${data.name}" успешно создана!`);
       }
 
       
@@ -71,6 +75,7 @@ export function ShopStorages() {
     const filteredProducts = products?.filter((product) => product.id !== id);
     setProducts(filteredProducts ?? null);
     setSelectedProduct(null); // Сброс выбора после удаления
+    showAlert("Карточка успешно удалена!");
   };
 
   const handleAddNewCard = () => {
