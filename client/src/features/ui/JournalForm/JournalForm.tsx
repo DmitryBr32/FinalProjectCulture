@@ -54,7 +54,9 @@ export default function JournalForm(): JSX.Element {
         </div>
 
         <CoctailBox recipes={recipes} onOpen={openModal} />
+        
       </div>
+      
 
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
