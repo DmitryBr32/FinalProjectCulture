@@ -5,10 +5,10 @@
 
 .carousel {
   width: 1200px;
-  padding-bottom: 10px; /* Небольшой отступ снизу для тени (если есть) */
-  overflow-x: auto; /* Включаем горизонтальную прокрутку */
+  padding-bottom: 10px;
+  overflow-x: auto;
   border-radius: 8px;
-  -webkit-overflow-scrolling: touch; /* Для плавной прокрутки на iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel::-webkit-scrollbar {
@@ -16,8 +16,8 @@
 }
 
 .recipeList {
-  display: flex; /* Размещаем карточки в ряд */
-  flex-wrap: nowrap; /* Запрещаем перенос на новую строку */
+  display: flex;
+  flex-wrap: nowrap;
   border-radius: 8px;
   transition: transform 0.3s ease-in-out;
 }
@@ -65,7 +65,6 @@
   right: 0;
 }
 
-/* Стили для иконок */
 .scrollButton i {
-  font-size: 16px; /* Размер иконок */
+  font-size: 16px;
 }

@@ -12,6 +12,10 @@
   overflow-y: scroll;
 }
 
+.recipesGrid::-webkit-scrollbar {
+  display: none;
+}
+
 .recipeCard {
   position: relative;
   display: flex;
