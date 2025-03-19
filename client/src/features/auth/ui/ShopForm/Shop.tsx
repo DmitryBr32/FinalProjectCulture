@@ -8,6 +8,7 @@ import { addToCart as addToCartAPI } from "@/shared/api/api";
 import { NavLink, useNavigate, useParams } from "react-router"; 
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import ProductDetailsModal from "./ProductDetailsModal";
+import { useAlert } from "@/features/alert";
 
 export default function Shop(): JSX.Element {
   const { productId } = useParams();
@@ -18,6 +19,7 @@ export default function Shop(): JSX.Element {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -161,6 +163,7 @@ export default function Shop(): JSX.Element {
             e.stopPropagation();
             if (quantity === 0) {
               handleQuantityChange(product, 1);
+              showAlert("Добавленно в корзину!");
             } else {
               navigate(CLIENT_ROUTES.BASKETS); // Переход в корзину
             }

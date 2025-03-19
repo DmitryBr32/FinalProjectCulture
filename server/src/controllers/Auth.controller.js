@@ -91,7 +91,7 @@ class AuthController {
         .status(201)
         .cookie("refreshToken", refreshToken, cookiesConfig)
         .json(
-          formatResponse(201, "Register successful", {
+          formatResponse(201, "Регистрация прошла успешно", {
             user: plainUser,
             accessToken,
           })
@@ -147,7 +147,7 @@ class AuthController {
         .status(200)
         .cookie("refreshToken", refreshToken, cookiesConfig)
         .json(
-          formatResponse(200, "Login successful", {
+          formatResponse(200, "Добро пожаловать!", {
             user: plainUser,
             accessToken,
           })

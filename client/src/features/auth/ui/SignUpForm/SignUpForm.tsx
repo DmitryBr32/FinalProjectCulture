@@ -5,7 +5,7 @@ import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import styles from "./SignUpForm.module.css";
 import { useAppDispatch } from "@/shared/hooks/reduxHook";
 import { signUpThunk } from "@/entities/user";
-//import { useAlert } from "@/features/alerts";
+import { useAlert } from "@/features/alert";
 
 const INITIAL_INPUTS_DATA = {
   username: "",
@@ -18,7 +18,7 @@ export default function SignUpForm() {
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  //const { showAlert } = useAlert();
+  const { showAlert } = useAlert();
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -28,15 +28,14 @@ export default function SignUpForm() {
     event.preventDefault();
     const { isValid, error } = UserValidator.validateSignIn(inputs);
 
-    if (!isValid) return alert(error);
+    if (!isValid) return showAlert(error || "Ошибка валидации");
 
     try {
       const result = await dispatch(signUpThunk(inputs));
       if (result.payload?.statusCode === 201) {
-        // showAlert(
-        //   result.payload?.message ?? "Ошибка авторизации",
-        //   result.payload.statusCode
-        // );
+        showAlert(
+          result.payload?.message ?? "Ошибка авторизации",
+        );
         setInputs(INITIAL_INPUTS_DATA);
         navigate(CLIENT_ROUTES.MAIN);
       }
