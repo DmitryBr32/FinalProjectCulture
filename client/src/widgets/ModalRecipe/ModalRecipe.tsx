@@ -6,38 +6,47 @@ import {
   addFavouriteRecipeThunk,
   delFavouriteRecipeThunk,
 } from "@/entities/favouriterecipe";
+import { IRecipeArrayType } from "@/entities/recipe/model";
 
 type Props = {
+  recipes: IRecipeArrayType;
   recId: number;
   recipesLength: number;
   onClose: () => void;
 };
 
 export default function ModalRecipe({
+  recipes,
   recId,
   recipesLength,
   onClose,
 }: Props): JSX.Element {
-  const recipe = useAppSelector((state) => state.recipe.recipe);
-  const [recipeId, setRecipeId] = useState(recId);
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.user.user?.id);
   const userFavorites = useAppSelector((state) => state.userfavrecipes.recipes);
 
-  const isFavorite = userFavorites.some((recipe) => recipe.id === recipeId);
+  const initialRecipeIndex = recipes.findIndex((recipe) => recipe.id === recId);
+
+  const [recipeIndex, setRecipeIndex] = useState(
+    initialRecipeIndex >= 0 ? initialRecipeIndex : 0
+  );
+
+  const recipe = recipes[recipeIndex];
+  const isFavorite = userFavorites.some(
+    (favRecipe) => favRecipe.id === recipe?.id
+  );
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getRecipeByIdThunk(recipeId));
-      // dispatch(getUserFavRecipesThunk(userId));
+    if (userId && recipe?.id) {
+      dispatch(getRecipeByIdThunk(recipe.id));
     }
-  }, [recipeId, userId, dispatch]);
+  }, [recipe, userId, dispatch]);
 
   const switchToFavorite = async () => {
-    if (userId) {
+    if (userId && recipe?.id) {
       const action = isFavorite
-        ? delFavouriteRecipeThunk({ userId: userId, recipeId: recipeId })
-        : addFavouriteRecipeThunk({ userId: userId, recipeId: recipeId });
+        ? delFavouriteRecipeThunk({ userId, recipeId: recipe.id })
+        : addFavouriteRecipeThunk({ userId, recipeId: recipe.id });
 
       await dispatch(action);
       dispatch(getUserFavRecipesThunk(userId));
@@ -46,8 +55,8 @@ export default function ModalRecipe({
 
   return (
     <div className={styles.modalOverlay}>
-      {recipeId > 1 && (
-        <button onClick={() => setRecipeId(recipeId - 1)}></button>
+      {recipeIndex > 0 && (
+        <button onClick={() => setRecipeIndex(recipeIndex - 1)}>&lt;</button>
       )}
 
       <div className={styles.modalContainer}>
@@ -87,6 +96,13 @@ export default function ModalRecipe({
                   ))}
                 </div>
               </div>
+              <div>
+                <form>
+                  <label>Сколько коктейлей вы хотите сделать?</label>
+                  <input type="number" />
+                  <button type="submit">Подтвердить</button>
+                </form>
+              </div>
             </div>
           </div>
           <button className={styles.favoriteButton} onClick={switchToFavorite}>
@@ -106,8 +122,9 @@ export default function ModalRecipe({
           </button>
         </div>
       </div>
-      {recipeId < recipesLength && (
-        <button onClick={() => setRecipeId(recipeId + 1)}></button>
+
+      {recipeIndex < recipesLength - 1 && (
+        <button onClick={() => setRecipeIndex(recipeIndex + 1)}>&gt;</button>
       )}
     </div>
   );

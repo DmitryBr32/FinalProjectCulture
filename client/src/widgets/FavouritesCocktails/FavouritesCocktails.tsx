@@ -7,9 +7,11 @@ import {
   addFavouriteRecipeThunk,
   delFavouriteRecipeThunk,
 } from "@/entities/favouriterecipe";
+import IngredientsList from "../CoctailCard/IngredientsList";
 
 export default function FavouritesCocktails() {
-  const recipes = useAppSelector((state) => state.userfavrecipes.recipes);
+  const favResipes = useAppSelector((state) => state.userfavrecipes.recipes);
+  const recipes = useAppSelector((state) => state.recipes.recipes);
   const user = useAppSelector((state) => state.user.user?.id);
 
   const dispatch = useAppDispatch();
@@ -35,7 +37,7 @@ export default function FavouritesCocktails() {
 
   const handleFavoriteToggle = async (recipeId: number) => {
     if (user) {
-      const isFavorite = recipes.some((recipe) => recipe.id === recipeId);
+      const isFavorite = favResipes.some((recipe) => recipe.id === recipeId);
       try {
         const action = isFavorite
           ? delFavouriteRecipeThunk
@@ -48,24 +50,34 @@ export default function FavouritesCocktails() {
       }
     }
   };
-  console.log("favrecipes", recipes);
+
+  const favRecipeIds = favResipes.map((fav) => fav.id);
+  const filteredRecipes = recipes.filter((recipe) =>
+    favRecipeIds.includes(recipe.id)
+  );
 
   return (
     <div className={styles.container}>
       <div className={styles.recipesGrid}>
-        {Array.isArray(recipes) && recipes.length > 0 ? (
-          recipes.map((recipe) => (
+        {filteredRecipes.length > 0 ? (
+          filteredRecipes.map((recipe) => (
             <div key={recipe.id} className={styles.recipeCard}>
               <div
                 className={styles.recipeHeader}
                 onClick={() => openModal(recipe.id)}
               >
-                <img
-                  src={recipe.img || "/default-cocktail.jpg"}
-                  alt={recipe.title}
-                  className={styles.recipeImage}
-                />
-                <h2 className={styles.recipeTitle}>{recipe.title}</h2>
+                <div className={styles.imageContainer}>
+                  <img
+                    src={recipe.img || "/default-cocktail.jpg"}
+                    alt={recipe.title}
+                    className={styles.recipeImage}
+                  />
+                  <div className={styles.ingredientsOverlay}>
+                    <div className={styles.ingrList}>
+                      <IngredientsList recipe={recipe} />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className={styles.recipeContent}>
                 <p className={styles.recipeDescription}>{recipe.text}</p>
@@ -79,13 +91,13 @@ export default function FavouritesCocktails() {
                 </div>
                 <button
                   className={`${styles.favoriteButton} ${
-                    recipes.some((fav) => fav.id === recipe.id)
+                    favResipes.some((fav) => fav.id === recipe.id)
                       ? styles.active
                       : ""
                   }`}
                   onClick={() => handleFavoriteToggle(recipe.id)}
                 >
-                  {recipes.some((fav) => fav.id === recipe.id)
+                  {favResipes.some((fav) => fav.id === recipe.id)
                     ? "Удалить из избранного"
                     : "Добавить в избранное"}
                 </button>
@@ -98,9 +110,10 @@ export default function FavouritesCocktails() {
       </div>
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
+          recipes={filteredRecipes}
           recId={selectedRecipeId}
           onClose={closeModal}
-          recipesLength={recipes.length}
+          recipesLength={filteredRecipes.length}
         />
       )}
     </div>

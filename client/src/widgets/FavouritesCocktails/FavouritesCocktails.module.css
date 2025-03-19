@@ -8,8 +8,12 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 78vh;
+  height: 64vh;
   overflow-y: scroll;
+}
+
+.recipesGrid::-webkit-scrollbar {
+  display: none;
 }
 
 .recipeCard {
@@ -26,32 +30,11 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.recipeCard:hover {
-  box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
-  transform: translateY(-5px);
-}
-
 .recipeHeader {
   display: flex;
   flex-direction: column;
   gap: 8px;
   text-align: center;
-}
-
-.recipeImage {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-}
-
-.recipeTitle {
-  margin: 0;
-  font-family: var(--font-h1);
-  font-size: 18px;
-  font-weight: 600;
-  color: #e0e0e0;
 }
 
 .recipeContent {
@@ -91,4 +74,63 @@
   background-color: rgb(76 175 80 / 30%);
   border: 1px solid rgb(76 175 80 / 50%);
   border-radius: 4px;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.ingredientsOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: rgb(0 0 0 / 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.imageContainer:hover .ingredientsOverlay {
+  opacity: 1;
+}
+
+.recipeImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+.imageContainer:hover .recipeImage {
+  filter: brightness(0.4);
+}
+
+.ingrList {
+  max-height: 100%;
+  overflow-y: auto;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+}
+
+.ingrList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ingrList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ingrList::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 30%);
+  border-radius: 2px;
 }

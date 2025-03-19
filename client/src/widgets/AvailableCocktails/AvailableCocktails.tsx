@@ -7,6 +7,7 @@ import {
   addFavouriteRecipeThunk,
   delFavouriteRecipeThunk,
 } from "@/entities/favouriterecipe";
+import IngredientsList from "../CoctailCard/IngredientsList";
 
 export default function AvailableCocktails() {
   const recipes = useAppSelector((state) => state.recipes.recipes);
@@ -71,12 +72,18 @@ export default function AvailableCocktails() {
                 className={styles.recipeHeader}
                 onClick={() => openModal(recipe.id)}
               >
-                <img
-                  src={recipe.img || "/default-cocktail.jpg"}
-                  alt={recipe.title}
-                  className={styles.recipeImage}
-                />
-                <h2 className={styles.recipeTitle}>{recipe.title}</h2>
+                <div className={styles.imageContainer}>
+                  <img
+                    src={recipe.img || "/default-cocktail.jpg"}
+                    alt={recipe.title}
+                    className={styles.recipeImage}
+                  />
+                  <div className={styles.ingredientsOverlay}>
+                    <div className={styles.ingrList}>
+                      <IngredientsList recipe={recipe} />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className={styles.recipeContent}>
                 <p className={styles.recipeDescription}>{recipe.text}</p>
@@ -110,6 +117,7 @@ export default function AvailableCocktails() {
 
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
+          recipes={filteredRecipes}
           recId={selectedRecipeId}
           onClose={closeModal}
           recipesLength={recipes.length}
