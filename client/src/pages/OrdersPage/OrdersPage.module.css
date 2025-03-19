@@ -92,18 +92,50 @@
   transition: background-color 0.3s ease;
 }
 
-.totalAmount {
+.statusAndTotal {
+  display: flex;
+  flex-wrap: wrap; /* Позволяет перенос строк */
+  align-items: center;
+  justify-content: space-between; /* Раздвигает элементы по краям */
+  width: 100%;
   margin-top: 8px;
-  font-size: 1.1rem; 
-  font-weight: bold;
-  text-align: right; 
 }
+
+.currentStatus {
+  flex: 1; /* Растягивает статус, чтобы он оставался слева */
+  text-align: left;
+}
+
+.totalAmount {
+  margin-left: 0; /* Убираем лишние отступы */
+  font-weight: bold;
+}
+
+.adminView {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.adminView .totalAmount {
+  margin-right: auto; /* Выравнивает сумму влево */
+}
+
 
 .buttonBlock {
   display: flex;
   gap: 10px;
-  justify-content: flex-end; 
-  margin-top: 15px; 
+  justify-content: flex-end;
+}
+
+.adminControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Раздвигает сумму влево, а кнопки вправо */
+  width: 100%;
+  margin-top: 10px; /* Добавляем отступ сверху */
 }
 
 
