@@ -3,6 +3,7 @@ import styles from "./OrdersPage.module.css";
 import { Order } from "./OrdersPage";
 import { useNavigate } from "react-router";
 import { changeStatusOrder, deleteOrder } from "@/shared/api/api";
+import { useAlert } from "@/features/alert";
 
 type Props = {
   order: Order;
@@ -14,6 +15,8 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
   const defaultStatus = order.status;
   const [status, setStatus] = useState(defaultStatus);
   const navigate = useNavigate();
+  const { showAlert } = useAlert();
+
 
   const statusOptions = [
     "заказ принят",
@@ -34,6 +37,7 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
 
   async function onChangeStatus() {
     await changeStatusOrder(order.id, status);
+    showAlert(`Статус заказа №${order.id} изменен на "${status}"`)
   }
 
   async function onClickDelete() {

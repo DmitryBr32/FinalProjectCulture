@@ -1,6 +1,6 @@
 import { getUserFavRecipesThunk } from "@/entities/recipe";
 import { refreshTokensThunk } from "@/entities/user";
-//import { AlertContainer } from "@/features/alerts";
+import { AlertContainer } from "@/features/alert";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
 //import { Footer } from "@/widgets/Footer/Footer";
 import { Header } from "@/widgets/Header/Header";
@@ -22,9 +22,9 @@ export default function Layout(): JSX.Element {
   return (
     <>
       <Header />
-
+      <AlertContainer />
       <Outlet />
     </>
   );
 }
-//  <AlertContainer /> <Footer />
+//   <Footer />
