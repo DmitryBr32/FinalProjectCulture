@@ -89,6 +89,12 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
     }
   };
 
+  const handleClose = () => {
+    resetForm();
+
+    setShowAddForm(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -196,6 +202,9 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
           className={styles.input}
         />
       </div>
+      <button type="button" className={styles.button} onClick={handleClose}>
+        Отменить
+      </button>
       <button type="submit" className={styles.button}>
         Обновить
       </button>

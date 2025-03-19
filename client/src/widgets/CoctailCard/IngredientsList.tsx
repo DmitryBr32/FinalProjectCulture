@@ -8,8 +8,8 @@ type Props = {
 function IngredientsList({ recipe }: Props): JSX.Element {
   return (
     <ul className={styles.recipeTitle}>
-      {recipe?.Components.map((component, index) => (
-        <li key={index}>- {component.ingredient.type}</li>
+      {recipe?.Components?.map((component, index) => (
+        <li key={index}>- {component.ingredient?.type ?? "Unknown"}</li>
       ))}
     </ul>
   );

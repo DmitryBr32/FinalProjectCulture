@@ -57,6 +57,8 @@ export default function JournalForm(): JSX.Element {
 
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
+          isBar={false}
+          recipes={recipes}
           recId={selectedRecipeId}
           onClose={closeModal}
           recipesLength={recipes.length}
