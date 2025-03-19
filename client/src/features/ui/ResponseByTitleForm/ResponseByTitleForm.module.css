@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  width: 400px; 
+  width: 30%; 
   height: 100px;
   padding: 30px;
   background: rgb(255 255 255 / 10%);
@@ -13,17 +13,13 @@
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
   backdrop-filter: blur(10px);
   font-family: var(--font-h1);
+  box-shadow: 5px 15px 20px rgba(6, 6, 6, 0.722);
 }
 
 .componentContainer {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.label {
-  font-size: 16px;
-  color: #e0e0e0;
 }
 
 .input {
@@ -55,5 +51,11 @@
   font-size: 18px;
   color: #e0e0e0;
   text-align: right;
+}
+.smallDivider {
+  width: 90%; 
+  height: 2px;  
+  background-color: #444; 
+  margin: 6px auto; 
 }
 

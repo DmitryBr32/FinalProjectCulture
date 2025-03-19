@@ -49,7 +49,8 @@ export default function ResponseByTitleForm() {
       </button>
     </form>
      <p className={styles.searchText}>
-     Хотите найти определенный рецепт? <br />
+     Хотите найти определенный рецепт?
+     <div className={styles.smallDivider}></div> 
      Воспользуйся поиском
    </p>
    </div>

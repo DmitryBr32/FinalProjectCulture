@@ -37,6 +37,7 @@ export default function JournalForm(): JSX.Element {
           Изучайте новые рецепты, фильтруйте по ингредиентам и категориям.
         </p>
       </div>
+      <div className={styles.divider}></div>
       <div className={styles.selector}>
         {rec && <OneCoctailCard rec={rec} onOpen={openModal} />}
         <ResponseByTitleForm />
