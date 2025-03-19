@@ -1,4 +1,4 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, useCallback, useEffect, useState } from "react";
 import styles from "./ModalRecipe.module.css";
 import { getRecipeByIdThunk, getUserFavRecipesThunk } from "@/entities/recipe";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHook";
@@ -7,6 +7,7 @@ import {
   delFavouriteRecipeThunk,
 } from "@/entities/favouriterecipe";
 import { IRecipeArrayType } from "@/entities/recipe/model";
+import { getStockThunk, updateStockThunk } from "@/entities/stock";
 
 type Props = {
   isBar: boolean;
@@ -27,12 +28,25 @@ export default function ModalRecipe({
   const userId = useAppSelector((state) => state.user.user?.id);
   const userFavorites = useAppSelector((state) => state.userfavrecipes.recipes);
   const stock = useAppSelector((state) => state.stock.stock);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [maxQuantity, setMaxQuantity] = useState<number>(1);
 
   const initialRecipeIndex = recipes.findIndex((recipe) => recipe.id === recId);
 
   const [recipeIndex, setRecipeIndex] = useState(
     initialRecipeIndex >= 0 ? initialRecipeIndex : 0
   );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    while (value.length > 1 && value[0] === "0") {
+      value = value.slice(1);
+    }
+    const numericValue = Number(value) || 0;
+    const newValue = Math.max(0, Math.min(maxQuantity, numericValue || 0));
+    setQuantity(newValue);
+    e.target.value = newValue.toString();
+  };
 
   const recipe = recipes[recipeIndex];
   const isFavorite = userFavorites.some(
@@ -56,21 +70,79 @@ export default function ModalRecipe({
     }
   };
 
-  const handleSubmit = () => {};
-
-  const checkStockAvailability = (
-    ingredientId: number,
-    requiredQuantity: string
-  ) => {
-    const stockItem = stock.find(
-      (item) => item.ingredientTypeId === ingredientId
-    );
-
-    return (
-      Number(stockItem!.ingredientBalance) -
-      Number(parseFloat(requiredQuantity.replace(",", ".").slice(0, -3)))
-    );
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      recipe.Components?.forEach(async (component) => {
+        const stockItem = stock.find(
+          (item) => item.ingredientTypeId === component.ingredientTypeId
+        );
+        await dispatch(
+          updateStockThunk({
+            ingredientTypeId: stockItem!.ingredientTypeId,
+            ingredientBalance: (
+              parseFloat(stockItem!.ingredientBalance) -
+              quantity *
+                Number(component.quantity.replace(",", ".").slice(0, -3))
+            ).toString(),
+            title: stockItem!.title,
+            strength: stockItem!.strength,
+            userId: userId!,
+            id: stockItem!.id,
+          })
+        );
+        await dispatch(getStockThunk(userId!));
+      });
+    } catch (error) {
+      console.error("Ошибка при обновлении:", error);
+      await dispatch(getStockThunk(userId!));
+    }
   };
+
+  const checkStockAvailability = useCallback(
+    (ingredientId: number, requiredQuantity: string): number => {
+      const stockItem = stock.find(
+        (item) => item.ingredientTypeId === ingredientId
+      );
+      if (!stockItem) return 0;
+
+      const balance = parseFloat(stockItem.ingredientBalance);
+      if (isNaN(balance)) return 0;
+
+      const parsedQuantity = parseFloat(
+        requiredQuantity.replace(",", ".").slice(0, -3)
+      );
+      if (isNaN(parsedQuantity) || parsedQuantity === 0) return 0;
+      return Math.floor(balance / parsedQuantity);
+    },
+    [stock]
+  );
+
+  useEffect(() => {
+    if (recipe?.Components) {
+      let calculatedMax = Infinity;
+
+      for (const component of recipe.Components) {
+        if (component.ingredient.isAlko) {
+          const possibleCocktails = checkStockAvailability(
+            component.ingredient.id,
+            component.quantity
+          );
+
+          if (possibleCocktails === 0) {
+            calculatedMax = 0;
+            break;
+          }
+
+          calculatedMax = Math.min(calculatedMax, possibleCocktails);
+        }
+      }
+
+      const finalMax = calculatedMax === Infinity ? 0 : calculatedMax;
+      setMaxQuantity(finalMax);
+      setQuantity((prev) => Math.min(prev, finalMax));
+    }
+  }, [recipe, checkStockAvailability]);
 
   return (
     <div className={styles.modalOverlay}>
@@ -104,15 +176,12 @@ export default function ModalRecipe({
                 <h3>Тебе понадобятся:</h3>
                 <div>
                   {recipe?.Components.map((component, index) => {
-                    console.log(component);
-                    console.log(component.ingredient.id);
-                    console.log(component.quantity);
                     const isAvailable =
                       component.ingredient.isAlko === false ||
                       checkStockAvailability(
                         component.ingredient.id,
                         component.quantity
-                      );
+                      ) > 0;
                     return isBar ? (
                       <div
                         key={index}
@@ -143,18 +212,31 @@ export default function ModalRecipe({
               </div>
               {isBar ? (
                 <>
-                  <p>В данный момент вы можете сделать {} коктейлей</p>
-                  <div>
-                    <form onSubmit={handleSubmit}>
-                      <label>Сколько коктейлей вы хотите сделать?</label>
-                      <input type="number" />
-                      <button type="submit">Подтвердить</button>
-                    </form>
-                  </div>
+                  {maxQuantity > 0 ? (
+                    <>
+                      <p>Максимальное количество коктейлей: {maxQuantity}</p>
+                      <form onSubmit={handleSubmit}>
+                        <label>Количество коктейлей:</label>
+                        <input
+                          type="number"
+                          value={quantity}
+                          onChange={handleChange}
+                          min={0}
+                          max={maxQuantity}
+                        />
+                        <button
+                          type="submit"
+                          disabled={quantity === 0 || quantity > maxQuantity}
+                        >
+                          Подтвердить
+                        </button>
+                      </form>
+                    </>
+                  ) : (
+                    <p className={styles.error}>Недостаточно ингредиентов</p>
+                  )}
                 </>
-              ) : (
-                ""
-              )}
+              ) : null}
             </div>
           </div>
           <button className={styles.favoriteButton} onClick={switchToFavorite}>

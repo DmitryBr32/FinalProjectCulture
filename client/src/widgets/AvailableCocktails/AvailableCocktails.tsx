@@ -34,16 +34,26 @@ export default function AvailableCocktails() {
   };
 
   const filteredRecipes = recipes.filter((recipe) => {
-    const recipeIngredients =
-      recipe.Components?.map((comp) => ({
-        type: comp.ingredient.type,
-        isAlko: comp.ingredient.isAlko,
-      })) || [];
-    const stockIngredients = stock.map((item) => item.ingredientType?.type);
-    return recipeIngredients.every(
-      (ingredient) =>
-        !ingredient.isAlko || stockIngredients.includes(ingredient.type)
-    );
+    const hasEnoughIngredients = recipe.Components?.every((component) => {
+      if (!component.ingredient.isAlko) {
+        return true;
+      }
+      const stockItem = stock.find(
+        (item) => item.ingredientType?.type === component.ingredient.type
+      );
+
+      if (!stockItem) return false;
+
+      const requiredQuantity = Number(
+        parseFloat(component.quantity.replace(",", ".").slice(0, -3))
+      );
+
+      const stockQuantity = Number(stockItem.ingredientBalance);
+
+      return stockQuantity >= requiredQuantity;
+    });
+
+    return hasEnoughIngredients;
   });
 
   const handleFavoriteToggle = async (recipeId: number) => {
