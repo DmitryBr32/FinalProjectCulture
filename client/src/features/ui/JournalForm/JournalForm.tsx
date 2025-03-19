@@ -38,9 +38,9 @@ export default function JournalForm(): JSX.Element {
         </p>
       </div>
       <div className={styles.selector}>
-        <ResponseByIngrsForm />
-        <ResponseByTitleForm />
         {rec && <OneCoctailCard rec={rec} onOpen={openModal} />}
+        <ResponseByTitleForm />
+        <ResponseByIngrsForm />
       </div>
       <div className={styles.selector}>
         <div className={styles.banner}>

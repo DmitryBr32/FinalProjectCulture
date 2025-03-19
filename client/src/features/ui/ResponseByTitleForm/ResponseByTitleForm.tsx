@@ -29,23 +29,29 @@ export default function ResponseByTitleForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <div className={styles.componentContainer}>
-        <label htmlFor="recipeTitle" className={styles.label}>
+    <div className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.componentContainer}>
+      {/* <div className={styles.componentContainer}> */}
+        {/* <label htmlFor="recipeTitle" className={styles.label}>
           Название рецепта:
-        </label>
+        </label> */}
         <input
           type="text"
           id="recipeTitle"
           className={styles.input}
           value={title}
           onChange={handleTitleChange}
-          placeholder="Введите название рецепта"
+          placeholder="Введите название"
         />
-      </div>
+      {/* </div> */}
       <button type="submit" className={styles.submitButton}>
         Найти
       </button>
     </form>
+     <p className={styles.searchText}>
+     Хотите найти определенный рецепт? <br />
+     Воспользуйся поиском
+   </p>
+   </div>
   );
 }
