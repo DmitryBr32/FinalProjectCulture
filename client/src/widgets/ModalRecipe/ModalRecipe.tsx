@@ -9,6 +9,7 @@ import {
 import { IRecipeArrayType } from "@/entities/recipe/model";
 
 type Props = {
+  isBar: boolean;
   recipes: IRecipeArrayType;
   recId: number;
   recipesLength: number;
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export default function ModalRecipe({
+  isBar,
   recipes,
   recId,
   recipesLength,
@@ -24,6 +26,7 @@ export default function ModalRecipe({
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.user.user?.id);
   const userFavorites = useAppSelector((state) => state.userfavrecipes.recipes);
+  const stock = useAppSelector((state) => state.stock.stock);
 
   const initialRecipeIndex = recipes.findIndex((recipe) => recipe.id === recId);
 
@@ -51,6 +54,22 @@ export default function ModalRecipe({
       await dispatch(action);
       dispatch(getUserFavRecipesThunk(userId));
     }
+  };
+
+  const handleSubmit = () => {};
+
+  const checkStockAvailability = (
+    ingredientId: number,
+    requiredQuantity: string
+  ) => {
+    const stockItem = stock.find(
+      (item) => item.ingredientTypeId === ingredientId
+    );
+
+    return (
+      Number(stockItem!.ingredientBalance) -
+      Number(parseFloat(requiredQuantity.replace(",", ".").slice(0, -3)))
+    );
   };
 
   return (
@@ -84,25 +103,58 @@ export default function ModalRecipe({
               <div>
                 <h3>Тебе понадобятся:</h3>
                 <div>
-                  {recipe?.Components.map((component, index) => (
-                    <div key={index} className={styles.ingrTable}>
-                      <div className={styles.ingrName}>
-                        - {component.ingredient.type}
+                  {recipe?.Components.map((component, index) => {
+                    console.log(component);
+                    console.log(component.ingredient.id);
+                    console.log(component.quantity);
+                    const isAvailable =
+                      component.ingredient.isAlko === false ||
+                      checkStockAvailability(
+                        component.ingredient.id,
+                        component.quantity
+                      );
+                    return isBar ? (
+                      <div
+                        key={index}
+                        className={styles.ingrTable}
+                        style={{
+                          color: isAvailable ? "" : "red",
+                        }}
+                      >
+                        <div className={styles.ingrName}>
+                          - {component.ingredient.type}
+                        </div>
+                        <div className={styles.ingrQuant}>
+                          ({component.quantity})
+                        </div>
                       </div>
-                      <div className={styles.ingrQuant}>
-                        ({component.quantity})
+                    ) : (
+                      <div key={index} className={styles.ingrTable}>
+                        <div className={styles.ingrName}>
+                          - {component.ingredient.type}
+                        </div>
+                        <div className={styles.ingrQuant}>
+                          ({component.quantity})
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
-              <div>
-                <form>
-                  <label>Сколько коктейлей вы хотите сделать?</label>
-                  <input type="number" />
-                  <button type="submit">Подтвердить</button>
-                </form>
-              </div>
+              {isBar ? (
+                <>
+                  <p>В данный момент вы можете сделать {} коктейлей</p>
+                  <div>
+                    <form onSubmit={handleSubmit}>
+                      <label>Сколько коктейлей вы хотите сделать?</label>
+                      <input type="number" />
+                      <button type="submit">Подтвердить</button>
+                    </form>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <button className={styles.favoriteButton} onClick={switchToFavorite}>

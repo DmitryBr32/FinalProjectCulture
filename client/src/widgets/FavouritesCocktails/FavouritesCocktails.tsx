@@ -80,6 +80,7 @@ export default function FavouritesCocktails() {
                 </div>
               </div>
               <div className={styles.recipeContent}>
+                <h1 className={styles.recipeTitle}>{recipe.title}</h1>
                 <p className={styles.recipeDescription}>{recipe.text}</p>
                 <div className={styles.recipeDetails}>
                   <span className={styles.strengthLevel}>
@@ -110,6 +111,7 @@ export default function FavouritesCocktails() {
       </div>
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
+          isBar={true}
           recipes={filteredRecipes}
           recId={selectedRecipeId}
           onClose={closeModal}

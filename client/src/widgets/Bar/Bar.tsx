@@ -79,7 +79,7 @@ export default function Bar() {
               <img
                 src={
                   stockByType[type][0]?.ingredientType?.imgUrl ||
-                  "/ingredients/Биттер Пейшо.png"
+                  "/ingredients/default.png"
                 }
                 alt={`${type} bottle`}
               />

@@ -86,6 +86,7 @@ export default function AvailableCocktails() {
                 </div>
               </div>
               <div className={styles.recipeContent}>
+                <h1 className={styles.recipeTitle}>{recipe.title}</h1>
                 <p className={styles.recipeDescription}>{recipe.text}</p>
                 <div className={styles.recipeDetails}>
                   <span className={styles.strengthLevel}>
@@ -117,10 +118,11 @@ export default function AvailableCocktails() {
 
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
+          isBar={true}
           recipes={filteredRecipes}
           recId={selectedRecipeId}
           onClose={closeModal}
-          recipesLength={recipes.length}
+          recipesLength={filteredRecipes.length}
         />
       )}
     </div>

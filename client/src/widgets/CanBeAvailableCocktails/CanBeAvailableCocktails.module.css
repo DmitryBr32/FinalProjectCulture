@@ -43,6 +43,12 @@
   gap: 15px;
 }
 
+.recipeTitle {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .recipeDescription {
   margin: 0;
   font-size: 14px;

@@ -12,7 +12,7 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/Абрикосовый ликер.png",
         },
-        { type: "Абсент", isAlko: true, imgUrl: "" },
+        { type: "Абсент", isAlko: true, imgUrl: "/ingredients/default.png" },
         {
           type: "Анчо Рейес (ликер чили)",
           isAlko: true,
@@ -35,9 +35,13 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/Биттер Пейшо.png",
         },
-        { type: "Блю Кюрасао", isAlko: true, imgUrl: "" },
+        {
+          type: "Блю Кюрасао",
+          isAlko: true,
+          imgUrl: "/ingredients/default.png",
+        },
         { type: "Бренди", isAlko: true, imgUrl: "/ingredients/Бренди.png" },
-        { type: "Бурбон", isAlko: true, imgUrl: "" },
+        { type: "Бурбон", isAlko: true, imgUrl: "/ingredients/default.png" },
         {
           type: "Бенедиктин",
           isAlko: true,
@@ -48,7 +52,11 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/Бехеровка.png",
         },
-        { type: "Ванильная водка", isAlko: true, imgUrl: "" },
+        {
+          type: "Ванильная водка",
+          isAlko: true,
+          imgUrl: "/ingredients/default.png",
+        },
         {
           type: "Вермут (сухой)",
           isAlko: true,
@@ -80,7 +88,11 @@ module.exports = {
         { type: "Кампари", isAlko: true, imgUrl: "/ingredients/Кампари.png" },
         { type: "Коньяк", isAlko: true, imgUrl: "/ingredients/Коньяк.png" },
         { type: "Куантро", isAlko: true, imgUrl: "/ingredients/Куантро.png" },
-        { type: "Ликер Drambuie", isAlko: true, imgUrl: "" },
+        {
+          type: "Ликер Drambuie",
+          isAlko: true,
+          imgUrl: "/ingredients/default.png",
+        },
         {
           type: "Ликер бузины (St. Germain)",
           isAlko: true,
@@ -96,9 +108,13 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/Ликер сливочный.png",
         },
-        { type: "Лимончелло", isAlko: true, imgUrl: "" },
-        { type: "Малибу", isAlko: true, imgUrl: "" },
-        { type: "Midori", isAlko: true, imgUrl: "" },
+        {
+          type: "Лимончелло",
+          isAlko: true,
+          imgUrl: "/ingredients/default.png",
+        },
+        { type: "Малибу", isAlko: true, imgUrl: "/ingredients/default.png" },
+        { type: "Midori", isAlko: true, imgUrl: "/ingredients/default.png" },
         {
           type: "Мятный ликер",
           isAlko: true,
@@ -120,7 +136,7 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/Ром (темный).png",
         },
-        { type: "Саке", isAlko: true, imgUrl: "" },
+        { type: "Саке", isAlko: true, imgUrl: "/ingredients/default.png" },
         { type: "Самбука", isAlko: true, imgUrl: "/ingredients/Самбука.png" },
         {
           type: "Текила (бланко)",
@@ -177,12 +193,12 @@ module.exports = {
         {
           type: "Ликер мараскино",
           isAlko: true,
-          imgUrl: "",
+          imgUrl: "/ingredients/default.png",
         },
         {
           type: "Ликер фиалковый",
           isAlko: true,
-          imgUrl: "",
+          imgUrl: "/ingredients/default.png",
         },
       ],
       {}
