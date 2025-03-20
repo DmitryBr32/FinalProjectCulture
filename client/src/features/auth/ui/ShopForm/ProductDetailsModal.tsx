@@ -24,76 +24,93 @@ export default function ProductDetailsModal({
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
-  <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-    {/* Кнопка Закрытия */}
-    <button className={styles.closeButton} onClick={onClose}>
-  &#10006; {/* Символ крестика */}
-</button>
-
-    <div className={styles.modalBody}>
-      {/* Картинка слева */}
-      <img className={styles.image} src={product.image} alt={product.name} />
-      
-      {/* Описание и характеристики справа от картинки */}
-      <div className={styles.productDetails}>
-        <h1 className={styles.name}>{product.name}</h1>
-
-        {/* Описание */}
-        <div className={styles.description}>
-          <h3>Описание</h3>
-          <p>{product.description}</p>
-        </div>
-
-        {/* Характеристики */}
-        <div className={styles.specifications}>
-          <h3>Общие характеристики</h3>
-          <p><strong>Артикул:</strong> {product.article}</p>
-          <p><strong>Бренд:</strong> {product.brand}</p>
-          <p><strong>Материал:</strong> {product.material}</p>
-          <p><strong>Размер/Габариты:</strong> {product.dimensions}</p>
-          <p><strong>Вес:</strong> {product.weight} кг</p>
-        </div>
-        <p className={styles.price}>Цена: {product.price} руб.</p>
-
-        {/* Кнопки + и - */}
-        {user && (
-          <div className={styles.controlsWrapper}>
-            {quantity > 0 && (
-          <div className={styles.quantityBlock}>
-            <button
-              className={styles.quantityButton}
-              onClick={() => handleQuantityChange(product, -1)}
-              disabled={quantity === 0}
-            >
-              -
-            </button>
-            <span className={styles.quantityValue}>{quantity}</span>
-            <button
-              className={styles.quantityButton}
-              onClick={() => handleQuantityChange(product, 1)}
-            >
-              +
-            </button>
-          </div>
-            )}
-          <button
-          className={styles.cartButton}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (quantity === 0) {
-              handleQuantityChange(product, 1);
-            } else {
-              navigate(CLIENT_ROUTES.BASKETS);
-            }
-          }}
-        >
-          {quantity === 0 ? "В корзину" : "➜Корзина"}
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        {/* Кнопка Закрытия */}
+        <button className={styles.closeButton} onClick={onClose}>
+          &#10006; {/* Символ крестика */}
         </button>
+
+        <div className={styles.modalBody}>
+          {/* Картинка слева */}
+          <img
+            className={styles.image}
+            src={product.image}
+            alt={product.name}
+          />
+
+          {/* Описание и характеристики справа от картинки */}
+          <div className={styles.productDetails}>
+            <h1 className={styles.name}>{product.name}</h1>
+
+            {/* Описание */}
+            <div className={styles.description}>
+              <h3>Описание</h3>
+              <p className={styles.descriptionSize}>{product.description}</p>
+            </div>
+
+            {/* Характеристики */}
+            <div className={styles.specifications}>
+              <h3>Общие характеристики</h3>
+              <div className={styles.productDetails}>
+                <div className={styles.detailItem}>
+                  <strong className={styles.label}>Бренд:</strong>
+                  <span className={styles.value}>{product.brand}</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <strong className={styles.label}>Материал:</strong>
+                  <span className={styles.value}>{product.material}</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <strong className={styles.label}>Размер/Габариты:</strong>
+                  <span className={styles.value}>{product.dimensions}</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <strong className={styles.label}>Вес:</strong>
+                  <span className={styles.value}>{product.weight} кг</span>
+                </div>
+              </div>
+            </div>
+            <p className={styles.price}>Цена: {product.price} руб.</p>
+
+            {/* Кнопки + и - */}
+            {user && (
+              <div className={styles.controlsWrapper}>
+                {quantity > 0 && (
+                  <div className={styles.quantityBlock}>
+                    <button
+                      className={styles.quantityButton}
+                      onClick={() => handleQuantityChange(product, -1)}
+                      disabled={quantity === 0}
+                    >
+                      -
+                    </button>
+                    <span className={styles.quantityValue}>{quantity}</span>
+                    <button
+                      className={styles.quantityButton}
+                      onClick={() => handleQuantityChange(product, 1)}
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+                <button
+                  className={styles.cartButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (quantity === 0) {
+                      handleQuantityChange(product, 1);
+                    } else {
+                      navigate(CLIENT_ROUTES.BASKETS);
+                    }
+                  }}
+                >
+                  {quantity === 0 ? "В корзину" : "➜Корзина"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-        )}
       </div>
     </div>
-  </div>
-</div>
   );
 }
