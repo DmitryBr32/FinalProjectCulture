@@ -32,6 +32,13 @@ export default function ResponseByTitleForm() {
 
   return (
     <div className={styles.form}>
+      <div className={styles.textWrapper}>
+          <p className={styles.searchText}>
+            Хотите найти определенный рецепт?
+            <div className={styles.smallDivider}></div>
+            Воспользуйтесь поиском по названию
+          </p>
+        </div>
       <form onSubmit={handleSubmit} className={styles.componentContainer}>
         <div className={styles.inputWrapper}>
           {rec && <OneCoctailCard rec={rec} onOpen={() => {}} />}
@@ -46,13 +53,6 @@ export default function ResponseByTitleForm() {
           <button type="submit" className={styles.submitButton}>
             Найти
           </button>
-        </div>
-        <div className={styles.textWrapper}>
-          <p className={styles.searchText}>
-            Хотите найти определенный рецепт?
-            <div className={styles.smallDivider}></div>
-            Воспользуйся поиском
-          </p>
         </div>
       </form>
     </div>
