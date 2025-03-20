@@ -1,7 +1,7 @@
 import { IIngredientResArrayType } from "@/entities/ingredient/model";
 import { getRecipesByIngrsThunk } from "@/entities/recipe";
 import { useAppDispatch } from "@/shared/hooks/reduxHook";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./ResponseByIngrsForm.module.css";
 
 export default function ResponseByIngrsForm() {
@@ -9,6 +9,7 @@ export default function ResponseByIngrsForm() {
     { type: "" },
   ]);
   const dispatch = useAppDispatch();
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleComponentChange = (index: number, value: string) => {
     const newComponents = [...components];
@@ -46,45 +47,61 @@ export default function ResponseByIngrsForm() {
     }
   };
 
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = carouselRef.current.scrollWidth;
+    }
+  }, [components]);
+
   return (
-    <div className={styles.form}>
-    <form onSubmit={handleSubmit} className={styles.componentContainer}>
-      {components.map((component, index) => (
-        <div key={index} className={styles.componentContainer}>
-          {/* <label htmlFor={`component-${index}`} className={styles.label}>
-            Component {index + 1}:
-          </label> */}
-          <input
-            type="text"
-            id={`component-${index}`}
-            placeholder="Добавить компонент"
-            className={styles.input}
-            value={component.type}
-            onChange={(e) => handleComponentChange(index, e.target.value)}
-          />
-          {index > 0 && (
-            <button
-              type="button"
-              className={styles.removeButton}
-              onClick={() => removeComponent(index)}
-            >
-              Удалить
-            </button>
-          )}
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div
+        className={
+          components.length > 1
+            ? styles.carouselContainer
+            : styles.carouselContainerClose
+        }
+      >
+        <div className={styles.carousel} ref={carouselRef}>
+          {components.map((component, index) => (
+            <div key={index} className={styles.componentContainer}>
+              <label
+                htmlFor={`component-${index}`}
+                className={styles.label}
+              ></label>
+              <input
+                type="text"
+                placeholder={`Напиток ${index + 1}`}
+                id={`component-${index}`}
+                className={styles.input}
+                value={component.type}
+                onChange={(e) => handleComponentChange(index, e.target.value)}
+              />
+              {index > 0 && (
+                <button
+                  type="button"
+                  className={styles.removeButton}
+                  onClick={() => removeComponent(index)}
+                >
+                  Убрать
+                </button>
+              )}
+            </div>
+          ))}
         </div>
-      ))}
-      <button type="button" className={styles.addButton} onClick={addComponent}>
-      Добавить ещё
-      </button>
-      <button type="submit" className={styles.submitButton}>
-        Найти
-      </button>
+      </div>
+      <div className={styles.buttonBlock}>
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={addComponent}
+        >
+          Добавить напиток
+        </button>
+        <button type="submit" className={styles.submitButton}>
+          Подтвердить
+        </button>
+      </div>
     </form>
-    <p className={styles.searchText}>
-          Ищешь по любимым ингредиентам? 
-          <div className={styles.smallDivider}></div> 
-          Просто введи компоненты сюда
-        </p>
-    </div>
   );
 }

@@ -5,11 +5,12 @@ import Orders from "@/pages/OrdersPage/OrdersPage";
 import { useAppSelector } from "@/shared/hooks/reduxHook";
 import { useNavigate } from "react-router-dom";
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
+import RecipeCrud from "@/widgets/RecipesCRUD/RecipeCrud";
 
 export function AdminPage() {
-  const [activeModule, setActiveModule] = useState<"orders" | "shopStorages" | 'recipes' | 'drinks' >(
-    "orders"
-  );
+  const [activeModule, setActiveModule] = useState<
+    "orders" | "shopStorages" | "recipes" | "drinks"
+  >("orders");
   const user = useAppSelector((state) => state.user.user);
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ export function AdminPage() {
     const timer = setTimeout(() => {
       if (!user || user?.isAdmin === false) {
         navigate(CLIENT_ROUTES.MAIN);
-        console.log('user', user?.isAdmin);
+        console.log("user", user?.isAdmin);
       }
     }, 500); // Задержка 200 мс
 
@@ -70,7 +71,7 @@ export function AdminPage() {
       <div className={styles.moduleContainer}>
         {activeModule === "orders" && <Orders />}
         {activeModule === "shopStorages" && <ShopStorages />}
-        {activeModule === "recipes" && <h1>Рецепты</h1>}
+        {activeModule === "recipes" && <RecipeCrud />}
         {activeModule === "drinks" && <h1>Напитки</h1>}
       </div>
     </div>
