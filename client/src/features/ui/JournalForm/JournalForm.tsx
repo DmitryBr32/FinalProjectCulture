@@ -6,12 +6,10 @@ import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
 import CoctailBox from "@/widgets/CoctailBox/CoctailBox";
 import ResponseByIngrsForm from "../ResponseByIngrsForm/ResponseByIngrsForm";
 import ResponseByTitleForm from "../ResponseByTitleForm/ResponseByTitleForm";
-import OneCoctailCard from "@/widgets/CoctailCard/OneCoctailCard";
 
 export default function JournalForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const recipes = useAppSelector((state) => state.recipes.recipes);
-  const rec = useAppSelector((state) => state.recipe.recipe);
 
   useEffect(() => {
     dispatch(getRecipesThunk());
@@ -39,8 +37,8 @@ export default function JournalForm(): JSX.Element {
       </div>
       <div className={styles.divider}></div>
       <div className={styles.selector}>
-      <div className={styles.searchContainer}>
-        <ResponseByTitleForm />
+        <div className={styles.searchContainer}>
+          <ResponseByTitleForm />
         </div>
         <ResponseByIngrsForm />
       </div>
@@ -55,9 +53,7 @@ export default function JournalForm(): JSX.Element {
         </div>
 
         <CoctailBox recipes={recipes} onOpen={openModal} />
-        
       </div>
-      
 
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe

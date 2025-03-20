@@ -12,20 +12,17 @@ export default function Slider() {
 
   const items = [
     {
-      main: "Бар",
-      icon: "svg",
+      page: "Бар",
       backgroundImage: "/bottles.jpg",
       navigator: "/bar",
     },
     {
-      main: "Журнал",
-      icon: "svg",
+      page: "Журнал",
       backgroundImage: "/coctail_bar.jpg",
       navigator: "/journal",
     },
     {
-      main: "Магазин",
-      icon: "svg",
+      page: "Магазин",
       backgroundImage: "/shop.jpg",
       navigator: "/shop",
     },
@@ -52,11 +49,8 @@ export default function Slider() {
           >
             <div className={styles.shadow}></div>
             <div className={styles.label}>
-              <div className={styles.icon}>
-                <i className={item.icon}></i>
-              </div>
               <div className={styles.info}>
-                <div className={styles.main}>{item.main}</div>
+                <div className={styles.page}>{item.page}</div>
               </div>
             </div>
           </div>

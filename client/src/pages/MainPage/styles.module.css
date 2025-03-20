@@ -1,15 +1,16 @@
 .main {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  min-height: 90vh;
-  margin-bottom: 20px;
+  justify-content: center;
+  height: 80vh;
+  margin: 20px;
 }
 
 .banner {
-  /* background-color: #333; */
-  padding: 20px;
-  margin: 20px;
+  margin-right: 100px;
+  margin-left: 100px;
+  border: 20px;
+  max-width: 580px;
 }
 
 .title {
@@ -17,6 +18,7 @@
   font-family: var(--font-h1);
   color: white;
   text-align: center;
+  font-size: 50px;
 }
 
 .text {
@@ -24,7 +26,14 @@
   margin: 0 auto;
   margin-bottom: 10px;
   font-family: var(--font-h1);
+  font-size: 24px;
   line-height: 1.5;
   color: white;
   text-align: center;
+}
+
+.slider {
+  height: 100%;
+  max-width: 756px;
+  border-left: 20px;
 }
