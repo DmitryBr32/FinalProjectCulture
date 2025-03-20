@@ -39,8 +39,8 @@ export default function JournalForm(): JSX.Element {
       </div>
       <div className={styles.divider}></div>
       <div className={styles.selector}>
-      <div className={styles.searchContainer}>
-        <ResponseByTitleForm />
+        <div className={styles.searchContainer}>
+          <ResponseByTitleForm />
         </div>
         <ResponseByIngrsForm />
       </div>
@@ -55,9 +55,7 @@ export default function JournalForm(): JSX.Element {
         </div>
 
         <CoctailBox recipes={recipes} onOpen={openModal} />
-        
       </div>
-      
 
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
