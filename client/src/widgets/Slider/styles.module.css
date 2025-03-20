@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 756px;
+  min-width: 800px;
   height: 100%;
   overflow: hidden;
   transition: 0.25s;

@@ -515,7 +515,7 @@ module.exports = {
           discription: "Тщательно смешайте компоненты, перелейте в бокал.",
           strengthLevel: "средний",
           isShot: false,
-          likes: 7,
+          likes: 22,
         },
 
         {
@@ -559,9 +559,9 @@ module.exports = {
 
         {
           title: "Торонто",
-          text: "Почти как олд фешен",
+          text: "Виски с травянистыми нотками. Почти как олд фешен",
           img: "https://i.pinimg.com/originals/d2/8f/54/d28f54d249bcc5edd04430a9c50f7e1c.png",
-          discription: "Виски с травянистыми нотками",
+          discription: "Смешайте компоненты",
           strengthLevel: "крепкий",
           isShot: false,
           likes: 24,
@@ -571,7 +571,7 @@ module.exports = {
           title: "Золотая лихорадка",
           text: "Более медовый вкус.",
           img: "https://avatars.mds.yandex.net/i?id=8123f16a7d3b02a2fc832837ca49c49e5039d63f-12569692-images-thumbs&n=13",
-          discription: "Бурбон, мед и лимон",
+          discription: "Смешайте бурбон, мед и лимонный сок",
           strengthLevel: "средний",
           isShot: false,
           likes: 30,
@@ -581,7 +581,8 @@ module.exports = {
           title: "Кловер Клаб",
           text: "С малиновым сиропом и яичным белком.",
           img: "https://i.pinimg.com/originals/fb/fe/5f/fbfe5fe7eb5b9cc4541fc47b170414f5.jpg",
-          discription: "Для истинных ценителей.",
+          discription:
+            "В шейкере со льдом смешать все ингредиенты, тщательно взбить.",
           strengthLevel: "средний",
           isShot: false,
           likes: 13,
@@ -599,7 +600,8 @@ module.exports = {
           title: "Эль Президенте",
           text: "Сладкий карибский коктейль",
           img: "https://i.pinimg.com/originals/bf/5c/f9/bf5cf9c46dccdbebc374a35ab44348af.jpg",
-          discription: "На карибский манер.",
+          discription:
+            "Смесительный стакан наполнить крупным льдом, затем добавить все остальные ингредиенты. Активно перемешивать 10-15 секунд, после чего перелить коктейль через браное ситечко (стрейнер) в пустой бокал для подачи.",
           strengthLevel: "средний",
           isShot: false,
           likes: 8,
@@ -688,7 +690,7 @@ module.exports = {
           text: "Кофейный, сливочный ликер и Malibu",
           img: "https://i.pinimg.com/originals/30/a5/c1/30a5c18b0da3c5f2ecba73c5e4811955.jpg",
           discription:
-            "Аккуратно слоями в шот-бокал: 1/3 (приблизительно 15 мл) кофейного ликера, 1/3 сливочного ликера, и 1/3 ликера Malibu. Важно наливать слоями, используя коктейльную ложку или по лезвию ножа.",
+            "Аккуратно слоями в шот-бокал: 1/3 (приблизительно 20 мл) кофейного ликера, 1/3 сливочного ликера, и 1/3 ликера Malibu. Важно наливать слоями, используя коктейльную ложку или по лезвию ножа.",
           strengthLevel: "крепкий",
           isShot: true,
           likes: 28,

@@ -1,4 +1,4 @@
-import { deleteRecipeThunk, updateRecipeByIdThunk } from "@/entities/recipe";
+import { deleteRecipeThunk } from "@/entities/recipe";
 import { IRecipeRowData } from "@/entities/recipe/model";
 import { useAppDispatch } from "@/shared/hooks/reduxHook";
 import styles from "./RecipeCrud.module.css";
@@ -16,10 +16,6 @@ const initialData: IRecipeRowData = {
   Components: [],
 };
 
-// type Prop = {
-//   recipeId: number;
-// };
-
 export default function RecipeUpdateForm() {
   const [formData, setFormData] = useState(initialData);
   const dispatch = useAppDispatch();
@@ -27,7 +23,8 @@ export default function RecipeUpdateForm() {
     { type: "" },
   ]);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const recipeId = 1;
+  const [inputRecipeId, setInputRecipeId] = useState<number | string>("");
+  const [recipeId, setRecipeId] = useState<number | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,7 +73,22 @@ export default function RecipeUpdateForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(updateRecipeByIdThunk({ id: recipeId, recipeData: formData }));
+    if (!recipeId) {
+      alert("Please provide valid ID");
+      return;
+    }
+
+    // const recipeDataToSubmit = {
+    //   ...formData,
+    //   Components: components,
+    // };
+
+    // dispatch(
+    //   updateRecipeByIdThunk({
+    //     id: recipeId,
+    //     recipeData: recipeDataToSubmit,
+    //   })
+    // );
   };
 
   const handleClearForm = () => {
@@ -84,8 +96,8 @@ export default function RecipeUpdateForm() {
     setComponents([{ type: "" }]);
   };
 
-  const handleDelete = (recipeId: number) => {
-    dispatch(deleteRecipeThunk(recipeId));
+  const handleDelete = (id: number) => {
+    dispatch(deleteRecipeThunk(id));
   };
 
   useEffect(() => {
@@ -94,9 +106,25 @@ export default function RecipeUpdateForm() {
     }
   }, [components]);
 
+  const handleInputRecipeIdChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setInputRecipeId(value);
+      setRecipeId(value === "" ? null : Number(value)); // set the number or null
+    }
+  };
+
   return (
     <div className={styles.card}>
       <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Enter Recipe ID"
+          type="text"
+          value={inputRecipeId}
+          onChange={handleInputRecipeIdChange}
+          className={styles.input}
+        />
+
         {formData.img && (
           <img
             src={formData.img}
@@ -104,7 +132,6 @@ export default function RecipeUpdateForm() {
             className={styles.image}
           />
         )}
-
         <input
           placeholder="Название:"
           type="text"
@@ -165,57 +192,52 @@ export default function RecipeUpdateForm() {
           </label>
         </div>
         <div className={styles.componentContainer}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <div
-              className={
-                components.length > 1
-                  ? styles.carouselContainer
-                  : styles.carouselContainerClose
-              }
+          <div
+            className={
+              components.length > 1
+                ? styles.carouselContainer
+                : styles.carouselContainerClose
+            }
+          >
+            <div className={styles.carousel} ref={carouselRef}>
+              {components.map((component, index) => (
+                <div key={index} className={styles.componentContainer}>
+                  <label
+                    htmlFor={`component-${index}`}
+                    className={styles.label}
+                  ></label>
+                  <input
+                    type="text"
+                    placeholder={`Напиток ${index + 1}`}
+                    id={`component-${index}`}
+                    className={styles.input}
+                    value={component.type}
+                    onChange={(e) =>
+                      handleComponentChange(index, e.target.value)
+                    }
+                  />
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      className={styles.removeButton}
+                      onClick={() => removeComponent(index)}
+                    >
+                      Убрать
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.buttonBlock}>
+            <button
+              type="button"
+              className={styles.addButton}
+              onClick={addComponent}
             >
-              <div className={styles.carousel} ref={carouselRef}>
-                {components.map((component, index) => (
-                  <div key={index} className={styles.componentContainer}>
-                    <label
-                      htmlFor={`component-${index}`}
-                      className={styles.label}
-                    ></label>
-                    <input
-                      type="text"
-                      placeholder={`Напиток ${index + 1}`}
-                      id={`component-${index}`}
-                      className={styles.input}
-                      value={component.type}
-                      onChange={(e) =>
-                        handleComponentChange(index, e.target.value)
-                      }
-                    />
-                    {index > 0 && (
-                      <button
-                        type="button"
-                        className={styles.removeButton}
-                        onClick={() => removeComponent(index)}
-                      >
-                        Убрать
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className={styles.buttonBlock}>
-              <button
-                type="button"
-                className={styles.addButton}
-                onClick={addComponent}
-              >
-                Добавить напиток
-              </button>
-              <button type="submit" className={styles.submitButton}>
-                Подтвердить
-              </button>
-            </div>
-          </form>
+              Добавить напиток
+            </button>
+          </div>
         </div>
 
         <button className={styles.buttonUpdate} type="submit">
@@ -233,7 +255,7 @@ export default function RecipeUpdateForm() {
         <button
           className={styles.buttonDelete}
           type="button"
-          onClick={() => handleDelete(recipeId)}
+          onClick={() => handleDelete(recipeId ?? 0)}
         >
           Удалить рецепт
         </button>

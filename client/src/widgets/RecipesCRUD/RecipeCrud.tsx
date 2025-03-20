@@ -19,9 +19,7 @@ export default function RecipeCrud() {
         <button onClick={handleUpdateClick}>Добавить рецепт</button>
         <button onClick={handleUpdateClick}>Редактировать рецепт</button>
       </div>
-      {/* {recipe && updateForm && <RecipeUpdateForm recipeId={recipe.id} />}
 
-      {!updateForm && <RecipeCreateForm />} */}
       <RecipeUpdateForm />
       <RecipeCreateForm />
     </div>

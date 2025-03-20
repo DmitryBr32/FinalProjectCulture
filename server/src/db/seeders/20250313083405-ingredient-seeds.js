@@ -205,6 +205,19 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/Ягермейстер.png",
         },
+        {
+          type: "Кашаса",
+          isAlko: true,
+          imgUrl: "/ingredients/default.png",
+        },
+        {
+          type: "Red Bull",
+          isAlko: false,
+          imgUrl: "",
+        },
+        { type: "Апельсиновый сок", isAlko: false, imgUrl: "" },
+        { type: "Гренадин сироп", isAlko: false, imgUrl: "" },
+        { type: "Манго", isAlko: false, imgUrl: "" },
       ],
       {}
     );
