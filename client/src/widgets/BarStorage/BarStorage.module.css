@@ -104,6 +104,7 @@
   height: 220px;
   overflow: hidden;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .ingrImg img {
@@ -111,6 +112,7 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .buttonContainer {
@@ -150,11 +152,15 @@ button:hover {
 
 .addButton {
   width: 100%;
-  margin-top: 10px;
-  background-color: rgb(33 150 243 / 30%);
-  border: 1px solid rgb(33 150 243 / 50%);
+  height: 50px;
 }
 
-.addButton:hover {
-  background-color: rgb(33 150 243 / 50%);
+.editButton {
+  background-color: rgb(255 255 255 / 30%);
+  border: 1px solid rgb(255 255 255 / 50%);
+}
+
+.editButton:hover {
+  background-color: rgb(255 255 255 / 50%);
+  transform: translateY(-2px);
 }
