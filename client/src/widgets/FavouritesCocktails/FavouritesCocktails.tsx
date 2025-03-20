@@ -9,7 +9,11 @@ import {
 } from "@/entities/favouriterecipe";
 import IngredientsList from "../CoctailCard/IngredientsList";
 
-export default function FavouritesCocktails() {
+type Props = {
+  searchValue: string;
+};
+
+export default function FavouritesCocktails({ searchValue }: Props) {
   const favResipes = useAppSelector((state) => state.userfavrecipes.recipes);
   const recipes = useAppSelector((state) => state.recipes.recipes);
   const user = useAppSelector((state) => state.user.user?.id);
@@ -52,9 +56,20 @@ export default function FavouritesCocktails() {
   };
 
   const favRecipeIds = favResipes.map((fav) => fav.id);
-  const filteredRecipes = recipes.filter((recipe) =>
-    favRecipeIds.includes(recipe.id)
-  );
+
+  const filteredRecipes = recipes.filter((recipe) => {
+    const isFavorite = favRecipeIds.includes(recipe.id);
+
+    const containsSearchedIngredient =
+      searchValue.trim() === "" ||
+      recipe.Components?.some((component) =>
+        component.ingredient.type
+          .toLowerCase()
+          .includes(searchValue.toLowerCase())
+      );
+
+    return isFavorite && containsSearchedIngredient;
+  });
 
   return (
     <div className={styles.container}>

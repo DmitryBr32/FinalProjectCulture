@@ -5,6 +5,7 @@ import { deleteStockThunk, getStockThunk, IStock } from "@/entities/stock";
 import { getIngredientsThunk } from "@/entities/ingredient";
 import BarUpdateForm from "@/features/ui/BarUpdateForm/BarUpdateForm";
 import BarAddForm from "@/features/ui/BarAddForm/BarAddForm";
+import { setCocktailSearch } from "@/entities/ingredient/slice/searchSlice";
 export default function BarStorage() {
   const stock = useAppSelector((state) => state.stock.stock);
   const ingredients = useAppSelector((state) => state.ingredients.ingredients);
@@ -14,13 +15,26 @@ export default function BarStorage() {
   const error = useAppSelector((state) => state.stock.error);
   const [processedItems, setProcessedItems] = useState<number[]>([]);
 
-  const alkoStock = useMemo(
-    () => stock.filter((ingredient) => ingredient.ingredientType?.isAlko),
-    [stock]
-  );
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [editingStock, setEditingStock] = useState<IStock | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const alkoStock = useMemo(
+    () =>
+      stock.filter(
+        (ingredient) =>
+          (ingredient.ingredientType?.isAlko && searchValue.trim() === "") ||
+          ingredient.ingredientType?.type
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
+      ),
+    [stock, searchValue]
+  );
 
   const deleteHandler = async (id: number) => {
     if (!user) return;
@@ -124,6 +138,22 @@ export default function BarStorage() {
           initialData={null}
         />
       )}
+      <label>Поиск по ингредиенту</label>
+      <input
+        type="text"
+        onChange={handleChange}
+        value={searchValue}
+        list="ingredientsType"
+      />
+      <datalist id="ingredientsType">
+        {ingredients
+          .filter((ingredient) => ingredient.isAlko)
+          .map((ingredient) =>
+            ingredient.type ? (
+              <option key={ingredient.id} value={ingredient.type} />
+            ) : null
+          )}
+      </datalist>
       {loading && <p>Загрузка...</p>}
       {error && <p>Ошибка: {error}</p>}
       <div className={styles.ingredients}>
@@ -152,7 +182,16 @@ export default function BarStorage() {
                     Остаток: {ingredient.ingredientBalance} мл.
                   </p>
                 </div>
-                <div className={styles.ingrImg}>
+                <div
+                  className={styles.ingrImg}
+                  onClick={() => {
+                    if (ingredient.ingredientType?.type) {
+                      dispatch(
+                        setCocktailSearch(ingredient.ingredientType.type)
+                      );
+                    }
+                  }}
+                >
                   <img
                     src={ingredient.ingredientType.imgUrl}
                     alt={ingredient.title}
