@@ -37,10 +37,11 @@ export default function JournalForm(): JSX.Element {
           Изучайте новые рецепты, фильтруйте по ингредиентам и категориям.
         </p>
       </div>
+      <div className={styles.divider}></div>
       <div className={styles.selector}>
-        <ResponseByIngrsForm />
-        <ResponseByTitleForm />
         {rec && <OneCoctailCard rec={rec} onOpen={openModal} />}
+        <ResponseByTitleForm />
+        <ResponseByIngrsForm />
       </div>
       <div className={styles.selector}>
         <div className={styles.banner}>
@@ -53,10 +54,14 @@ export default function JournalForm(): JSX.Element {
         </div>
 
         <CoctailBox recipes={recipes} onOpen={openModal} />
+        
       </div>
+      
 
       {isModalOpen && selectedRecipeId && (
         <ModalRecipe
+          isBar={false}
+          recipes={recipes}
           recId={selectedRecipeId}
           onClose={closeModal}
           recipesLength={recipes.length}

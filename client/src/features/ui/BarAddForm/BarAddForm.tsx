@@ -89,6 +89,18 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
     }
   };
 
+  const handleClose = () => {
+    setIngredientInputs({ type: "", isAlko: true, imgUrl: "" });
+    setStockInputs({
+      ingredientTypeId: 0,
+      ingredientBalance: "0",
+      userId: user,
+      title: "",
+      strength: "",
+    });
+    setShowAddForm(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -193,6 +205,9 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
       </div>
       <button type="submit" className={styles.button}>
         Добавить
+      </button>
+      <button type="button" className={styles.delButton} onClick={handleClose}>
+        Отменить
       </button>
     </form>
   );

@@ -104,6 +104,7 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
     <div className={styles.filterContainer}>
       {filteredRecipes.length !== 0 && (
         <>
+        <div className={styles.filterWrapper}>
           <div className={styles.filter}>
             <label htmlFor="strength">По крепости </label>
             <select
@@ -141,7 +142,9 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
               <option value="desc">По убыванию</option>
             </select>
           </div>
-
+          </div>
+          
+          <div className={styles.divider}></div>
           <div className={styles.carouselContainer}>
             <button
               className={styles.scrollButton}
