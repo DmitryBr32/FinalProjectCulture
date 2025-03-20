@@ -149,7 +149,7 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
             <button
               className={styles.scrollButton}
               onClick={scrollLeft}
-            ></button>
+            > <img src="../../../public/left-arrow.png" alt='left' /></button>
             <div className={styles.carousel} ref={carouselRef}>
               <div className={styles.recipeList}>
                 {filteredRecipes.map((recipe) => (
@@ -164,7 +164,7 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
             <button
               className={styles.scrollButton}
               onClick={scrollRight}
-            ></button>
+            > <img src="../../../public/right-arrow.png" alt='right' /></button>
           </div>
         </>
       )}

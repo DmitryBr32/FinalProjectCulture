@@ -149,7 +149,7 @@ export default function ModalRecipe({
   return (
     <div className={styles.modalOverlay}>
       {recipeIndex > 0 && (
-        <button onClick={() => setRecipeIndex(recipeIndex - 1)}>&lt;</button>
+        <button className={`${styles.modalArrow} ${styles.modalArrowLeft}`} onClick={() => setRecipeIndex(recipeIndex - 1)}><img src='../../../public/left-arrow.png' alt='left' /></button>
       )}
 
       <div className={styles.modalContainer}>
@@ -270,7 +270,7 @@ export default function ModalRecipe({
       </div>
 
       {recipeIndex < recipesLength - 1 && (
-        <button onClick={() => setRecipeIndex(recipeIndex + 1)}>&gt;</button>
+        <button  className={`${styles.modalArrow} ${styles.modalArrowRight}`} onClick={() => setRecipeIndex(recipeIndex + 1)}><img src='../../../public/right-arrow.png' alt='right' /></button>
       )}
     </div>
   );
