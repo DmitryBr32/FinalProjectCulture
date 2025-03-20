@@ -9,7 +9,11 @@ import {
 } from "@/entities/favouriterecipe";
 import IngredientsList from "../CoctailCard/IngredientsList";
 
-export default function AvailableCocktails() {
+type Props = {
+  searchValue: string;
+};
+
+export default function AvailableCocktails({ searchValue }: Props) {
   const recipes = useAppSelector((state) => state.recipes.recipes);
   const stock = useAppSelector((state) => state.stock.stock);
   const user = useAppSelector((state) => state.user.user?.id);
@@ -53,7 +57,15 @@ export default function AvailableCocktails() {
       return stockQuantity >= requiredQuantity;
     });
 
-    return hasEnoughIngredients;
+    const containsSearchedIngredient =
+      searchValue.trim() === "" ||
+      recipe.Components?.some((component) =>
+        component.ingredient.type
+          .toLowerCase()
+          .includes(searchValue.toLowerCase())
+      );
+
+    return hasEnoughIngredients && containsSearchedIngredient;
   });
 
   const handleFavoriteToggle = async (recipeId: number) => {

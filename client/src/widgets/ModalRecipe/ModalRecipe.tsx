@@ -92,10 +92,12 @@ export default function ModalRecipe({
           })
         );
         await dispatch(getStockThunk(userId!));
+        onClose();
       });
     } catch (error) {
       console.error("Ошибка при обновлении:", error);
       await dispatch(getStockThunk(userId!));
+      onClose();
     }
   };
 
