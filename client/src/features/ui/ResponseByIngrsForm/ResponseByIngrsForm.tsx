@@ -65,6 +65,7 @@ export default function ResponseByIngrsForm() {
       </div>
       {/* </div> */}
       <div className={styles.inputContainer}>
+      <div className={styles.inputBlock}>
         <div
           className={
             components.length > 1
@@ -100,7 +101,7 @@ export default function ResponseByIngrsForm() {
             ))}
           </div>
         </div>
-        <div className={styles.buttonBlock}>
+        {/* <div className={styles.buttonBlock}> */}
           <button
             type="button"
             className={styles.addButton}
@@ -108,11 +109,12 @@ export default function ResponseByIngrsForm() {
           >
             Добавить компонент
           </button>
+          </div>
           <button type="submit" className={styles.submitButton}>
             Найти сочетания
           </button>
         </div>
-      </div>
+      {/* </div> */}
     </form>
   );
 }
