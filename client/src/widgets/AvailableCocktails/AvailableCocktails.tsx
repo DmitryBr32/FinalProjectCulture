@@ -95,6 +95,17 @@ export default function AvailableCocktails({ searchValue }: Props) {
                 onClick={() => openModal(recipe.id)}
               >
                 <div className={styles.imageContainer}>
+                  {userFavorites.some((fav) => fav.id === recipe.id) ? (
+                    <div className={styles.favoriteDiv}>
+                      <img
+                        className={styles.favoriteIcon}
+                        src="/free-icon-bookmark-4305474.png"
+                        alt="favorite"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <img
                     src={recipe.img || "/default-cocktail.jpg"}
                     alt={recipe.title}

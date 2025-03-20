@@ -171,19 +171,36 @@ export default function Baskets(): JSX.Element {
                 }
               />
               <div className={styles.cartItemDetailsContainer}>
-                <h3>
+                <h3 className={styles.name}>
                   <strong className={styles.name}>
                     {product.Product?.name}
                   </strong>
                 </h3>
-              <div className={styles.cartItemDetails}>
-                <p>Артикул: {product.Product?.article}</p>
-                <p>Вес: {product.Product?.weight}</p>
-                <p>Бренд: {product.Product?.brand}</p>
-                <p>Габариты: {product.Product?.dimensions}</p>
-                <p>Цена: {product.Product?.price} руб.</p>
+                <div className={styles.cartItemDetails}>
+                  <div className={styles.detailRow}>
+                    <span>Артикул:</span>
+                    <span>{product.Product?.article}</span>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <span>Вес:</span>
+                    <span>{product.Product?.weight}</span>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <span>Бренд:</span>
+                    <span>{product.Product?.brand}</span>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <span>Габариты:</span>
+                    <span>{product.Product?.dimensions}</span>
+                  </div>
+                  <div className={styles.detailRowPrice}>
+                    <span>Цена: </span>
+                    <span>{product.Product?.price} руб.</span>
+                  </div>
+                </div>
               </div>
-              </div>
+              {/* Контейнер для кнопок */}
+              <div className={styles.actionsContainer}>
                 <div className={styles.quantityBlock}>
                   <button
                     className={styles.quantityButton}
@@ -197,9 +214,7 @@ export default function Baskets(): JSX.Element {
                   >
                     -
                   </button>
-                  <span className={styles.quantityValue}>
-                    {product.quantity}
-                  </span>
+                  <span className={styles.quantityValue}>{product.quantity}</span>
                   <button
                     className={styles.quantityButton}
                     onClick={(e) => {
@@ -212,30 +227,31 @@ export default function Baskets(): JSX.Element {
                     +
                   </button>
                 </div>
-              <button
-                className={styles.deleteButton}
-                onClick={() => deleteProduct(product.id)}
-              >
-                Удалить
-              </button>
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => deleteProduct(product.id)}
+                >
+                  Удалить
+                </button>
+              </div>
             </div>
           ))}
           <div className={styles.total}>
-            <h3>Итого: {totalPrice.toFixed(2)} руб.</h3>
+            <h3 className={styles.total}>Итого: {totalPrice.toFixed(2)} руб.</h3>
           </div>
           <div>
-          <button
-            className={styles.orderButton}
-            onClick={() => navigate(CLIENT_ROUTES.SHOP_FORM)}
-          >
-            Продолжить покупки
-          </button>
-          <button
-            className={styles.orderButton}
-            onClick={() => setIsModalOpen(true)}
-          >
-            Оформить заказ
-          </button>
+            <button
+              className={styles.orderButton}
+              onClick={() => navigate(CLIENT_ROUTES.SHOP_FORM)}
+            >
+              Продолжить покупки
+            </button>
+            <button
+              className={styles.orderButton}
+              onClick={() => setIsModalOpen(true)}
+            >
+              Оформить заказ
+            </button>
           </div>
         </div>
       )}
@@ -247,7 +263,7 @@ export default function Baskets(): JSX.Element {
               className={styles.closeButton}
               onClick={() => setIsModalOpen(false)}
             >
-              &#10006; {/* Символ крестика */}
+              &#10006;
             </button>
             <h2>Оформить заказ</h2>
             <form
@@ -297,7 +313,7 @@ export default function Baskets(): JSX.Element {
                 />
               </div>
               <div className={styles.formField}>
-                <label>Коментарий к заказу:</label>
+                <label>Комментарий к заказу:</label>
                 <input
                   type="text"
                   name="comment"

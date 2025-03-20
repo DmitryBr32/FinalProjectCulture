@@ -76,7 +76,7 @@ export function OneOrder({ order, deleteOneOrder, isAdmin }: Props) {
               <strong>{item.Product.name}</strong> x {item.quantity}
             </p>
             <p>{item.Product.price} руб.</p>
-            <button
+            <button className={styles.productCardButton}
               onClick={() =>
                 navigate(`/shop/${item.Product.id}?isOpenModal=true`)
               }
