@@ -32,58 +32,104 @@ export function Header(): JSX.Element {
 
   return (
     <nav className={styles.container}>
-      <NavLink
-        to={CLIENT_ROUTES.MAIN}
-        className={({ isActive }) => (isActive ? styles.active : "")}
-      >
-        Главная
-      </NavLink>
-      <NavLink
-        to={CLIENT_ROUTES.MY_BAR}
-        className={({ isActive }) => (isActive ? styles.active : "")}
-      >
-        Бар
-      </NavLink>
-      <NavLink
-        to={CLIENT_ROUTES.JOURNAL}
-        className={({ isActive }) => (isActive ? styles.active : "")}
-      >
-        Журнал
-      </NavLink>
-      <NavLink
-        to={CLIENT_ROUTES.SHOP_FORM}
-        className={({ isActive }) => (isActive ? styles.active : "")}
-      >
-        Магазин
-      </NavLink>
-      {!user && (
-        <>
+      {/* Левая секция */}
+      <div className={styles.leftSection}>
+        <div className={styles.navLinks}>
           <NavLink
-            to={CLIENT_ROUTES.SIGN_IN}
-            className={({ isActive }) => (isActive ? styles.active : "")}
+            to={CLIENT_ROUTES.MAIN}
+            className={({ isActive }) => 
+              `${isActive ? styles.active : ""} ${styles.navLink}`
+            }
+            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
           >
-            Вход
+            Главная
           </NavLink>
           <NavLink
-            to={CLIENT_ROUTES.SIGN_UP}
-            className={({ isActive }) => (isActive ? styles.active : "")}
+            to={CLIENT_ROUTES.MY_BAR}
+            className={({ isActive }) => 
+              `${isActive ? styles.active : ""} ${styles.navLink}`
+            }
+            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-blue)" } as React.CSSProperties : undefined)}
           >
-            Регистрация
+            Бар
           </NavLink>
-        </>
-      )}
-      {user && (
-        <>
-          <NavLink 
-           to={user.isAdmin ? CLIENT_ROUTES.ADMIN : CLIENT_ROUTES.MAIN}>
-            <UserAvatar 
-            user={user} />
-            </NavLink>
-          <button onClick={onLogoutHandler} className={styles.button}>
-            Выйти
-          </button>
-        </>
-      )}
+          <NavLink
+            to={CLIENT_ROUTES.JOURNAL}
+            className={({ isActive }) => 
+              `${isActive ? styles.active : ""} ${styles.navLink}`
+            }
+            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-orange)" } as React.CSSProperties : undefined)}
+          >
+            Журнал
+          </NavLink>
+        </div>
+        <div className={styles.line}></div>
+      </div>
+
+      {/* Центральная секция с логотипом */}
+      <div className={styles.centerSection}>
+        <img src="/culture-header.png" alt="Logo" className={styles.logo} />
+      </div>
+
+      {/* Правая секция */}
+      <div className={styles.rightSection}>
+        <div className={styles.navLinks}>
+          <NavLink
+            to={CLIENT_ROUTES.SHOP_FORM}
+            className={({ isActive }) => 
+              `${isActive ? styles.active : ""} ${styles.navLink}`
+            }
+            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-yellow)" } as React.CSSProperties : undefined)}
+          >
+            Магазин
+          </NavLink>
+          {!user ? (
+            <>
+              <NavLink
+                to={CLIENT_ROUTES.SIGN_IN}
+                className={({ isActive }) => 
+                  `${isActive ? styles.active : ""} ${styles.navLink}`
+                }
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-gray)" } as React.CSSProperties : undefined)}
+              >
+                Вход
+              </NavLink>
+              <NavLink
+                to={CLIENT_ROUTES.SIGN_UP}
+                className={({ isActive }) => 
+                  `${isActive ? styles.active : ""} ${styles.navLink}`
+                }
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-gray)" } as React.CSSProperties : undefined)}
+              >
+                Регистрация
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink 
+                to={user.isAdmin ? CLIENT_ROUTES.ADMIN : CLIENT_ROUTES.MAIN}
+                className={({ isActive }) => 
+                  `${isActive ? styles.active : ""} ${styles.navLink}`
+                }
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-teal)" } as React.CSSProperties : undefined)}
+              >
+                <UserAvatar user={user} />
+              </NavLink>
+              <NavLink
+                to={CLIENT_ROUTES.SIGN_IN}
+                onClick={onLogoutHandler}
+                className={({ isActive }) => 
+                  `${isActive ? styles.active : ""} ${styles.navLink}`
+                }
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-red)" } as React.CSSProperties : undefined)}
+              >
+                Выйти
+              </NavLink>
+            </>
+          )}
+        </div>
+        <div className={styles.line}></div>
+      </div>
     </nav>
   );
 }

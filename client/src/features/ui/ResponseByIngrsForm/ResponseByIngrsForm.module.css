@@ -1,27 +1,26 @@
 .form {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
+  gap: 20px;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
   width: 40%; 
   height: 100px;
   padding: 30px;
+  font-family: var(--font-h1);
   background: rgb(255 255 255 / 10%);
   border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 12px;
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
+  box-shadow: 5px 15px 20px rgb(6 6 6 / 72.2%);
   backdrop-filter: blur(10px);
-  font-family: var(--font-h1);
-  flex-wrap: wrap;
-  box-shadow: 5px 15px 20px rgba(6, 6, 6, 0.722);
 }
 
 .componentContainer {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 8px;
-  flex: 1;
 }
 
 .input {
@@ -82,8 +81,8 @@
 
 .smallDivider {
   width: 90%; 
-  height: 2px;  
+  height: 2px; 
+  margin: 6px auto;  
   background-color: #444; 
-  margin: 6px auto; 
 }
 

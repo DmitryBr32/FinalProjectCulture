@@ -140,3 +140,13 @@
   background: rgb(255 255 255 / 30%);
   border-radius: 2px;
 }
+
+.active {
+  background-color: rgb(244 67 54 / 30%);
+  border: 1px solid rgb(244 67 54 / 50%);
+}
+
+.active:hover {
+  background-color: rgb(244 67 54 / 50%);
+  transform: translateY(-2px);
+}

@@ -147,27 +147,6 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.formGroup}>
-        <label className={styles.label}>Введите тип напитка</label>
-        <input
-          type="text"
-          name="type"
-          value={ingredientInputs.type}
-          onChange={handleChange}
-          list="ingredientsType"
-          required
-          className={styles.input}
-        />
-        <datalist id="ingredientsType">
-          {ingredients
-            .filter((ingredient) => ingredient.isAlko)
-            .map((ingredient) =>
-              ingredient.type ? (
-                <option key={ingredient.id} value={ingredient.type} />
-              ) : null
-            )}
-        </datalist>
-      </div>
-      <div className={styles.formGroup}>
         <label className={styles.label}>Введите марку напитка</label>
         <input
           type="text"
@@ -202,11 +181,11 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
           className={styles.input}
         />
       </div>
-      <button type="button" className={styles.button} onClick={handleClose}>
-        Отменить
-      </button>
       <button type="submit" className={styles.button}>
         Обновить
+      </button>
+      <button type="button" className={styles.delButton} onClick={handleClose}>
+        Отменить
       </button>
     </form>
   );

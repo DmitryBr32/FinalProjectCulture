@@ -36,7 +36,8 @@
   align-items: center;
 }
 
-.button {
+.button,
+.delButton {
   padding: 8px 16px;
   font-size: 14px;
   color: #fff;
@@ -45,6 +46,16 @@
   border: 1px solid rgb(76 175 80 / 50%);
   border-radius: 6px;
   transition: all 0.3s ease;
+}
+
+.delButton {
+  background-color: rgb(244 67 54 / 30%);
+  border: 1px solid rgb(244 67 54 / 50%);
+}
+
+.delButton:hover {
+  background-color: rgb(244 67 54 / 50%);
+  transform: translateY(-2px);
 }
 
 .button:hover {

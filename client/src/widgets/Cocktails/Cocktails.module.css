@@ -5,6 +5,21 @@
   color: #fff;
 }
 
+.containerLabel {
+  padding: 8px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.containerInput {
+  padding: 8px;
+  font-size: 14px;
+  color: #fff;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 6px;
+}
+
 .title {
   margin-bottom: 24px;
   font-family: var(--font-h1);

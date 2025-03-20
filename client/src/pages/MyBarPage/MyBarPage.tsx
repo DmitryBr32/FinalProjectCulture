@@ -9,17 +9,17 @@ import Cocktails from "@/widgets/Cocktails/Cocktails";
 
 export default function MyBarPage() {
   const user = useAppSelector((state) => state.user.user?.id);
+  const isLoading = useAppSelector((state) => state.user.isLoading);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate(CLIENT_ROUTES.MAIN);
-      return;
+    if (!isLoading && user === undefined) {
+      navigate(CLIENT_ROUTES.SIGN_IN);
     }
-  }, [user, navigate]);
+  }, [user, isLoading, navigate]);
 
-  if (!user) {
-    return null;
+  if (isLoading || user === undefined) {
+    return <p>Загрузка...</p>;
   }
 
   return (
