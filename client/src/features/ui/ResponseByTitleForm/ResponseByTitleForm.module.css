@@ -1,19 +1,19 @@
 .form {
   display: flex;
   flex-direction: row;
+  gap: 20px;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
   width: 30%; 
   height: 100px;
   padding: 30px;
+  font-family: var(--font-h1);
   background: rgb(255 255 255 / 10%);
   border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 12px;
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
+  box-shadow: 5px 15px 20px rgb(6 6 6 / 72.2%);
   backdrop-filter: blur(10px);
-  font-family: var(--font-h1);
-  box-shadow: 5px 15px 20px rgba(6, 6, 6, 0.722);
 }
 
 .componentContainer {
@@ -52,10 +52,11 @@
   color: #e0e0e0;
   text-align: right;
 }
+
 .smallDivider {
   width: 90%; 
-  height: 2px;  
+  height: 2px; 
+  margin: 6px auto;  
   background-color: #444; 
-  margin: 6px auto; 
 }
 

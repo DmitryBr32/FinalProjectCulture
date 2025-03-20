@@ -13,7 +13,7 @@ export default function MyBarPage() {
 
   useEffect(() => {
     if (!user) {
-      navigate(CLIENT_ROUTES.MAIN);
+      navigate(CLIENT_ROUTES.SIGN_IN);
       return;
     }
   }, [user, navigate]);
