@@ -55,7 +55,11 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
 
   const handleShotChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    setIsShotFilter(value === "true" ? true : value === "false" ? false : null);
+    if (value !== null) {
+      setIsShotFilter(value === "true" ? true : false);
+    } else {
+      setIsShotFilter(null);
+    }
   }, []);
 
   const handleSortByLikesChange = useCallback(
@@ -108,9 +112,9 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
               onChange={handleStrengthChange}
             >
               <option value="Все">Все</option>
-              <option value="крепкий">Мужицкие</option>
+              <option value="крепкий">Крепкие</option>
               <option value="средний">Средние</option>
-              <option value="слабый">Лёгенькие</option>
+              <option value="слабый">Легкие</option>
             </select>
           </div>
           <div className={styles.filter}>

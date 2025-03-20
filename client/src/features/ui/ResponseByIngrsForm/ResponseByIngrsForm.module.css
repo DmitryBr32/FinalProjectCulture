@@ -1,18 +1,35 @@
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 350px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
 .componentContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   margin-bottom: 10px;
+}
+
+.carouselContainer {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  margin-bottom: 14px;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+
+.carouselContainerClose {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  margin-bottom: 14px;
+  border-radius: 5px;
+}
+
+.carousel {
+  padding: 0;
+}
+
+.carouselContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .label {
@@ -21,8 +38,8 @@
 }
 
 .input {
-  box-sizing: border-box; /* Очень важно, чтобы padding не увеличивал ширину */
-  width: 100%;
+  box-sizing: border-box;
+  width: 10%;
   padding: 8px;
   font-size: 14px;
   border: 1px solid #ddd;
@@ -30,6 +47,7 @@
 }
 
 .removeButton {
+  width: 60%;
   padding: 8px 12px;
   margin-top: 5px;
   font-size: 14px;
@@ -56,4 +74,10 @@
 
 .submitButton:hover {
   background-color: #367c39;
+}
+
+.buttonBlock {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
