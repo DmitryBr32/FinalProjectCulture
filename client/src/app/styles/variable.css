@@ -9,5 +9,10 @@
   --color-white: aliceblue;
   --color-green: rgb(76 175 80 / 50%);
   --color-red: #e74c3c;
+  --color-orange: #f39c12;
+  --color-yellow: #f1c40f;
+  --color-blue: #3498db;
+  --color-teal: #1abc9c;
+  --color-gray: #7f8c8d;
   /* --font-text: "Oswald"; */
 }
