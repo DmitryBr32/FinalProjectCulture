@@ -203,11 +203,11 @@ export default function BarAddForm({ setShowAddForm, initialData }: Props) {
           className={styles.input}
         />
       </div>
-      <button type="button" className={styles.button} onClick={handleClose}>
-        Отменить
-      </button>
       <button type="submit" className={styles.button}>
         Добавить
+      </button>
+      <button type="button" className={styles.delButton} onClick={handleClose}>
+        Отменить
       </button>
     </form>
   );

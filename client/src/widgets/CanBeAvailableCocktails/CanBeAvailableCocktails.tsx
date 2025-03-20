@@ -9,7 +9,11 @@ import {
 } from "@/entities/favouriterecipe";
 import IngredientsList from "../CoctailCard/IngredientsList";
 
-export default function CanBeAvailableCocktails() {
+type Props = {
+  searchValue: string;
+};
+
+export default function CanBeAvailableCocktails({ searchValue }: Props) {
   const recipes = useAppSelector((state) => state.recipes.recipes);
   const stock = useAppSelector((state) => state.stock.stock);
   const user = useAppSelector((state) => state.user.user?.id);
@@ -52,13 +56,22 @@ export default function CanBeAvailableCocktails() {
       return stockQuantity >= requiredQuantity;
     });
 
-    return hasEnoughIngredients;
+    const containsSearchedIngredient =
+      searchValue.trim() === "" ||
+      recipe.Components?.some((component) =>
+        component.ingredient.type
+          .toLowerCase()
+          .includes(searchValue.toLowerCase())
+      );
+
+    return hasEnoughIngredients && containsSearchedIngredient;
   });
 
   const filteredRecipes = recipes.filter((recipe) => {
     const isNotAvailableAlready = !filteredRecipesAvailableAlready.some(
       (availableRecipe) => availableRecipe.id === recipe.id
     );
+
     const recipeIngredients =
       recipe.Components?.map((comp) => ({
         type: comp.ingredient.type,
@@ -66,11 +79,18 @@ export default function CanBeAvailableCocktails() {
       })) || [];
     const stockIngredients = stock.map((item) => item.ingredientType?.type);
 
+    const containsSearchedIngredient =
+      searchValue.trim() === "" ||
+      recipeIngredients.some((ingredient) =>
+        ingredient.type.toLowerCase().includes(searchValue.toLowerCase())
+      );
+
     return (
       isNotAvailableAlready &&
       recipeIngredients.some((ingredient) =>
         stockIngredients.includes(ingredient.type)
-      )
+      ) &&
+      containsSearchedIngredient
     );
   });
 
