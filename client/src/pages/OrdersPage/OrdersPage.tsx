@@ -64,7 +64,7 @@ export default function OrdersPage() {
     <div className={styles.container}>
       <h1>Заказы</h1>
           {!user?.isAdmin && user && <button
-            className={styles.order}
+className={`${styles.order} ${styles.continueShoppingButton}`} 
             onClick={() => navigate(CLIENT_ROUTES.SHOP_FORM)}
           >
             Продолжить покупки
