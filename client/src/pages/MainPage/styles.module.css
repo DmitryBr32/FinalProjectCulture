@@ -1,20 +1,22 @@
 .main {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  min-height: 90vh;
-  margin-bottom: 20px;
+  justify-content: center;
+  height: 80vh;
+  margin: 20px;
 }
 
 .banner {
-  /* background-color: #333; */
-  padding: 20px;
-  margin: 20px;
+  max-width: 580px;
+  margin-right: 100px;
+  margin-left: 100px;
+  border: 20px;
 }
 
 .title {
   margin-bottom: 10px;
   font-family: var(--font-h1);
+  font-size: 50px;
   color: white;
   text-align: center;
 }
@@ -24,7 +26,14 @@
   margin: 0 auto;
   margin-bottom: 10px;
   font-family: var(--font-h1);
+  font-size: 24px;
   line-height: 1.5;
   color: white;
   text-align: center;
+}
+
+.slider {
+  max-width: 756px;
+  height: 100%;
+  border-left: 20px;
 }

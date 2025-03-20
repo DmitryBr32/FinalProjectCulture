@@ -27,7 +27,7 @@
 
 .modal {
   position: relative;
-  width: 75%;
+  width: 80%;
   height: 90%;
   padding: 40px;
   padding-bottom: 60px;
@@ -72,13 +72,12 @@
 .modalImage {
   position: relative;
   top: -15px;
-  left: 15%;
+  left: -5%;
   width: 350px;
   height: 450px;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 20px 20px 50px rgb(107 104 104 / 58.7%);
-  transform: translateX(-50%);
 }
 
 .modal h2 {

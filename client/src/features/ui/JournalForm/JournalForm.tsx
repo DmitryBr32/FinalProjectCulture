@@ -6,12 +6,10 @@ import ModalRecipe from "@/widgets/ModalRecipe/ModalRecipe";
 import CoctailBox from "@/widgets/CoctailBox/CoctailBox";
 import ResponseByIngrsForm from "../ResponseByIngrsForm/ResponseByIngrsForm";
 import ResponseByTitleForm from "../ResponseByTitleForm/ResponseByTitleForm";
-import OneCoctailCard from "@/widgets/CoctailCard/OneCoctailCard";
 
 export default function JournalForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const recipes = useAppSelector((state) => state.recipes.recipes);
-  const rec = useAppSelector((state) => state.recipe.recipe);
 
   useEffect(() => {
     dispatch(getRecipesThunk());
