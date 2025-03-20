@@ -30,9 +30,7 @@
   padding-top: 10px;
 }
 
-.closeButton {
-  outline: none; /* Убираем окантовку */
-  border: none; 
+.closeButton { 
   position: absolute;
   top: 5px;
   right: 5px;
@@ -41,7 +39,9 @@
   font-size: 1.5rem; 
   color: #fff; /* Цвет текста (крестика) */
   cursor: pointer;
+  outline: none; /* Убираем окантовку */
   background-color: transparent; /* Убираем фон */
+  border: none;
   border-radius: 50%; /* Делаем кнопку круглой */
   transition: background-color 0.3s ease, transform 0.2s ease; /* Плавное изменение фона и эффекта */
 }
@@ -61,10 +61,6 @@
   max-height: 500px; 
   object-fit: cover; /* Чтобы изображение заполнило контейнер без искажения */
   border-radius: 10px;
-}
-
-.productDetails {
-  flex-grow: 1; /* Позволяет описанию занимать доступное пространство */
 }
 
 .price {
@@ -114,14 +110,15 @@
 
 .productDetails {
   display: flex;
+  flex-grow: 1;
   flex-direction: column; /* Располагаем элементы вертикально */
   gap: 8px; /* Отступ между элементами */
 }
 
 .detailItem {
   display: flex;
-  justify-content: space-between; /* Разделяет текст и значение по краям */
   align-items: center; /* Выравнивает элементы по вертикали */
+  justify-content: space-between; /* Разделяет текст и значение по краям */
   width: 100%; /* Занимает всю доступную ширину */
 }
 
@@ -159,9 +156,9 @@ button:disabled {
 .quantityBlock {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
+  min-width: 100px; 
   min-height: 44px;
-  min-width: 100px;
   padding: 2px; 
   background-color: white; 
   border-radius: 4px;
@@ -203,8 +200,8 @@ button:disabled {
 }
 
 .cartButton {
-  min-height: 50px;
   min-width: 70px;
+  min-height: 50px;
   padding: 6px 12px;
   margin: 0;
   font-size: 14px;

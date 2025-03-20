@@ -133,9 +133,9 @@
 .quantityBlock {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
+  min-width: 100px; 
   min-height: 44px;
-  min-width: 100px;
   padding: 2px; 
   background-color: white; 
   border-radius: 4px;
@@ -169,8 +169,8 @@
 }
 
 .cartButton {
-  min-height: 50px;
   min-width: 70px;
+  min-height: 50px;
   padding: 6px 12px;
   margin: 0;
   font-size: 14px;
