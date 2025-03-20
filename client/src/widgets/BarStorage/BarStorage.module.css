@@ -14,6 +14,21 @@
   text-align: center;
 }
 
+.containerLabel {
+  padding: 8px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.containerInput {
+  padding: 8px;
+  font-size: 14px;
+  color: #fff;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 6px;
+}
+
 .ingredients {
   display: flex;
   flex-direction: column;
@@ -123,10 +138,19 @@ button:hover {
   transform: translateY(-2px);
 }
 
+.delButton {
+  background-color: rgb(244 67 54 / 30%);
+  border: 1px solid rgb(244 67 54 / 50%);
+}
+
+.delButton:hover {
+  background-color: rgb(244 67 54 / 50%);
+  transform: translateY(-2px);
+}
+
 .addButton {
   width: 100%;
   margin-top: 10px;
-  font-weight: bold;
   background-color: rgb(33 150 243 / 30%);
   border: 1px solid rgb(33 150 243 / 50%);
 }
