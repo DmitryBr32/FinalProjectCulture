@@ -3,23 +3,35 @@
   flex-direction: row;
   gap: 20px;
   align-items: center;
-  justify-content: space-between;
-  width: 30%; 
-  height: 100px;
+  justify-content: flex-start;
+  gap: 20px;
+  width: 70%; 
   padding: 30px;
   font-family: var(--font-h1);
   background: rgb(255 255 255 / 10%);
   border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
-  box-shadow: 5px 15px 20px rgb(6 6 6 / 72.2%);
   backdrop-filter: blur(10px);
+  font-family: var(--font-h1);
+  box-shadow: 5px 15px 20px rgba(6, 6, 6, 0.722);
+  position: relative;
+  height: auto; 
+  min-height: 300px;
 }
 
 .componentContainer {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+  position: relative;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px;
+  align-items: center; 
 }
 
 .input {
@@ -29,6 +41,7 @@
   background: rgb(255 255 255 / 5%);
   border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 6px;
+  width: 140px;
 }
 
 .submitButton {
@@ -40,6 +53,7 @@
   border: 1px solid rgb(76 175 80 / 50%);
   border-radius: 6px;
   transition: all 0.3s ease;
+  width: 150px;
 }
 
 .submitButton:hover {
@@ -58,5 +72,12 @@
   height: 2px; 
   margin: 6px auto;  
   background-color: #444; 
+  margin: 6px auto; 
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
 }
 
