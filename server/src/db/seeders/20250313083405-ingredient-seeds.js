@@ -200,6 +200,11 @@ module.exports = {
           isAlko: true,
           imgUrl: "/ingredients/default.png",
         },
+        {
+          type: "Ягермейстер",
+          isAlko: true,
+          imgUrl: "/ingredients/Ягермейстер.png",
+        },
       ],
       {}
     );
