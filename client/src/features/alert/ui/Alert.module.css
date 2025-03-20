@@ -1,6 +1,6 @@
 .alertContainer {
   position: fixed;
-  top: 110px;
+  top: 160px;
   left: 50%;
   z-index: 1000;
   display: flex;
