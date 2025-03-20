@@ -7,18 +7,18 @@
 }
 
 .banner {
+  max-width: 580px;
   margin-right: 100px;
   margin-left: 100px;
   border: 20px;
-  max-width: 580px;
 }
 
 .title {
   margin-bottom: 10px;
   font-family: var(--font-h1);
+  font-size: 50px;
   color: white;
   text-align: center;
-  font-size: 50px;
 }
 
 .text {
@@ -33,7 +33,7 @@
 }
 
 .slider {
-  height: 100%;
   max-width: 756px;
+  height: 100%;
   border-left: 20px;
 }
