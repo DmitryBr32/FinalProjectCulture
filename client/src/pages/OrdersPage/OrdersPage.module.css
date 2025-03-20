@@ -22,14 +22,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 80%;
+  width: 70%;
   padding: 15px;
   margin-top: 10px;
   margin-bottom: 10px; 
   background-color: #2c2c2c;
   border: 1px solid #ddd;
   border-radius: 10px;
-  
 }
 
 .numberOrder {
@@ -54,14 +53,13 @@
 .productsList {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Уменьшили отступы между товарами */
+  gap: 8px;
 }
 
 .productItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px; 
+  padding: 8px;
   background-color: #3a3a3a;
   border-radius: 5px;
 }
@@ -69,7 +67,36 @@
 .productItem p {
   margin: 0;
   font-size: 0.9rem;
-  color: #d3d3d3; 
+  color: #d3d3d3;
+}
+
+.productCardButton:hover {
+  background-color: rgb(76 175 80 / 30%);
+}
+
+/* Название товара */
+.productItem p:first-child {
+  flex: 1;
+  text-align: left;
+}
+
+/* Цена товара */
+.productItem p:nth-child(2) {
+  flex: 0 0 100px;
+  margin: 0 20px;
+  text-align: center;
+}
+
+/* Кнопка "Карточка товара" */
+.productItem button {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #555; /* Цвет фона для кнопки "Карточка товара" */
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .buttonBlock button {
@@ -79,34 +106,20 @@
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease; 
-}
-
-.productItem button {
-  padding: 6px 12px; 
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
 .statusAndTotal {
   display: flex;
-  flex-wrap: wrap; /* Позволяет перенос строк */
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between; /* Раздвигает элементы по краям */
+  justify-content: space-between;
   width: 100%;
   margin-top: 8px;
 }
 
-.currentStatus {
-  flex: 1; /* Растягивает статус, чтобы он оставался слева */
-  text-align: left;
-}
-
 .totalAmount {
-  margin-left: 0; /* Убираем лишние отступы */
+  margin-left: 0;
   font-weight: bold;
 }
 
@@ -119,7 +132,7 @@
 }
 
 .adminView .totalAmount {
-  margin-right: auto; /* Выравнивает сумму влево */
+  margin-right: auto;
 }
 
 .buttonBlock {
@@ -131,11 +144,10 @@
 .adminControls {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Раздвигает сумму влево, а кнопки вправо */
+  justify-content: space-between;
   width: 100%;
-  margin-top: 10px; /* Добавляем отступ сверху */
+  margin-top: 10px;
 }
-
 
 .buttonBlock button:first-child {
   color: white;
@@ -151,7 +163,6 @@
   background-color: #e67e22;
 }
 
-
 .buttonBlock button:last-child:hover {
   background-color: #c00;
 }
@@ -162,7 +173,7 @@
   font-size: 14px;
   color: rgb(0 0 0);
   cursor: pointer;
-  background-color: white; /* Цвет, как у первой кнопки */ 
+  background-color: white;
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;

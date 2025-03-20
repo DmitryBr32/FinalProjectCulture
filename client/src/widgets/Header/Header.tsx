@@ -37,28 +37,46 @@ export function Header(): JSX.Element {
         <div className={styles.navLinks}>
           <NavLink
             to={CLIENT_ROUTES.MAIN}
-            className={({ isActive }) => 
+            className={({ isActive }) =>
               `${isActive ? styles.active : ""} ${styles.navLink}`
             }
-            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+            style={({ isActive }) =>
+              isActive
+                ? ({
+                    "--active-color": "var(--color-green)",
+                  } as React.CSSProperties)
+                : undefined
+            }
           >
             Главная
           </NavLink>
           <NavLink
             to={CLIENT_ROUTES.MY_BAR}
-            className={({ isActive }) => 
+            className={({ isActive }) =>
               `${isActive ? styles.active : ""} ${styles.navLink}`
             }
-            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+            style={({ isActive }) =>
+              isActive
+                ? ({
+                    "--active-color": "var(--color-green)",
+                  } as React.CSSProperties)
+                : undefined
+            }
           >
             Бар
           </NavLink>
           <NavLink
             to={CLIENT_ROUTES.JOURNAL}
-            className={({ isActive }) => 
+            className={({ isActive }) =>
               `${isActive ? styles.active : ""} ${styles.navLink}`
             }
-            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+            style={({ isActive }) =>
+              isActive
+                ? ({
+                    "--active-color": "var(--color-green)",
+                  } as React.CSSProperties)
+                : undefined
+            }
           >
             Журнал
           </NavLink>
@@ -76,10 +94,16 @@ export function Header(): JSX.Element {
         <div className={styles.navLinks}>
           <NavLink
             to={CLIENT_ROUTES.SHOP_FORM}
-            className={({ isActive }) => 
+            className={({ isActive }) =>
               `${isActive ? styles.active : ""} ${styles.navLink}`
             }
-            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+            style={({ isActive }) =>
+              isActive
+                ? ({
+                    "--active-color": "var(--color-green)",
+                  } as React.CSSProperties)
+                : undefined
+            }
           >
             Магазин
           </NavLink>
@@ -87,41 +111,65 @@ export function Header(): JSX.Element {
             <>
               <NavLink
                 to={CLIENT_ROUTES.SIGN_IN}
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) =>
+                  isActive
+                    ? ({
+                        "--active-color": "var(--color-green)",
+                      } as React.CSSProperties)
+                    : undefined
+                }
               >
                 Вход
               </NavLink>
               <NavLink
                 to={CLIENT_ROUTES.SIGN_UP}
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) =>
+                  isActive
+                    ? ({
+                        "--active-color": "var(--color-green)",
+                      } as React.CSSProperties)
+                    : undefined
+                }
               >
                 Регистрация
               </NavLink>
             </>
           ) : (
             <>
-              <NavLink 
+              <NavLink
                 to={user.isAdmin ? CLIENT_ROUTES.ADMIN : CLIENT_ROUTES.MAIN}
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) =>
+                  isActive
+                    ? ({
+                        "--active-color": "var(--color-green)",
+                      } as React.CSSProperties)
+                    : undefined
+                }
               >
                 <UserAvatar user={user} />
               </NavLink>
               <NavLink
                 to={CLIENT_ROUTES.SIGN_IN}
                 onClick={onLogoutHandler}
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) =>
+                  isActive
+                    ? ({
+                        "--active-color": "var(--color-green)",
+                      } as React.CSSProperties)
+                    : undefined
+                }
               >
                 Выйти
               </NavLink>

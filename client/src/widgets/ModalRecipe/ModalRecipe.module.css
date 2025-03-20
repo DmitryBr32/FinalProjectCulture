@@ -20,14 +20,14 @@
   width: 60vw;
   max-width: 1000px;
   height: 80vh;
-  max-height: 700px;
+  max-height: 900px;
   overflow: visible;
   border-radius: 8px;
 }
 
 .modal {
   position: relative;
-  width: 75%;
+  width: 80%;
   height: 90%;
   padding: 40px;
   padding-bottom: 60px;
@@ -72,13 +72,12 @@
 .modalImage {
   position: relative;
   top: -15px;
-  left: 15%;
+  left: -5%;
   width: 350px;
   height: 450px;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 20px 20px 50px rgb(107 104 104 / 58.7%);
-  transform: translateX(-50%);
 }
 
 .modal h2 {
@@ -101,6 +100,7 @@
 }
 
 .modalPreparation {
+  max-width: 350px;
   margin-top: 20px;
   margin-bottom: 40px;
 }
@@ -117,6 +117,23 @@
   border: none;
   border-radius: 50%;
   transition: transform 0.2s ease-in-out;
+}
+
+.form {
+  position: absolute;
+  right: 50px;
+  bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 410px;
+  background: #00000030;
+  border-radius: 12px;
+}
+
+.formPart {
+  display: flex;
+  padding: 10px;
 }
 
 .favoriteIcon {
@@ -157,6 +174,8 @@
 }
 
 .addButton {
+  width: 100%;
+  height: 50px;
   padding: 8px 16px;
   font-size: 14px;
   color: #fff;
