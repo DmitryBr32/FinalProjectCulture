@@ -47,23 +47,24 @@ export default function Cocktails() {
         >
           Избранное
         </button>
+        <label className={styles.containerLabel}>Поиск по ингредиенту</label>
+        <input
+          className={styles.containerInput}
+          type="text"
+          onChange={handleChange}
+          value={searchValue}
+          list="ingredientsType"
+        />
+        <datalist id="ingredientsType">
+          {ingredients
+            .filter((ingredient) => ingredient.isAlko)
+            .map((ingredient) =>
+              ingredient.type ? (
+                <option key={ingredient.id} value={ingredient.type} />
+              ) : null
+            )}
+        </datalist>
       </div>
-      <label>Поиск по ингредиенту</label>
-      <input
-        type="text"
-        onChange={handleChange}
-        value={searchValue}
-        list="ingredientsType"
-      />
-      <datalist id="ingredientsType">
-        {ingredients
-          .filter((ingredient) => ingredient.isAlko)
-          .map((ingredient) =>
-            ingredient.type ? (
-              <option key={ingredient.id} value={ingredient.type} />
-            ) : null
-          )}
-      </datalist>
 
       <div className={styles.content}>
         {activeTab === "available" && (

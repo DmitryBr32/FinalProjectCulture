@@ -184,7 +184,7 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
       <button type="submit" className={styles.button}>
         Обновить
       </button>
-      <button type="button" className={styles.button} onClick={handleClose}>
+      <button type="button" className={styles.delButton} onClick={handleClose}>
         Отменить
       </button>
     </form>

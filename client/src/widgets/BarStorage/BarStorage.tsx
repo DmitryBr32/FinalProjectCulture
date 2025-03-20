@@ -116,7 +116,6 @@ export default function BarStorage() {
       <h1>Ваши напитки</h1>
       {!showAddForm && !showUpdateForm ? (
         <button
-          className={styles.addButton}
           onClick={() => {
             setShowAddForm(true);
             setShowUpdateForm(false);
@@ -138,8 +137,9 @@ export default function BarStorage() {
           initialData={null}
         />
       )}
-      <label>Поиск по ингредиенту</label>
+      <label className={styles.containerLabel}>Поиск по ингредиенту</label>
       <input
+        className={styles.containerInput}
         type="text"
         onChange={handleChange}
         value={searchValue}
@@ -198,10 +198,16 @@ export default function BarStorage() {
                   />
                 </div>
                 <div className={styles.buttonContainer}>
-                  <button onClick={() => editHandler(ingredient.id)}>
+                  <button
+                    className={styles.editButton}
+                    onClick={() => editHandler(ingredient.id)}
+                  >
                     Отредактировать
                   </button>
-                  <button onClick={() => deleteHandler(ingredient.id)}>
+                  <button
+                    className={styles.delButton}
+                    onClick={() => deleteHandler(ingredient.id)}
+                  >
                     Закончилось
                   </button>
                 </div>

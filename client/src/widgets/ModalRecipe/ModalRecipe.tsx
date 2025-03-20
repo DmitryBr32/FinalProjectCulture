@@ -218,20 +218,26 @@ export default function ModalRecipe({
                     <>
                       <p>Максимальное количество коктейлей: {maxQuantity}</p>
                       <form onSubmit={handleSubmit}>
-                        <label>Количество коктейлей:</label>
+                        <label className={styles.containerLabel}>
+                          Количество коктейлей:
+                        </label>
                         <input
                           type="number"
                           value={quantity}
                           onChange={handleChange}
                           min={0}
                           max={maxQuantity}
+                          className={styles.containerInput}
                         />
-                        <button
-                          type="submit"
-                          disabled={quantity === 0 || quantity > maxQuantity}
-                        >
-                          Подтвердить
-                        </button>
+                        <div>
+                          <button
+                            type="submit"
+                            className={styles.addButton}
+                            disabled={quantity === 0 || quantity > maxQuantity}
+                          >
+                            Подтвердить
+                          </button>
+                        </div>
                       </form>
                     </>
                   ) : (
