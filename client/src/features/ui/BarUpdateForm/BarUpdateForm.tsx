@@ -170,17 +170,6 @@ export default function BarUpdateForm({ setShowAddForm, initialData }: Props) {
           className={styles.input}
         />
       </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Введите крепость напитка</label>
-        <input
-          type="text"
-          name="strength"
-          value={stockInputs.strength}
-          onChange={handleChange}
-          required
-          className={styles.input}
-        />
-      </div>
       <button type="submit" className={styles.button}>
         Обновить
       </button>
