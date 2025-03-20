@@ -1,3 +1,129 @@
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: row; 
+  gap: 15px;
+  align-items: center; 
+  justify-content: center; 
+  width: auto;
+  max-width: 600px;
+  height: auto;
+  min-height: 300px;
+  padding: 30px;
+  font-family: var(--font-h1);
+  background: rgb(255 255 255 / 10%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 12px;
+  box-shadow: 5px 15px 20px rgb(6 6 6 / 72.2%);
+  backdrop-filter: blur(10px);
+  flex: 1;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.textWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  text-align: left;
+}
+
+.searchText {
+  font-size: 18px;
+  color: #e0e0e0;
+  max-width: 300px;
+}
+
+.smallDivider {
+  width: 50%;
+  height: 2px;
+  margin: 6px auto;
+  background-color: #444;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+}
+
+.input {
+  /* width: 100%; */
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #fff;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 6px;
+}
+
+.buttonBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: flex-start;; 
+}
+
+.removeButton {
+  width: 20%;
+  padding: 8px 12px;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+  background-color: rgb(244 67 54 / 30%);
+  border: 1px solid rgb(244 67 54 / 50%);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.removeButton:hover {
+  background-color: rgb(244 67 54 / 50%);
+  transform: translateY(-2px);
+}
+
+.addButton,
+.submitButton {
+  /* width: 50%; */
+  padding: 10px;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.addButton {
+  background-color: rgb(33 150 243 / 30%);
+  border: 1px solid rgb(33 150 243 / 50%);
+  width: 60%; 
+  padding: 6px 6px; 
+  font-size: 12px;
+}
+
+.addButton:hover {
+  background-color: rgb(33 150 243 / 50%);
+}
+
+.submitButton {
+  background-color: rgb(76 175 80 / 30%);
+  border: 1px solid rgb(76 175 80 / 50%);
+  width: 300px; 
+  padding: 6px 16px; 
+  font-size: 12px;
+}
+
+.submitButton:hover {
+  background-color: rgb(76 175 80 / 50%);
+}
+
 .componentContainer {
   display: flex;
   flex-flow: row wrap;
@@ -17,11 +143,12 @@
   border-radius: 5px;
 }
 
-.carouselContainerClose {
+.carouselContainer {
   width: 100%;
-  height: 50px;
+  height: 200px;
   padding: 10px;
   margin-bottom: 14px;
+  overflow-y: auto;
   border-radius: 5px;
 }
 
@@ -33,75 +160,4 @@
   display: none;
 }
 
-.label {
-  margin-bottom: 5px;
-  font-size: 14px;
-}
 
-.input {
-  box-sizing: border-box;
-  width: 10%;
-  padding: 8px;
-  font-size: 14px;
-  color: #fff;
-  background: rgb(255 255 255 / 5%);
-  border: 1px solid rgb(255 255 255 / 20%);
-  border-radius: 6px;
-}
-
-.addButton {
-  background-color: rgb(33 150 243 / 30%);
-  border: 1px solid rgb(33 150 243 / 50%);
-}
-
-.addButton:hover {
-  background-color: rgb(33 150 243 / 50%);
-  transform: translateY(-2px);
-}
-
-.removeButton {
-  width: 60%;
-  padding: 8px 12px;
-  margin-top: 5px;
-  font-size: 14px;
-  color: #fff;
-  cursor: pointer;
-  background-color: rgb(244 67 54 / 30%);
-  border: 1px solid rgb(244 67 54 / 50%);
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-.removeButton:hover {
-  background-color: rgb(244 67 54 / 50%);
-  transform: translateY(-2px);
-}
-
-.submitButton {
-  background-color: rgb(76 175 80 / 30%);
-  border: 1px solid rgb(76 175 80 / 50%);
-}
-
-.submitButton:hover {
-  background-color: rgb(76 175 80 / 50%);
-  transform: translateY(-2px);
-}
-
-.searchText {
-  font-size: 18px;
-  color: #e0e0e0;
-  text-align: right;
-}
-
-.smallDivider {
-  width: 90%;
-  height: 2px;
-  margin: 6px auto;
-  background-color: #444;
-}
-
-.buttonBlock {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}

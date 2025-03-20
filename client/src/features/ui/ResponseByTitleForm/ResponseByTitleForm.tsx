@@ -51,7 +51,7 @@ export default function ResponseByTitleForm() {
           <p className={styles.searchText}>
             Хотите найти определенный рецепт?
             <div className={styles.smallDivider}></div>
-            Воспользуйся поиском
+            Воспользуйтесь поиском по названию
           </p>
         </div>
       </form>
