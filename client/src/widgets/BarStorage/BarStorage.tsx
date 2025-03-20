@@ -116,6 +116,7 @@ export default function BarStorage() {
       <h1>Ваши напитки</h1>
       {!showAddForm && !showUpdateForm ? (
         <button
+          className={styles.addButton}
           onClick={() => {
             setShowAddForm(true);
             setShowUpdateForm(false);

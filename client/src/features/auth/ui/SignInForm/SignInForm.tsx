@@ -26,52 +26,58 @@ export default function SignInForm() {
     event.preventDefault();
     const { isValid, error } = UserValidator.validateSignIn(inputs);
     if (!isValid) return showAlert(error || "Ошибка валидации");
-    let result
-    
+    let result;
+
     try {
       result = await dispatch(signInThunk(inputs));
       if (result.payload?.statusCode === 200) {
-        showAlert(
-          result.payload?.message ?? "Вход выполнен",
-        );
+        showAlert(result.payload?.message ?? "Вход выполнен");
         setInputs(INITIAL_INPUTS_DATA);
         navigate(CLIENT_ROUTES.MAIN);
       }
     } catch (error) {
       console.error("Ошибка:", error);
-      showAlert(
-        "Ошибка входа",
-      );
+      showAlert("Ошибка входа");
     }
   };
 
   const { email, password } = inputs;
 
   return (
+    <>
+      <h1 className={styles.title}>Вход</h1>
       <form className={styles.form} onSubmit={onSubmitHandler}>
         <div className={styles.formGroup}>
-        <label className={styles.label}>Введите почту</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="почта"
-          onChange={onChangeHandler}
-          value={email}
-          className={styles.input}
-        />
+          <input
+            type="email"
+            name="email"
+            placeholder="почта"
+            onChange={onChangeHandler}
+            value={email}
+            className={styles.input}
+          />
         </div>
         <div className={styles.formGroup}>
-        <label className={styles.label}>Введите пароль</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="пароль"
-          onChange={onChangeHandler}
-          value={password}
-          className={styles.input}
-        />
+          <input
+            type="password"
+            name="password"
+            placeholder="пароль"
+            onChange={onChangeHandler}
+            value={password}
+            className={styles.input}
+          />
         </div>
-        <button type="submit" className={styles.button}>Войти</button>
+        <button
+          type="button"
+          className={styles.navigateButton}
+          onClick={() => navigate(CLIENT_ROUTES.SIGN_UP)}
+        >
+          Еще нет аккаунта?
+        </button>
+        <button type="submit" className={styles.button}>
+          Войти
+        </button>
       </form>
+    </>
   );
 }
