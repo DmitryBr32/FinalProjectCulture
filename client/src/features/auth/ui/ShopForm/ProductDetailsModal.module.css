@@ -14,10 +14,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 800px;
-  max-height: 90vh;
+  max-width: 900px;
+  max-height: 100vh;
   padding: 20px;
-  background-color: rgb(34 34 34 / 60%); /* Полупрозрачный фон */
+  background-color: rgb(255 255 255 / 20%); /* Полупрозрачный фон */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
   backdrop-filter: blur(8px); /* Эффект размытия */
@@ -26,12 +26,13 @@
 .name{
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
   padding-top: 10px;
 }
 
 .closeButton {
+  outline: none; /* Убираем окантовку */
+  border: none; 
   position: absolute;
   top: 5px;
   right: 5px;
@@ -78,7 +79,7 @@
 
 .description {
   padding: 15px 20px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   color: #e0e0e0;
   background: #1f1f1f;
   border-radius: 8px;
@@ -90,6 +91,10 @@
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.descriptionSize {
+  font-size: 18px;
 }
 
 .specifications {
@@ -105,6 +110,19 @@
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column; /* Располагаем элементы вертикально */
+  gap: 8px; /* Отступ между элементами */
+}
+
+.detailItem {
+  display: flex;
+  justify-content: space-between; /* Разделяет текст и значение по краям */
+  align-items: center; /* Выравнивает элементы по вертикали */
+  width: 100%; /* Занимает всю доступную ширину */
 }
 
 .quantityControls {
@@ -142,8 +160,8 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between; 
-  width: 91px;
-  height: 24px;
+  min-height: 44px;
+  min-width: 100px;
   padding: 2px; 
   background-color: white; 
   border-radius: 4px;
@@ -152,12 +170,12 @@ button:disabled {
 .quantityButton {
   display: flex;
   align-items: center;
-  justify-content: center; 
-  width: 30px; 
-  height: 24px; 
-  padding: 0;
-  margin: 0;
-  font-size: 12px; 
+  justify-content: center;
+  width: 40px; 
+  height: 44px; 
+  padding: 0; 
+  margin: 0; 
+  font-size: 12px;
   color: #000; 
   cursor: pointer;
   background-color: transparent;
@@ -185,13 +203,13 @@ button:disabled {
 }
 
 .cartButton {
-  max-height: 30px;
+  min-height: 50px;
+  min-width: 70px;
   padding: 6px 12px;
   margin: 0;
   font-size: 14px;
   color: white;
   cursor: pointer;
-  border: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }

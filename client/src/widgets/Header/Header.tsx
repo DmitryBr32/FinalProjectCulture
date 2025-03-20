@@ -49,7 +49,7 @@ export function Header(): JSX.Element {
             className={({ isActive }) => 
               `${isActive ? styles.active : ""} ${styles.navLink}`
             }
-            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-blue)" } as React.CSSProperties : undefined)}
+            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
           >
             Бар
           </NavLink>
@@ -58,7 +58,7 @@ export function Header(): JSX.Element {
             className={({ isActive }) => 
               `${isActive ? styles.active : ""} ${styles.navLink}`
             }
-            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-orange)" } as React.CSSProperties : undefined)}
+            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
           >
             Журнал
           </NavLink>
@@ -67,9 +67,9 @@ export function Header(): JSX.Element {
       </div>
 
       {/* Центральная секция с логотипом */}
-      <div className={styles.centerSection}>
+      <NavLink to={CLIENT_ROUTES.MAIN} className={styles.centerSection}>
         <img src="/culture-header.png" alt="Logo" className={styles.logo} />
-      </div>
+      </NavLink>
 
       {/* Правая секция */}
       <div className={styles.rightSection}>
@@ -79,7 +79,7 @@ export function Header(): JSX.Element {
             className={({ isActive }) => 
               `${isActive ? styles.active : ""} ${styles.navLink}`
             }
-            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-yellow)" } as React.CSSProperties : undefined)}
+            style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
           >
             Магазин
           </NavLink>
@@ -90,7 +90,7 @@ export function Header(): JSX.Element {
                 className={({ isActive }) => 
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-gray)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
               >
                 Вход
               </NavLink>
@@ -99,7 +99,7 @@ export function Header(): JSX.Element {
                 className={({ isActive }) => 
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-gray)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
               >
                 Регистрация
               </NavLink>
@@ -111,7 +111,7 @@ export function Header(): JSX.Element {
                 className={({ isActive }) => 
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-teal)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
               >
                 <UserAvatar user={user} />
               </NavLink>
@@ -121,7 +121,7 @@ export function Header(): JSX.Element {
                 className={({ isActive }) => 
                   `${isActive ? styles.active : ""} ${styles.navLink}`
                 }
-                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-red)" } as React.CSSProperties : undefined)}
+                style={({ isActive }) => (isActive ? { "--active-color": "var(--color-green)" } as React.CSSProperties : undefined)}
               >
                 Выйти
               </NavLink>
