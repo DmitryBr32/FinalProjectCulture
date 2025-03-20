@@ -1,6 +1,6 @@
 .carouselContainer {
-  display: flex;
   position: relative;
+  display: flex;
 }
 
 .carousel {
@@ -25,16 +25,17 @@
 .scrollButton {
   position: absolute;
   top: 38%; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+
   /* transform: translateY(-50%);  */
   width: 50px;
   height: 50px;
-  background: rgb(255 255 255 / 5%); 
-  border-radius: 50%; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
   cursor: pointer;
+  background: rgb(255 255 255 / 5%);
+  border: none; 
+  border-radius: 50%;
   opacity: 0.8;
   transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
