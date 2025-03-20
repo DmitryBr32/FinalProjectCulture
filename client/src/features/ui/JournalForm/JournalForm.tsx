@@ -39,8 +39,9 @@ export default function JournalForm(): JSX.Element {
       </div>
       <div className={styles.divider}></div>
       <div className={styles.selector}>
-        {rec && <OneCoctailCard rec={rec} onOpen={openModal} />}
+      <div className={styles.searchContainer}>
         <ResponseByTitleForm />
+        </div>
         <ResponseByIngrsForm />
       </div>
       <div className={styles.selector}>
