@@ -39,18 +39,42 @@
 }
 
 .filter {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
   font-family: var(--font-h1);
   font-size: large;
-  color: #d0d0d0;
 }
 
 .filter select {
   padding: 8px 10px;
   font-size: 15px;
+  color: #fff;
+  background: rgb(255 255 255 / 5%);
   cursor: pointer;
-  border: 1px solid #d0d0d0;
+  border: 1px solid rgb(255 255 255 / 20%); 
   border-radius: 9px;
+  transition: all 0.3s ease;
+}
+
+.filter select:hover {
+  background-color: rgb(255 255 255 / 15%); 
+  transform: translateY(-2px);
+}
+
+.filter select option {
+  background-color: #FFFFFF0D;
+  color: #fff; 
+}
+
+.filter select:focus {
+  background: #222;
+  border-color: #fff;
+}
+
+.filter select option:checked {
+  background: rgb(33 150 243 / 30%);
 }
 
 .scrollButton:hover {
@@ -67,4 +91,26 @@
 
 .scrollButton i {
   font-size: 16px;
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.filterWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #444;
+  margin: 10px 0;
 }

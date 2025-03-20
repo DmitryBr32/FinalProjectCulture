@@ -47,15 +47,17 @@ export default function ResponseByIngrsForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <div className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.componentContainer}>
       {components.map((component, index) => (
         <div key={index} className={styles.componentContainer}>
-          <label htmlFor={`component-${index}`} className={styles.label}>
+          {/* <label htmlFor={`component-${index}`} className={styles.label}>
             Component {index + 1}:
-          </label>
+          </label> */}
           <input
             type="text"
             id={`component-${index}`}
+            placeholder="Добавить компонент"
             className={styles.input}
             value={component.type}
             onChange={(e) => handleComponentChange(index, e.target.value)}
@@ -66,17 +68,23 @@ export default function ResponseByIngrsForm() {
               className={styles.removeButton}
               onClick={() => removeComponent(index)}
             >
-              Remove
+              Удалить
             </button>
           )}
         </div>
       ))}
       <button type="button" className={styles.addButton} onClick={addComponent}>
-        Add Component
+      Добавить ещё
       </button>
       <button type="submit" className={styles.submitButton}>
-        Submit
+        Найти
       </button>
     </form>
+    <p className={styles.searchText}>
+          Ищешь по любимым ингредиентам? 
+          <div className={styles.smallDivider}></div> 
+          Просто введи компоненты сюда
+        </p>
+    </div>
   );
 }
