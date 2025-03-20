@@ -81,6 +81,8 @@ export default function Shop(): JSX.Element {
   return (
     <div className={styles.container}>
       <nav className={styles.navContainer}>
+        {user && (
+         <>
         <NavLink
           to={CLIENT_ROUTES.BASKETS}
           className={({ isActive }) => (isActive ? styles.active : "")}
@@ -96,6 +98,7 @@ export default function Shop(): JSX.Element {
         >
           Заказы
         </NavLink>
+        </>)}
       </nav>
       <div className={styles.content}>
         <div className={styles.productList}>

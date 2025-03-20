@@ -33,9 +33,7 @@ export default function SignUpForm() {
     try {
       const result = await dispatch(signUpThunk(inputs));
       if (result.payload?.statusCode === 201) {
-        showAlert(
-          result.payload?.message ?? "Ошибка авторизации",
-        );
+        showAlert(result.payload?.message ?? "Ошибка авторизации");
         setInputs(INITIAL_INPUTS_DATA);
         navigate(CLIENT_ROUTES.MAIN);
       }
@@ -47,54 +45,62 @@ export default function SignUpForm() {
   const { username, email, password, repeatPassword } = inputs;
 
   return (
-    <form className={styles.form} onSubmit={onSubmitHandler}>
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Введите ваше имя</label>
-        <input
-          type="text"
-          name="username"
-          placeholder="имя"
-          autoFocus
-          onChange={onChangeHandler}
-          value={username}
-          className={styles.input}
-        />
-      </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Введите почту</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="почта"
-          onChange={onChangeHandler}
-          value={email}
-          className={styles.input}
-        />
-      </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Введите пароль</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="пароль"
-          onChange={onChangeHandler}
-          value={password}
-          className={styles.input}
-        />
-      </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Повторите пароль</label>
-        <input
-          type="password"
-          name="repeatPassword"
-          placeholder="повторите пароль"
-          onChange={onChangeHandler}
-          value={repeatPassword}
-          className={styles.input}
-        />
-      </div>
+    <>
+      <h1 className={styles.title}>Регистрация</h1>
+      <form className={styles.form} onSubmit={onSubmitHandler}>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            name="username"
+            placeholder="имя"
+            autoFocus
+            onChange={onChangeHandler}
+            value={username}
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="email"
+            name="email"
+            placeholder="почта"
+            onChange={onChangeHandler}
+            value={email}
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="password"
+            name="password"
+            placeholder="пароль"
+            onChange={onChangeHandler}
+            value={password}
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="password"
+            name="repeatPassword"
+            placeholder="повторите пароль"
+            onChange={onChangeHandler}
+            value={repeatPassword}
+            className={styles.input}
+          />
+        </div>
 
-      <button type="submit" className={styles.button}>Зарегистрироваться</button>
-    </form>
+        <button
+          className={styles.navigateButton}
+          type="button"
+          onClick={() => navigate(CLIENT_ROUTES.SIGN_IN)}
+        >
+          Уже есть аккаунт?
+        </button>
+        <button type="submit" className={styles.button}>
+          Зарегистрироваться
+        </button>
+      </form>
+    </>
   );
 }

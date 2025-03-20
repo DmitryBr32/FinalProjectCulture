@@ -216,7 +216,7 @@ export default function ModalRecipe({
                 <>
                   {maxQuantity > 0 ? (
                     <>
-                      <p>Максимальное количество коктейлей: {maxQuantity}</p>
+                      <p>Доступное количество коктейлей: {maxQuantity}</p>
                       <form onSubmit={handleSubmit}>
                         <label className={styles.containerLabel}>
                           Количество коктейлей:
