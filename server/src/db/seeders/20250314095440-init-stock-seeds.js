@@ -321,6 +321,21 @@ module.exports = {
           strength: "18",
           userId: 1,
         },
+
+        {
+          ingredientTypeId: 74,
+          ingredientBalance: "550",
+          title: "Violet Liqueur",
+          strength: "18",
+          userId: 1,
+        },
+        {
+          ingredientTypeId: 75,
+          ingredientBalance: "550",
+          title: "Violet Liqueur",
+          strength: "18",
+          userId: 1,
+        },
         {
           ingredientTypeId: 12,
           ingredientBalance: "400",
@@ -404,7 +419,7 @@ module.exports = {
           title: "Vanilla Vodka",
           strength: "40",
           userId: 2,
-        }
+        },
       ],
       {}
     );
