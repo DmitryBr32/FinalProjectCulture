@@ -42,7 +42,8 @@ export default function JournalForm(): JSX.Element {
         </div>
         <ResponseByIngrsForm />
       </div>
-      <div className={styles.selector}>
+
+      <div className={styles.selectorBottom}>
         <div className={styles.banner}>
           <h1 className={styles.title}>Сохраните любимые</h1>
           <p className={styles.text}>
@@ -51,19 +52,18 @@ export default function JournalForm(): JSX.Element {
             напитков.
           </p>
         </div>
-
+        <div className={styles.divider}></div>
         <CoctailBox recipes={recipes} onOpen={openModal} />
+        {isModalOpen && selectedRecipeId && (
+          <ModalRecipe
+            isBar={false}
+            recipes={recipes}
+            recId={selectedRecipeId}
+            onClose={closeModal}
+            recipesLength={recipes.length}
+          />
+        )}{" "}
       </div>
-
-      {isModalOpen && selectedRecipeId && (
-        <ModalRecipe
-          isBar={false}
-          recipes={recipes}
-          recId={selectedRecipeId}
-          onClose={closeModal}
-          recipesLength={recipes.length}
-        />
-      )}
     </div>
   );
 }

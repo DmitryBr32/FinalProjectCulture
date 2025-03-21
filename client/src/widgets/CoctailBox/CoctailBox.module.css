@@ -1,6 +1,7 @@
 .carouselContainer {
   position: relative;
   display: flex;
+  margin: 50px;
 }
 
 .carousel {
@@ -24,17 +25,17 @@
 
 .scrollButton {
   position: absolute;
-  top: 38%; 
+  top: 38%;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
 
   /* transform: translateY(-50%);  */
   width: 50px;
   height: 50px;
   cursor: pointer;
   background: rgb(255 255 255 / 5%);
-  border: none; 
+  border: none;
   border-radius: 50%;
   opacity: 0.8;
   transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -55,19 +56,19 @@
   color: #fff;
   cursor: pointer;
   background: rgb(255 255 255 / 5%);
-  border: 1px solid rgb(255 255 255 / 20%); 
+  border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 9px;
   transition: all 0.3s ease;
 }
 
 .filter select:hover {
-  background-color: rgb(255 255 255 / 15%); 
+  background-color: rgb(255 255 255 / 15%);
   transform: translateY(-2px);
 }
 
 .filter select option {
   color: #fff;
-  background-color: #FFFFFF0D; 
+  background-color: #ffffff0d;
 }
 
 .filter select:focus {
@@ -98,17 +99,21 @@
 
 .filterContainer {
   display: flex;
-  flex-direction: column;
+
   gap: 20px;
   width: 100%;
 }
 
 .filterWrapper {
   display: flex;
+  flex-direction: column;
   gap: 20px;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 20px;
+  justify-content: start;
+  max-width: 200px;
+  width: 50%;
+  margin-top: 60px;
+  margin-left: 50px;
+  margin-right: 100px;
 }
 
 .divider {

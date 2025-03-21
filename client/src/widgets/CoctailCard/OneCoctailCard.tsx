@@ -9,18 +9,18 @@ interface Prop {
 }
 export default function OneCoctailCard({ rec, onOpen }: Prop) {
   return (
-    <div className={styles.recipeContainer} onClick={() => onOpen(rec.id)}>
-      <div className={styles.ingrList}>
+    <div className={styles.oneRecipeContainer} onClick={() => onOpen(rec.id)}>
+      <div className={styles.oneIngrList}>
         <IngredientsList recipe={rec} />
       </div>
       <div
-        className={styles.recipeCard}
+        className={styles.oneRecipeCard}
         style={{
           backgroundImage: rec?.img ? `url(${rec.img})` : "none",
           backgroundSize: "cover",
         }}
       ></div>{" "}
-      <h3 className={styles.recipeTitle}>{rec?.title}</h3>
+      <div className={styles.oneRecipeTitle}>{rec?.title}</div>
     </div>
   );
 }

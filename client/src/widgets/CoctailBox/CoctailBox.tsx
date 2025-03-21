@@ -55,11 +55,7 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
 
   const handleShotChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    if (value !== null) {
-      setIsShotFilter(value === "true" ? true : false);
-    } else {
-      setIsShotFilter(null);
-    }
+    setIsShotFilter(value === "true" ? true : value === "false" ? false : null);
   }, []);
 
   const handleSortByLikesChange = useCallback(
@@ -102,54 +98,52 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
 
   return (
     <div className={styles.filterContainer}>
+      <div className={styles.filterWrapper}>
+        <div className={styles.filter}>
+          <label htmlFor="strength">По крепости </label>
+          <select
+            id="strength"
+            value={selectedStrength}
+            onChange={handleStrengthChange}
+          >
+            <option value="Все">Все</option>
+            <option value="крепкий">Крепкие</option>
+            <option value="средний">Средние</option>
+            <option value="слабый">Легкие</option>
+          </select>
+        </div>
+        <div className={styles.filter}>
+          <label htmlFor="strength">По объему </label>
+          <select
+            id="strength"
+            value={isShotFilter === null ? "Все" : isShotFilter.toString()}
+            onChange={handleShotChange}
+          >
+            <option value="Все">Все</option>
+            <option value="false">Лонг-дринк</option>
+            <option value="true">Шот-дринк</option>
+          </select>
+        </div>
+        <div className={styles.filter}>
+          <label htmlFor="sortByLikes">Популярные</label>
+          <select
+            id="sortByLikes"
+            value={sortByLikes || ""}
+            onChange={handleSortByLikesChange}
+          >
+            <option value="">Не сортировать</option>
+            <option value="asc">По возрастанию</option>
+            <option value="desc">По убыванию</option>
+          </select>
+        </div>
+      </div>
       {filteredRecipes.length !== 0 && (
         <>
-        <div className={styles.filterWrapper}>
-          <div className={styles.filter}>
-            <label htmlFor="strength">По крепости </label>
-            <select
-              id="strength"
-              value={selectedStrength}
-              onChange={handleStrengthChange}
-            >
-              <option value="Все">Все</option>
-              <option value="крепкий">Крепкие</option>
-              <option value="средний">Средние</option>
-              <option value="слабый">Легкие</option>
-            </select>
-          </div>
-          <div className={styles.filter}>
-            <label htmlFor="strength">По объему </label>
-            <select
-              id="strength"
-              value={selectedStrength}
-              onChange={handleShotChange}
-            >
-              <option value="Все">Все</option>
-              <option value="false">Лонг-дринк</option>
-              <option value="true">Шот-дринк</option>
-            </select>
-          </div>
-          <div className={styles.filter}>
-            <label htmlFor="sortByLikes">Популярные</label>
-            <select
-              id="sortByLikes"
-              value={sortByLikes || ""}
-              onChange={handleSortByLikesChange}
-            >
-              <option value="">Не сортировать</option>
-              <option value="asc">По возрастанию</option>
-              <option value="desc">По убыванию</option>
-            </select>
-          </div>
-          </div>
-          
-          <div className={styles.divider}></div>
           <div className={styles.carouselContainer}>
-            <button
-              className={styles.scrollButton}
-              onClick={scrollLeft}
-            > <img src="../../../public/left-arrow.png" alt='left' /></button>
+            <button className={styles.scrollButton} onClick={scrollLeft}>
+              {" "}
+              <img src="../../../public/left-arrow.png" alt="left" />
+            </button>
             <div className={styles.carousel} ref={carouselRef}>
               <div className={styles.recipeList}>
                 {filteredRecipes.map((recipe) => (
@@ -161,10 +155,10 @@ export default function CoctailBox({ recipes, onOpen }: Prop) {
                 ))}
               </div>
             </div>
-            <button
-              className={styles.scrollButton}
-              onClick={scrollRight}
-            > <img src="../../../public/right-arrow.png" alt='right' /></button>
+            <button className={styles.scrollButton} onClick={scrollRight}>
+              {" "}
+              <img src="../../../public/right-arrow.png" alt="right" />
+            </button>
           </div>
         </>
       )}

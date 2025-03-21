@@ -65,43 +65,45 @@ export default function ResponseByIngrsForm() {
       </div>
       {/* </div> */}
       <div className={styles.inputContainer}>
-      <div className={styles.inputBlock}>
-        <div
-          className={
-            components.length > 1
-              ? styles.carouselContainer
-              : styles.carouselContainerClose
-          }
-        >
-          <div className={styles.carousel} ref={carouselRef}>
-            {components.map((component, index) => (
-              <div key={index} className={styles.componentContainer}>
-                {/* <label
+        <div className={styles.inputBlock}>
+          <div
+            className={
+              components.length > 1
+                ? styles.carouselContainer
+                : styles.carouselContainerClose
+            }
+          >
+            <div className={styles.carousel} ref={carouselRef}>
+              {components.map((component, index) => (
+                <div key={index} className={styles.componentContainer}>
+                  {/* <label
                 htmlFor={`component-${index}`}
                 className={styles.label}
               ></label> */}
-                <input
-                  type="text"
-                  placeholder={`Напиток ${index + 1}`}
-                  id={`component-${index}`}
-                  className={styles.input}
-                  value={component.type}
-                  onChange={(e) => handleComponentChange(index, e.target.value)}
-                />
-                {index > 0 && (
-                  <button
-                    type="button"
-                    className={styles.removeButton}
-                    onClick={() => removeComponent(index)}
-                  >
-                    x
-                  </button>
-                )}
-              </div>
-            ))}
+                  <input
+                    type="text"
+                    placeholder={`Напиток ${index + 1}`}
+                    id={`component-${index}`}
+                    className={styles.input}
+                    value={component.type}
+                    onChange={(e) =>
+                      handleComponentChange(index, e.target.value)
+                    }
+                  />
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      className={styles.removeButton}
+                      onClick={() => removeComponent(index)}
+                    >
+                      x
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        {/* <div className={styles.buttonBlock}> */}
+          {/* <div className={styles.buttonBlock}> */}
           <button
             type="button"
             className={styles.addButton}
@@ -109,11 +111,11 @@ export default function ResponseByIngrsForm() {
           >
             Добавить компонент
           </button>
-          </div>
-          <button type="submit" className={styles.submitButton}>
-            Найти сочетания
-          </button>
         </div>
+        <button type="submit" className={styles.submitButton}>
+          Найти сочетания
+        </button>
+      </div>
       {/* </div> */}
     </form>
   );

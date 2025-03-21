@@ -40,8 +40,9 @@
 }
 
 .banner {
-  padding: 20px;
-  margin: 20px;
+  padding: 0 0 20px;
+  margin-bottom: 30px;
+  margin-top: 50px;
 }
 
 .text {
@@ -49,6 +50,7 @@
   margin: 0 auto;
   margin-bottom: 10px;
   font-family: var(--font-h1);
+  font-size: 20px;
   line-height: 1.5;
   color: white;
   text-align: center;

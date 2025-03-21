@@ -4,10 +4,10 @@
   flex-direction: row;
   gap: 20px;
   align-items: center;
-  justify-content: space-between;;
+  justify-content: space-between;
   width: 70%;
-  height: auto; 
-  min-height: 300px; 
+  height: 300px;
+  min-height: 300px;
   padding: 30px;
   font-family: var(--font-h1);
   background: rgb(255 255 255 / 10%);
@@ -19,7 +19,7 @@
 
 .componentContainer {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 16px;
   align-items: flex-end;
   width: 100%;
@@ -27,9 +27,9 @@
 
 .inputWrapper {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 10px;
-  align-items: center; 
+  align-items: center;
 }
 
 .input {
@@ -40,6 +40,7 @@
   background: rgb(255 255 255 / 5%);
   border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 6px;
+  outline: none;
 }
 
 .submitButton {
@@ -66,17 +67,21 @@
 }
 
 .smallDivider {
-  width: 90%; 
-  height: 2px; 
-  margin: 6px auto;  
-  background-color: #444; 
+  width: 90%;
+  height: 2px;
+  margin: 6px auto;
+  background-color: #444;
 }
 
 .textWrapper {
   display: flex;
-  flex: 1; 
+  flex-direction: column;
+  flex: 1;
   align-items: center;
   justify-content: flex-start;
   text-align: left;
 }
 
+.addForm {
+  margin-top: 55px;
+}
