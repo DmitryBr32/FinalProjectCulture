@@ -8,7 +8,7 @@
   justify-content: center;
   width: auto;
   max-width: 600px;
-  height: auto;
+  height: 300px;
   min-height: 300px;
   padding: 30px;
   font-family: var(--font-h1);
@@ -58,6 +58,7 @@
   padding: 8px 16px;
   font-size: 14px;
   color: #fff;
+  outline: none;
   background: rgb(255 255 255 / 5%);
   border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 6px;
@@ -72,10 +73,10 @@
 }
 
 .removeButton {
-  width: 60%;
-  padding: 8px 12px;
+  width: 30px;
+  padding: 4px;
   margin-top: 5px;
-  font-size: 14px;
+  font-size: 13px;
   color: #fff;
   cursor: pointer;
   background-color: rgb(244 67 54 / 30%);
@@ -101,7 +102,6 @@
 
 .addButton {
   width: 60%;
-  padding: 6px 10px;
   font-size: 12px;
   background-color: rgb(33 150 243 / 30%);
   border: 1px solid rgb(33 150 243 / 50%);
@@ -109,14 +109,13 @@
 
 .addButton:hover {
   background-color: rgb(33 150 243 / 50%);
-  transform: translateY(-2px);
 }
 
 .submitButton {
   width: 300px;
   padding: 6px 16px;
-  margin-top: 65px;
-  font-size: 12px;
+  margin-top: 20px;
+  font-size: 14px;
   background-color: rgb(76 175 80 / 30%);
   border: 1px solid rgb(76 175 80 / 50%);
 }
@@ -137,7 +136,16 @@
 
 .carouselContainer {
   width: 100%;
-  height: 200px;
+  height: 120px;
+  padding: 10px;
+  margin-bottom: 14px;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+
+.carouselContainerClose {
+  width: 100%;
+  height: 120px;
   padding: 10px;
   margin-bottom: 14px;
   overflow-y: auto;
@@ -152,7 +160,12 @@
   display: none;
 }
 
-.label {
-  margin-bottom: 5px;
-  font-size: 14px;
+.inputBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 200px;
 }
