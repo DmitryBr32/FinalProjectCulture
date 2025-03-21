@@ -671,7 +671,7 @@ module.exports = {
           title: "Чешский Мул",
           text: "Вариант Moscow Mule с Бехеровкой",
           img: "https://forumsamogon.ru/wp-content/uploads/2/2/9/22911608a0f562f16984a6618a130fcc.jpg",
-          imgBar: "/recipes/Чешский Мул.png",
+          imgBar: "/recipes/ЧешскийМул.png",
           discription:
             "Смешайте Бехеровку и сок лайма в медной кружке. Добавьте лед, долейте имбирным пивом и украсьте.",
           strengthLevel: "средний",
