@@ -107,7 +107,7 @@ export default function AvailableCocktails({ searchValue }: Props) {
                     ""
                   )}
                   <img
-                    src={recipe.img || "/default-cocktail.jpg"}
+                    src={recipe.imgBar || "/recipes/default-cocktail.png"}
                     alt={recipe.title}
                     className={styles.recipeImage}
                   />

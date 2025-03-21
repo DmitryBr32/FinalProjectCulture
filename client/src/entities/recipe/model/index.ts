@@ -7,6 +7,7 @@ export interface IRecipeTitle {
 
 export interface IRecipeRowData extends IRecipeTitle {
   text: string;
+  imgBar: string;
   img: string;
   strengthLevel: string;
   isShot: boolean;
@@ -17,6 +18,7 @@ export interface IRecipeRowData extends IRecipeTitle {
 
 export interface IRecipePutData extends IRecipeTitle {
   text: string;
+  imgBar: string;
   img: string;
   strengthLevel: string;
   isShot: boolean;

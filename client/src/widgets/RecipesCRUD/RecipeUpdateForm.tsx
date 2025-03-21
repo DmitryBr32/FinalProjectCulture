@@ -9,6 +9,7 @@ const initialData: IRecipeRowData = {
   title: "",
   text: "",
   discription: "",
+  imgBar: "",
   img: "",
   strengthLevel: "",
   isShot: false,
