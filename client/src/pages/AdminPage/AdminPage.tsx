@@ -6,6 +6,8 @@ import { useAppSelector } from "@/shared/hooks/reduxHook";
 import { useNavigate } from "react-router-dom";
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import RecipeCrud from "@/widgets/RecipesCRUD/RecipeCrud";
+import DrinkCreateForm from "@/widgets/DrinksCrud/DrinkCreateForm";
+
 
 export function AdminPage() {
   const [activeModule, setActiveModule] = useState<
@@ -72,7 +74,7 @@ export function AdminPage() {
         {activeModule === "orders" && <Orders />}
         {activeModule === "shopStorages" && <ShopStorages />}
         {activeModule === "recipes" && <RecipeCrud />}
-        {activeModule === "drinks" && <h1>Напитки</h1>}
+        {activeModule === "drinks" && <DrinkCreateForm />}
       </div>
     </div>
   );
